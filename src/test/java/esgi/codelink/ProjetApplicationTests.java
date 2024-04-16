@@ -1,4 +1,4 @@
-package com.example.projet;
+package esgi.codelink;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

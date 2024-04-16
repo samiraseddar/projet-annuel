@@ -1,5 +1,4 @@
 package esgi.codelink.entity;
-
 import jakarta.persistence.*;
 
 @Entity

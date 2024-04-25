@@ -2,21 +2,21 @@ package esgi.codelink.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class Token {
+public class Token { // la table de token pour representer les token dans user
 
     @Id
     @GeneratedValue
     private long id;
 
-    @Column(unique = true)
+    @Column(unique = true)//pour mettre la condition a la colonne
     private String token;
 
     private boolean expired;
 
     private boolean revoked;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY) //plusieur token pour un utulisateur
+    @JoinColumn(name = "user_id") // c'est pour evité la table de jointure
     private User user;
 
     public Token(String token, User user) {

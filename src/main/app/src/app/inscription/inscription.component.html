@@ -1,0 +1,29 @@
+<!-- inscription.component.html -->
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mt-5">
+        <div class="card-header text-center">
+          <h4>Inscription</h4>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="form-group">
+              <label for="email">Email :</label>
+              <input type="email" id="email" class="form-control" placeholder="Entrez votre email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Mot de passe :</label>
+              <input type="password" id="password" class="form-control" placeholder="Entrez votre mot de passe" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
+          </form>
+          <div class="text-center mt-3">
+            <p>Déjà inscrit ? <a routerLink="/connexion">Connectez-vous ici</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

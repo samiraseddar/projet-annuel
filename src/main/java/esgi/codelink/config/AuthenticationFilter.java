@@ -18,16 +18,16 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import esgi.codelink.repository.*;
 @Component
-public class AuthenticationFilter extends OncePerRequestFilter {
+public class AuthenticationFilter extends OncePerRequestFilter { // pour appler la requette
 
     private final TokenService tokenService;
     private final UserDetailsService userDetailsService;
     private final TokenRepository tokenRepository;
     private final SecurityContextRepository securityContextRepository;
 
-    @Autowired
-    public AuthenticationFilter(TokenService tokenService, @Lazy TokenRepository tokenRepository, @Lazy UserDetailsService userDetailsService, @Lazy SecurityContextRepository securityContextRepository) {
-        this.tokenService= tokenService;
+    @Autowired // a chaques fois que je mis un service ou bien a repositorie ...
+    public AuthenticationFilter(TokenService tokenService, @Lazy  TokenRepository tokenRepository, @Lazy UserDetailsService userDetailsService, @Lazy SecurityContextRepository securityContextRepository) {
+        this.tokenService= tokenService;  //pour vérifier si elle a sun token de connexion
         this.userDetailsService = userDetailsService;
         this.tokenRepository = tokenRepository;
         this.securityContextRepository = securityContextRepository;

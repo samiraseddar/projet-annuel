@@ -1,6 +1,6 @@
 package esgi.codelink.dto;
 
-public class LoginResponseDTO {
+public class LoginResponseDTO { // la reponse si le login c'est bien passer
 
     private long userId;
 

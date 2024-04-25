@@ -37,7 +37,7 @@ public class TokenService  {
      * @param userDetails  the user details for which the token is generated
      * @return the generated JWT token
      */
-    private String generateKey(Map<String, Object> extraClaims, CustomUserDetails userDetails) {
+    private String generateKey(Map<String, Object> extraClaims, CustomUserDetails userDetails) { // une clée pour générée le token
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
@@ -55,7 +55,7 @@ public class TokenService  {
      */
     public String extractMail(String token) {
         return extractClaim(token, Claims::getSubject);
-    }
+    } //extrére le mail apartir du token
 
     /**
      * Extracts a specific claim from the provided JWT token.
@@ -68,7 +68,7 @@ public class TokenService  {
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
-    }
+    } // extrére un seul elemnt dans le token , le mail .
 
     /**
      * Extracts all claims from the provided JWT token.
@@ -92,7 +92,7 @@ public class TokenService  {
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
-    }
+    } // chaques token a une clée de signature , c'est pour vérifier que le token es authentique
 
     /**
      * Checks if the provided JWT token is valid for the specified user details.

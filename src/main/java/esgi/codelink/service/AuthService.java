@@ -18,14 +18,14 @@ import esgi.codelink.repository.UserRepository;
 import  esgi.codelink.entity.*;
 import  esgi.codelink.dto.*;
 @Service
-public class AuthService {
+public class AuthService {//c'est le service qui gére tt l'eutentification (tttt)
 
     private final TokenRepository tokenRepository;
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager; //une classe de spring sucuritée elle sert a enregistrée la connexion d'un etulisateur
 
     private final JpaUserDetailsService userDetailsService;
 
@@ -56,7 +56,7 @@ public class AuthService {
 
         var user = new User();
         user.setMail(registerDTO.getMail());
-        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));//pour ne pas afficher on utulise un passeword Encoder
         userRepository.save(user);
         return new RegisterResponseDTO("Success", "");
     }
@@ -66,19 +66,19 @@ public class AuthService {
         if(loginDTO.getPassword() == null || loginDTO.getPassword().isBlank()) {
             return new LoginResponseDTO("Password cannot be empty or null");
         }
-        var user = userRepository.findByUsername(loginDTO.getMail());
+        var user = userRepository.findByMail(loginDTO.getMail());
         var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken( user.isEmpty() ? loginDTO.getMail() : user.get().getMail(), loginDTO.getPassword()));
-
+        //pour dire si il es connectée ou pas .....
         if(!authentication.isAuthenticated()) {
             return new LoginResponseDTO("Failed");
         }
 
-        var context = SecurityContextHolder.createEmptyContext();
-        context.setAuthentication(authentication);
+        var context = SecurityContextHolder.createEmptyContext(); //ça stoque les details de securitée de tt l'application
+        context.setAuthentication(authentication); //il vas permetre d'enregistrée l'eulisateur authentifier
         securityContextRepository.saveContext(context, request, response);
 
         var userDetails = (CustomUserDetails) authentication.getPrincipal();
-
+        //spring securitée travail avec des userdetails
         var jwt = tokenService.generateToken(userDetails);
         revokeAllTokens(userDetails);
         saveUserToken(userDetails.getUser(), jwt);
@@ -93,7 +93,7 @@ public class AuthService {
         );
     }
 
-    private void revokeAllTokens(CustomUserDetails user) {
+    private void revokeAllTokens(CustomUserDetails user) { //pour invalidée tt les tokes d'avant
         var validTokens = tokenRepository.findAllValidTokenByUser(user.getUserId());
         if(validTokens.isEmpty()) {
             return;
@@ -111,31 +111,7 @@ public class AuthService {
         tokenRepository.save(new Token(jwt, user));
     }
 
-    public String mvcLogin(LoginDTO userDTO, HttpServletRequest request, HttpServletResponse response) {
-        if(userDTO.getPassword() == null || userDTO.getPassword().isBlank()) {
-            return "Password cannot be empty or null";
-        }
-
-        var token = UsernamePasswordAuthenticationToken.unauthenticated(userDTO.getMail(), userDTO.getPassword());
-
-        try {
-            var authentication = authenticationManager.authenticate(token);
-
-            if(!authentication.isAuthenticated()) {
-                return "Failed";
-            }
-
-            var context =  securityContextHolderStrategy.createEmptyContext();
-            context.setAuthentication(authentication);
-            securityContextHolderStrategy.setContext(context);
-            securityContextRepository.saveContext(context, request, response);
-
-            return "Success";
-        } catch (BadCredentialsException bce) {
-            return "Ident error";
-        }
-    }
-    public UserDetails current() {
+    public UserDetails current() { //l'etulisateur qui es connectée en se moment
         var context = SecurityContextHolder.getContext();
         var authentication = context.getAuthentication();
 

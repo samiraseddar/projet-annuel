@@ -27,7 +27,7 @@ public class User {
     private int nbPosts;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user")// un user c'est une clé etrangére pour un token
     private Set<Token> tokens;
 
     public User() { }

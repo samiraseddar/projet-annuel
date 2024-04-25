@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { InscriptionComponent } from './inscription/inscription.component';
 
-export const routes: Routes = [
+const routes: Routes = [
   { path: 'inscription', component: InscriptionComponent },
 ];
 

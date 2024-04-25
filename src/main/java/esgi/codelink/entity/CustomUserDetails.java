@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {// c'est pour représentée les details de l'etulisateur paraport a les infos dautontification .
 
     private final User user;
 
@@ -19,7 +19,7 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
-
+//le role on return une liste vide .
 
 
     public User getUser() {

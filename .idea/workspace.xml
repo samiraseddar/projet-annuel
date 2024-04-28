@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HELP.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/HELP.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/backend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/.editorconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/.vscode/extensions.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/.vscode/tasks.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/angular.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/package.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/app-routing.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/app.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/app.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/app.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/app.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/app.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/app.module.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/app.routes.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/inscription/inscription.component.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/inscription/inscription.component.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/inscription/inscription.component.spec.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/app/inscription/inscription.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/assets/.gitkeep" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/main.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/src/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/tsconfig.app.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/tsconfig.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/app/tsconfig.spec.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/ProjetApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/config/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/LoginDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/LoginResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/LoginResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/RegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/RegisterDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/RegisterResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/RegisterResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/CustomUserDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/entity/CustomUserDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/entity/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/TokenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/repository/TokenRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/JpaUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/JpaUserDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/TokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/esgi/codelink/ProjetApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/esgi/codelink/ProjetApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2fjI0ZMEdhriyMfNFE0ne7ej3NC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/jujutravail/coursESGIpresentiel/2023-2024/semestre2/projetAnnuel/origine/projet-annuel",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\jujutravail\coursESGIpresentiel\2023-2024\semestre2\projetAnnuel\origine\projet-annuel\backend" />
+      <recent name="C:\jujutravail\coursESGIpresentiel\2023-2024\semestre2\projetAnnuel\origine\projet-annuel" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="projet-annuel" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="projet-annuel" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProjetApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="projet" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="esgi.codelink.ProjetApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="" />
+      <created>1714307837213</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1714307837213</updated>
+      <workItem from="1714307838210" duration="3711000" />
+      <workItem from="1714319520602" duration="19000" />
+      <workItem from="1714319547021" duration="49000" />
+      <workItem from="1714319696823" duration="1433000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

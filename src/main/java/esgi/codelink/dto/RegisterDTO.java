@@ -30,5 +30,14 @@ public class RegisterDTO {
         public void setPasswordCheck(String passwordCheck) {
             this.passwordCheck = passwordCheck;
         }
+
+    @Override
+    public String toString() {
+        return "RegisterDTO{" +
+                "mail='" + mail + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordCheck='" + passwordCheck + '\'' +
+                '}';
     }
+}
 

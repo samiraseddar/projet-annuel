@@ -12,6 +12,9 @@ public class LoginResponseDTO { // la reponse si le login c'est bien passer
 
     private int nbFollowing;
 
+    private String lastName;
+    private String firstName;
+
     private int nbPosts;
 
 
@@ -19,13 +22,21 @@ public class LoginResponseDTO { // la reponse si le login c'est bien passer
         this.status = status;
     }
 
-    public LoginResponseDTO(long userId, String status, String token, int nbFollowers, int nbFollowing, int nbPosts) {
+    public LoginResponseDTO(long userId, String status, String token, int nbFollowers, int nbFollowing, int nbPosts, String firstName,String lastName) {
         this.userId = userId;
         this.status = status;
         this.token = token;
         this.nbFollowers = nbFollowers;
         this.nbFollowing = nbFollowing;
         this.nbPosts = nbPosts;
+        this.lastName=lastName;
+        this.firstName=firstName;
+    }
+    public String getLastName(){
+        return lastName;
+    }
+    public String getFirstName(){
+        return firstName;
     }
 
     public String getStatus() {
@@ -52,6 +63,9 @@ public class LoginResponseDTO { // la reponse si le login c'est bien passer
         public void setUserId(long userId) {
             this.userId = userId;
         }
+    public void setLastName(String lastName){ this.lastName=lastName;}
+    public void setFirstName(String firstName){this.firstName=firstName;
+    }
 
         public int getNbFollowers() {
             return nbFollowers;

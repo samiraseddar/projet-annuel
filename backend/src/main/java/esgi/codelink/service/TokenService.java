@@ -30,7 +30,7 @@ public class TokenService  {
         return generateKey(Map.of("username", userDetails.getMail()), userDetails);
     }
 
-    /**
+    /**s
      * Generates a JWT token with extra claims based on the provided user details.
      *
      * @param extraClaims  additional claims to include in the token
@@ -106,7 +106,7 @@ public class TokenService  {
         return mail.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-    /**
+    /**s
      * Checks if the provided JWT token has expired.
      *
      * @param token the JWT token to check for expiration

@@ -82,14 +82,15 @@ public class AuthService {//c'est le service qui gére tt l'eutentification (ttt
         var jwt = tokenService.generateToken(userDetails);
         revokeAllTokens(userDetails);
         saveUserToken(userDetails.getUser(), jwt);
-
         return new LoginResponseDTO(
                 userDetails.getUserId(),
                 "Success",
                 jwt,
                 userDetails.getUser().getNbFollowers(),
                 userDetails.getUser().getNbFollowing(),
-                userDetails.getUser().getNbPosts()
+                userDetails.getUser().getNbPosts(),
+                userDetails.getUser().getFirstName(),
+                userDetails.getUser().getLastName()
         );
     }
 

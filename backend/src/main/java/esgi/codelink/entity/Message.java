@@ -1,18 +1,18 @@
 package esgi.codelink.entity;
-
+import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.ManyToOne;
 @Entity
-@IdClass(MsgId.class)
 public class Message {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    long id;
+
     @ManyToOne
     private User sender;
 
-    @Id
     @ManyToOne
     private User receiver;
 
@@ -26,6 +26,14 @@ public class Message {
         this.receiver = receiver;
         this.msg = msg;
         this.timestamp = timestamp;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public User getSender() {
@@ -63,7 +71,8 @@ public class Message {
     @Override
     public String toString() {
         return "Message{" +
-                "sender=" + sender +
+                "id=" + id +
+                ", sender=" + sender +
                 ", receiver=" + receiver +
                 ", msg='" + msg + '\'' +
                 ", timestamp=" + timestamp +

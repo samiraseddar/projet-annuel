@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="add Message and MsgId">
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/MessageRepository.java" afterDir="false" />
+    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="add MessageRepository">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/MsgId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/MessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/MessageRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +142,7 @@
       <workItem from="1715077673466" duration="337000" />
       <workItem from="1715181978592" duration="2107000" />
       <workItem from="1715519037552" duration="971000" />
-      <workItem from="1715791887299" duration="5377000" />
+      <workItem from="1715791887299" duration="5692000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />
@@ -166,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715796327456</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add MessageRepository">
+      <option name="closed" value="true" />
+      <created>1715797652939</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1715797652939</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,6 +186,7 @@
     <MESSAGE value="add UserContoller after merge" />
     <MESSAGE value="added firstname and lastname" />
     <MESSAGE value="add Message and MsgId" />
-    <option name="LAST_COMMIT_MESSAGE" value="add Message and MsgId" />
+    <MESSAGE value="add MessageRepository" />
+    <option name="LAST_COMMIT_MESSAGE" value="add MessageRepository" />
   </component>
 </project>

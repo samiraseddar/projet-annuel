@@ -1,7 +1,6 @@
 package esgi.codelink.repository;
 
 import esgi.codelink.entity.Message;
-import esgi.codelink.entity.MsgId;
 import esgi.codelink.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

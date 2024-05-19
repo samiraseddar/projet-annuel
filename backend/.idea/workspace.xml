@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="change MessageRepository">
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/MessageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/MessageService.java" afterDir="false" />
+    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +144,7 @@
       <workItem from="1715791887299" duration="6872000" />
       <workItem from="1715978640718" duration="734000" />
       <workItem from="1716114580668" duration="1264000" />
-      <workItem from="1716134994210" duration="159000" />
+      <workItem from="1716134994210" duration="1302000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />
@@ -194,7 +194,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715798014993</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation">
+      <option name="closed" value="true" />
+      <created>1716135268813</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716135268813</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,6 +215,7 @@
     <MESSAGE value="add MessageRepository" />
     <MESSAGE value="change Message" />
     <MESSAGE value="change MessageRepository" />
-    <option name="LAST_COMMIT_MESSAGE" value="change MessageRepository" />
+    <MESSAGE value="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation" />
+    <option name="LAST_COMMIT_MESSAGE" value="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation" />
   </component>
 </project>

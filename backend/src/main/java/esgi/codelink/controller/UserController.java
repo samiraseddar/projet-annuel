@@ -66,6 +66,25 @@ public class UserController {
         }
 
     }
+    @PostMapping("/{followerId}/follow/{followeeId}")
+    public ResponseEntity<Void> followUser(@PathVariable long followerId, @PathVariable long followeeId) {
+        boolean success = userService.followUser(followerId, followeeId);
+        if (success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{followerId}/unfollow/{followeeId}")
+    public ResponseEntity<Void> unfollowUser(@PathVariable long followerId, @PathVariable long followeeId) {
+        boolean success = userService.unfollowUser(followerId, followeeId);
+        if (success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 

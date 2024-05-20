@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/ScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptExecutor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/differentScriptExecutor/pythonScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/differentScriptExecutor/pythonScriptExecutor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/ProjetApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/ProjetApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/ScriptExecutor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/differentScriptExecutor/pythonScriptExecutor.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +23,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
+        <option value="Enum" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -72,6 +78,9 @@
       <recent name="C:\jujutravail\coursESGIpresentiel\2023-2024\semestre2\projetAnnuel\origine\projet-annuel\backend" />
       <recent name="C:\jujutravail\coursESGIpresentiel\2023-2024\semestre2\projetAnnuel\origine\projet-annuel" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="esgi.codelink.service.script" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
@@ -109,11 +118,30 @@
       <workItem from="1714319547021" duration="49000" />
       <workItem from="1714319696823" duration="2444000" />
       <workItem from="1714556126330" duration="5970000" />
-      <workItem from="1714565738173" duration="352000" />
+      <workItem from="1714565738173" duration="5832000" />
+      <workItem from="1715020395210" duration="1439000" />
+      <workItem from="1715267019794" duration="4524000" />
+      <workItem from="1715707406659" duration="1446000" />
+      <workItem from="1715791829827" duration="2143000" />
+      <workItem from="1715880758468" duration="2476000" />
+      <workItem from="1715963019862" duration="1982000" />
+      <workItem from="1716140807248" duration="4122000" />
+      <workItem from="1716194260653" duration="694000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

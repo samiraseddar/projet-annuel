@@ -1,6 +1,6 @@
-package esgi.codelink.service.differentScriptExecutor;
+package esgi.codelink.service.script.differentScriptExecutor;
 
-import esgi.codelink.service.ScriptExecutor;
+import esgi.codelink.service.script.ScriptExecutor;
 
 import java.io.BufferedReader;
 import java.io.IOException;

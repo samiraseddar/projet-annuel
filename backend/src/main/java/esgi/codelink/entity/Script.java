@@ -41,10 +41,10 @@ public class Script {
         this.inputFiles = scriptToCopie.getInputFiles();
         this.outputFiles = scriptToCopie.getOutputFiles();
         this.name = scriptToCopie.getName();
-        this.user = scriptToCopie.getUser();
+        this.user = new User();//TODO
         this.language = scriptToCopie.getLanguage();
         this.location = scriptToCopie.getLocation();
-        this.protectionLevel = scriptToCopie.getProtectionLevel();
+        this.protectionLevel = ProtectionLevel.PRIVATE; //TODO
     }
 
     public Script(){

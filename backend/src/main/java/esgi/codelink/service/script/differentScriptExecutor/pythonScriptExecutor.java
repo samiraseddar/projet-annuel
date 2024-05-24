@@ -38,4 +38,40 @@ public class pythonScriptExecutor implements ScriptExecutor { //TODO : faire une
         }
     }
 
+    @Override
+    public String executeRawScript(String fullScript){
+        try {
+            // Créer un ProcessBuilder pour exécuter le script Python directement depuis le contenu
+            ProcessBuilder pb = new ProcessBuilder("python");
+
+            // Démarrer le processus
+            Process process = pb.start();
+
+            // Envoyer le contenu du script au processus
+            process.getOutputStream().write(fullScript.getBytes());
+            process.getOutputStream().flush();
+            process.getOutputStream().close();
+
+            // Lire la sortie du processus
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
+
+            // Attendre la fin de l'exécution du processus
+            int exitCode = process.waitFor();
+
+            // Vérifier le code de sortie
+            if (exitCode == 0) {
+                return output.toString();
+            } else {
+                throw new RuntimeException("Erreur lors de l'exécution du script. Code de sortie : " + exitCode);
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException("Erreur lors de l'exécution du script", e);
+        }
+    }
+
 }

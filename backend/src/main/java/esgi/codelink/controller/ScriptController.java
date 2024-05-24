@@ -33,7 +33,7 @@ public class ScriptController {
     }
 
     @GetMapping("/execute")
-    public ResponseEntity<String> getScriptById(@RequestBody String monScriptEnStr) {
+    public ResponseEntity<String> getScriptById(@RequestParam String monScriptEnStr) {
         // Supprimer tous les espaces avant les autres caractères
         String scriptSansEspaces = monScriptEnStr.replaceAll("^\\s+", "");
         String scriptResult = scriptExecutor.executeRawScript(scriptSansEspaces);

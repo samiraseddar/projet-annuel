@@ -1,13 +1,16 @@
 package esgi.codelink.entity;
 
+import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.enumeration.ProtectionLevel;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "scripts")
 public class Script {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "script_id")
     private Long script_id;
 
     @Column(nullable = false)
@@ -18,7 +21,7 @@ public class Script {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ProtectionLevel protectionLevel = ProtectionLevel.PRIVATE;
+    private ProtectionLevel protectionLevel;
 
     @Column(nullable = false)
     private String language;
@@ -32,6 +35,28 @@ public class Script {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Script(ScriptDTO scriptToCopie){
+        this.script_id = scriptToCopie.getId();
+        this.inputFiles = scriptToCopie.getInputFiles();
+        this.outputFiles = scriptToCopie.getOutputFiles();
+        this.name = scriptToCopie.getName();
+        this.user = scriptToCopie.getUser();
+        this.language = scriptToCopie.getLanguage();
+        this.location = scriptToCopie.getLocation();
+        this.protectionLevel = scriptToCopie.getProtectionLevel();
+    }
+
+    public Script(){
+        this.script_id = null;  //to rework
+        this.inputFiles = "";
+        this.outputFiles = "";
+        this.name = "";
+        this.user = null;
+        this.language = "";
+        this.location = "";
+        this.protectionLevel = ProtectionLevel.PRIVATE;
+    }
 
     // Getters and Setters
     public Long getScript_id() {

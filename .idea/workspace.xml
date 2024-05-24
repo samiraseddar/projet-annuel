@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" afterDir="false" />
+    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="configuration de la bdd + inscription et connexion fonctionne .">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/ScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/differentScriptExecutor/pythonScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/differentScriptExecutor/pythonScriptExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/ProjetApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/ProjetApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/ScriptExecutor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/differentScriptExecutor/pythonScriptExecutor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/RegisterDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/RegisterDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/AuthService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/JpaUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/JpaUserDetailsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/TokenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/TokenService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +38,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -49,28 +49,31 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2fjI0ZMEdhriyMfNFE0ne7ej3NC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;pythonExec&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/jujutravail/coursESGIpresentiel/2023-2024/semestre2/projetAnnuel/origine/projet-annuel&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/33763/IdeaProjects/projet-annuel/backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }</component>
   <component name="RecentsManager">
@@ -116,32 +119,16 @@
       <workItem from="1714307838210" duration="3711000" />
       <workItem from="1714319520602" duration="19000" />
       <workItem from="1714319547021" duration="49000" />
-      <workItem from="1714319696823" duration="2444000" />
-      <workItem from="1714556126330" duration="5970000" />
-      <workItem from="1714565738173" duration="5832000" />
-      <workItem from="1715020395210" duration="1439000" />
-      <workItem from="1715267019794" duration="4524000" />
-      <workItem from="1715707406659" duration="1446000" />
-      <workItem from="1715791829827" duration="2143000" />
-      <workItem from="1715880758468" duration="2476000" />
-      <workItem from="1715963019862" duration="1982000" />
-      <workItem from="1716140807248" duration="4122000" />
-      <workItem from="1716194260653" duration="694000" />
+      <workItem from="1714319696823" duration="1433000" />
+      <workItem from="1714921952257" duration="306000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="configuration de la bdd + inscription et connexion fonctionne ." />
+    <option name="LAST_COMMIT_MESSAGE" value="configuration de la bdd + inscription et connexion fonctionne ." />
   </component>
 </project>

@@ -25,16 +25,19 @@ public class User {
     private int nbFollowing;
 
     private int nbPosts;
-
+    private String lastName;
+    private String firstName;
 
     @OneToMany(mappedBy = "user")// un user c'est une clé etrangére pour un token
     private Set<Token> tokens;
 
     public User() { }
 
-    public User(String mail, String password) {
+    public User(String mail, String password,String lastName,String firstName) {
         this.mail = mail;
         this.password = password;
+        this.lastName=lastName;
+        this.firstName=firstName;
         this.tokens = new HashSet<>();
     }
 
@@ -58,6 +61,13 @@ public class User {
     public String getPassword() {
         return password;
     }
+    public String getLastName(){
+        return lastName;
+    }
+    public String getFirstName(){
+        return firstName;
+    }
+
 
     public void setPassword(String password) {
         this.password = password;
@@ -104,3 +114,4 @@ public class User {
         this.nbPosts = nbReviews;
     }
             }
+

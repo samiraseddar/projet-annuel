@@ -62,7 +62,7 @@ public class AuthService {//c'est le service qui gére tt l'eutentification (ttt
     }
 
     @Transactional
-    public LoginResponseDTO restLogin(LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
+    public LoginResponseDTO login(LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response) {
         if(loginDTO.getPassword() == null || loginDTO.getPassword().isBlank()) {
             return new LoginResponseDTO("Password cannot be empty or null");
         }
@@ -82,14 +82,15 @@ public class AuthService {//c'est le service qui gére tt l'eutentification (ttt
         var jwt = tokenService.generateToken(userDetails);
         revokeAllTokens(userDetails);
         saveUserToken(userDetails.getUser(), jwt);
-
         return new LoginResponseDTO(
                 userDetails.getUserId(),
                 "Success",
                 jwt,
                 userDetails.getUser().getNbFollowers(),
                 userDetails.getUser().getNbFollowing(),
-                userDetails.getUser().getNbPosts()
+                userDetails.getUser().getNbPosts(),
+                userDetails.getUser().getFirstName(),
+                userDetails.getUser().getLastName()
         );
     }
 
@@ -128,7 +129,7 @@ public class AuthService {//c'est le service qui gére tt l'eutentification (ttt
         return userDetailsService.loadUserByUsername(mail);
     }
     @Transactional
-    public boolean restLogout(String token) {
+    public boolean logout(String token) {
         if (token == null ||!token.startsWith("Bearer ")) {
             return false;
         }

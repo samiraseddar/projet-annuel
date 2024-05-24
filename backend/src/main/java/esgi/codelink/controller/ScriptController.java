@@ -1,8 +1,10 @@
-package esgi.codelink.controler;
+package esgi.codelink.controller;
 
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.dto.script.ScriptRequest;
+import esgi.codelink.service.script.ScriptExecutor;
 import esgi.codelink.service.script.ScriptService;
+import esgi.codelink.service.script.differentScriptExecutor.pythonScriptExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ public class ScriptController {
     @Autowired
     private ScriptService scriptService;
 
+    private ScriptExecutor scriptExecutor = new pythonScriptExecutor();
+
     @GetMapping
     public ResponseEntity<List<ScriptDTO>> getAllScripts() {
         return ResponseEntity.ok(scriptService.getAllScripts());
@@ -26,6 +30,12 @@ public class ScriptController {
     public ResponseEntity<ScriptDTO> getScriptById(@PathVariable Long id) {
         ScriptDTO scriptDTO = scriptService.getScriptById(id);
         return scriptDTO != null ? ResponseEntity.ok(scriptDTO) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/execute")
+    public ResponseEntity<String> getScriptById(@RequestBody String monScriptEnStr) {
+        String scriptResult = scriptExecutor.executeRawScript(monScriptEnStr);
+        return ResponseEntity.ok(scriptResult);
     }
 
     @PostMapping

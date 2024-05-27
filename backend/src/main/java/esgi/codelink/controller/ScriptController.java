@@ -19,7 +19,7 @@ public class ScriptController {
     @Autowired
     private ScriptService scriptService;
 
-    private ScriptExecutor scriptExecutor = new pythonScriptExecutor();
+    private final ScriptExecutor scriptExecutor = new pythonScriptExecutor();
 
     @GetMapping
     public ResponseEntity<List<ScriptDTO>> getAllScripts() {
@@ -33,9 +33,9 @@ public class ScriptController {
     }
 
     @GetMapping("/execute")
-    public ResponseEntity<String> getScriptById(@RequestParam String monScriptEnStr) {
+    public ResponseEntity<String> getScriptById(@RequestBody ScriptRequest monScriptEnStr) {
         // Supprimer tous les espaces avant les autres caractères
-        String scriptSansEspaces = monScriptEnStr.replaceAll("^\\s+", "");
+        String scriptSansEspaces = monScriptEnStr.getScriptContent().replaceAll("^\\s+", "");
         String scriptResult = scriptExecutor.executeRawScript(scriptSansEspaces);
         return ResponseEntity.ok(scriptResult);
     }

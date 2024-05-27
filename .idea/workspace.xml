@@ -6,26 +6,31 @@
   <component name="ChangeListManager">
     <list default="true" id="1af5ed06-754c-4fa9-9ce3-20b4632ad358" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/controler/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/repository/ScriptRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/repository/ScriptRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/differentScriptExecutor/pythonScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/differentScriptExecutor/pythonScriptExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/ProjetApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/ProjetApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/controler/ScriptController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/RegisterDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/RegisterDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/entity/Script.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/entity/Script.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/AuthService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/TokenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/TokenService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/ScriptExecutor.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/ScriptExecutor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/differentScriptExecutor/pythonScriptExecutor.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/differentScriptExecutor/pythonScriptExecutor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/controller/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/controller/ScriptController.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/controller/ScriptController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2h0ML9KUwlmABvZyEABlZUV8RN3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
@@ -33,11 +38,38 @@
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "pythonExec",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "last_opened_file_path": "C:/jujutravail/coursESGIpresentiel/2023-2024/semestre2/projetAnnuel/origine/projet-annuel",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1af5ed06-754c-4fa9-9ce3-20b4632ad358" name="Changes" comment="" />
+      <created>1716726484869</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716726484869</updated>
+      <workItem from="1716726486392" duration="95000" />
+      <workItem from="1716726694427" duration="53000" />
+      <workItem from="1716729100981" duration="28000" />
+      <workItem from="1716833261589" duration="1946000" />
+    </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

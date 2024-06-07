@@ -23,13 +23,20 @@ public class ScriptController {
 
     @GetMapping
     public ResponseEntity<List<ScriptDTO>> getAllScripts() {
-        return ResponseEntity.ok(scriptService.getAllScripts());
+        List<ScriptDTO> scripts = scriptService.getAllScripts();
+        return ResponseEntity.ok(scripts);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ScriptDTO> getScriptById(@PathVariable Long id) {
-        ScriptDTO scriptDTO = scriptService.getScriptById(id);
-        return scriptDTO != null ? ResponseEntity.ok(scriptDTO) : ResponseEntity.notFound().build();
+        ScriptDTO script = scriptService.getScriptById(id);
+        return script != null ? ResponseEntity.ok(script) : ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<ScriptDTO> createScript(@RequestBody ScriptRequest scriptRequest) throws IOException {
+        ScriptDTO createdScript = scriptService.saveScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
+        return ResponseEntity.ok(createdScript);
     }
 
     @GetMapping("/execute")
@@ -39,11 +46,4 @@ public class ScriptController {
         String scriptResult = scriptExecutor.executeRawScript(scriptSansEspaces);
         return ResponseEntity.ok(scriptResult);
     }
-
-    @PostMapping
-    public ResponseEntity<ScriptDTO> createScript(@RequestBody ScriptRequest scriptRequest) throws IOException {
-        ScriptDTO createdScript = scriptService.saveScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
-        return ResponseEntity.ok(createdScript);
-    }
-
 }

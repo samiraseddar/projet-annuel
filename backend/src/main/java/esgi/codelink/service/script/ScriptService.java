@@ -31,7 +31,7 @@ public class ScriptService {
     @PostConstruct
     public void init() {
         // Définir le chemin relatif au dossier des scripts
-        SCRIPTS_DIR = Paths.get("..", "..", "..", "..", "script").toAbsolutePath().normalize();
+        SCRIPTS_DIR = Path.of("../../../../script");
     }
 
     public List<ScriptDTO> getAllScripts() {
@@ -43,17 +43,36 @@ public class ScriptService {
     }
 
     public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent) throws IOException {
-        if ("Python".equalsIgnoreCase(scriptDTO.getLanguage())) {
-            validatePythonScript(scriptContent);
-        }
+        // Convertir le DTO en entité
+        Script script = new Script(scriptDTO);
 
-        storeScriptFile(scriptDTO.getName(), scriptContent);
-
-        Script script = convertToEntity(scriptDTO);
-        script.setLocation(SCRIPTS_DIR.resolve(scriptDTO.getName() + ".py").toString());
+        // Sauvegarder l'entité
         Script savedScript = scriptRepository.save(script);
-        return convertToDTO(savedScript);
+
+        // Définir le chemin de sauvegarde du script
+        String scriptName = scriptDTO.getName();
+        Path scriptPath = SCRIPTS_DIR.resolve("python/" + scriptName + ".py");
+
+        // Convertir l'entité sauvegardée en DTO
+        ScriptDTO savedScriptDTO = new ScriptDTO();
+        savedScriptDTO.setId(savedScript.getScript_id());
+        savedScriptDTO.setName(savedScript.getName());
+        savedScriptDTO.setLocation(savedScript.getLocation());
+        savedScriptDTO.setProtectionLevel(savedScript.getProtectionLevel().name());
+        savedScriptDTO.setLanguage(savedScript.getLanguage());
+        savedScriptDTO.setInputFiles(savedScript.getInputFiles());
+        savedScriptDTO.setOutputFiles(savedScript.getOutputFiles());
+        savedScriptDTO.setUserId(savedScript.getUser().getUserId());
+
+        return savedScriptDTO;
     }
+
+    //to locally save the script
+    private void storeScriptFile(Path scriptPath, String scriptContent) throws IOException {
+        Files.createDirectories(scriptPath.getParent());
+        Files.write(scriptPath, scriptContent.getBytes());
+    }
+
 
     private void validatePythonScript(String scriptContent) {
         // Add your validation logic here.

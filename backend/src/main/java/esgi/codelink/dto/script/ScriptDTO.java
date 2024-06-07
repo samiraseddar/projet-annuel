@@ -12,6 +12,16 @@ public class ScriptDTO {
 
 
     // Getters and Setters
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }

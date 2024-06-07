@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1af5ed06-754c-4fa9-9ce3-20b4632ad358" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/controller/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/repository/ScriptRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/repository/ScriptRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/controller/ScriptController.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/controller/ScriptController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/script/ScriptDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/script/ScriptDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/ScriptService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/ScriptService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,6 +41,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -46,6 +54,7 @@
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -54,6 +63,12 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\jujutravail\coursESGIpresentiel\2023-2024\semestre2\projetAnnuel\origine\projet-annuel" />
+      <recent name="C:\jujutravail\coursESGIpresentiel\2023-2024\semestre2\projetAnnuel\origine\projet-annuel\backend" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -65,7 +80,13 @@
       <workItem from="1716726486392" duration="95000" />
       <workItem from="1716726694427" duration="53000" />
       <workItem from="1716729100981" duration="28000" />
-      <workItem from="1716833261589" duration="1946000" />
+      <workItem from="1716833261589" duration="5886000" />
+      <workItem from="1716908861893" duration="1402000" />
+      <workItem from="1717350105222" duration="3313000" />
+      <workItem from="1717427392195" duration="5754000" />
+      <workItem from="1717519958858" duration="6768000" />
+      <workItem from="1717606919979" duration="4583000" />
+      <workItem from="1717753090231" duration="1262000" />
     </task>
     <servers />
   </component>

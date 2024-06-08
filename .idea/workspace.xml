@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1af5ed06-754c-4fa9-9ce3-20b4632ad358" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/entity/Script.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/entity/Script.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/script/ScriptDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/script/ScriptDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/entity/Script.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/entity/Script.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/script/python/HelloWorld.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/ScriptService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/ScriptService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
     </list>
@@ -18,6 +16,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -84,7 +89,7 @@
       <workItem from="1717519958858" duration="6768000" />
       <workItem from="1717606919979" duration="4583000" />
       <workItem from="1717753090231" duration="6298000" />
-      <workItem from="1717837673672" duration="4268000" />
+      <workItem from="1717837673672" duration="10472000" />
     </task>
     <servers />
   </component>

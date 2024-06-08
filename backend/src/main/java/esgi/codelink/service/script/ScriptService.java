@@ -9,7 +9,9 @@ import esgi.codelink.repository.UserRepository;
 import esgi.codelink.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -55,7 +57,17 @@ public class ScriptService {
             default:
                 break;
         }
-        script.setLocation(SCRIPTS_DIR.toString() + complement + "\\" + script.getName() + ".py");
+        complement += "\\" + script.getUser().getUserId() + "\\";
+        script.setLocation(SCRIPTS_DIR.toString() + complement);
+        System.out.println("location = " + script.getLocation());
+        try{
+            makeScriptRepoForUserIfNotexist(script);
+        }
+        catch (IOException e){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create user directory for saving his scripts", e);
+        }
+
+        script.setLocation(script.getLocation() + script.getName() + ".py");
     }
 
     public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent) throws IOException {
@@ -65,12 +77,14 @@ public class ScriptService {
         // Convertir le DTO en entité
         Script script = new Script(scriptDTO, userOwner);
         makeScriptLocation(script);
+        storeScriptFile(Path.of(script.getLocation()), scriptContent);
 
         // Sauvegarder l'entité
         Script savedScript = scriptRepository.save(script);
 
-        //sauvegarder le script en local a l'emplacement de script.location
-        storeScriptFile(Paths.get(script.getLocation()), scriptContent);
+
+
+
 
         // Convertir l'entité sauvegardée en DTO
         ScriptDTO savedScriptDTO = new ScriptDTO();
@@ -86,24 +100,34 @@ public class ScriptService {
         return savedScriptDTO;
     }
 
+    private void makeScriptRepoForUserIfNotexist(Script script) throws IOException{
+        Path userDir = SCRIPTS_DIR.resolve(script.getLanguage().toLowerCase() + "/" + script.getUser().getUserId());
+        System.out.println("creation du repertoire a l'emplacement : " + userDir);
+        if (Files.notExists(userDir)) {
+            Files.createDirectories(userDir);
+            System.out.println("creation du repertoire");
+        }
+        else{
 
-    // To locally save the script
+        }
+    }
+
+
+    // To locally save the script file
     private void storeScriptFile(Path scriptPath, String scriptContent) throws IOException {
         System.out.println("Storing script at: " + scriptPath.toAbsolutePath());
+        if(Files.exists(scriptPath)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "vous devez effectuer une opération de modification, le fichier existe déjà.");
+        }
         Files.createFile(scriptPath);
         Files.write(scriptPath, scriptContent.getBytes());
     }
 
-
-    private void validatePythonScript(String scriptContent) {
-        // Add your validation logic here.
-    }
-
-    private void storeScriptFile(String scriptName, String scriptContent) throws IOException {
-        Path scriptPath = SCRIPTS_DIR.resolve(scriptName + ".py");
-        Files.createDirectories(scriptPath.getParent());
-        Files.write(scriptPath, scriptContent.getBytes());
-    }
+//    private void storeScriptFile(String scriptName, String scriptContent) throws IOException {
+//        Path scriptPath = SCRIPTS_DIR.resolve(scriptName + ".py");
+//        Files.createDirectories(scriptPath.getParent());
+//        Files.write(scriptPath, scriptContent.getBytes());
+//    }
 
     private ScriptDTO convertToDTO(Script script) {
         ScriptDTO dto = new ScriptDTO();

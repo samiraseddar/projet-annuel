@@ -13,7 +13,7 @@ public class Script {
     @Column(name = "script_id")
     private Long script_id;
 
-    @Column(nullable = false)
+    @Column(nullable = false/*, unique = true*/)    //necessaire sinon les fichiers sont écrasés. Donc pourrait aussi servir d'id
     private String name;
 
     @Column(nullable = false)

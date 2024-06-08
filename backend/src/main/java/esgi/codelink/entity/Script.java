@@ -36,12 +36,12 @@ public class Script {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Script(ScriptDTO scriptToCopie){
+    public Script(ScriptDTO scriptToCopie, User user){
         this.script_id = scriptToCopie.getId();
         this.inputFiles = scriptToCopie.getInputFiles();
         this.outputFiles = scriptToCopie.getOutputFiles();
         this.name = scriptToCopie.getName();
-        this.user = new User();//TODO
+        this.user = user;
         this.language = scriptToCopie.getLanguage();
         this.location = scriptToCopie.getLocation();
         this.protectionLevel = ProtectionLevel.PRIVATE; //TODO

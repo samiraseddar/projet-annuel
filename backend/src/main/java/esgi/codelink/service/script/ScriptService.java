@@ -6,6 +6,7 @@ import esgi.codelink.entity.User;
 import esgi.codelink.enumeration.ProtectionLevel;
 import esgi.codelink.repository.ScriptRepository;
 import esgi.codelink.repository.UserRepository;
+import esgi.codelink.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,12 +27,15 @@ public class ScriptService {
     private ScriptRepository scriptRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private UserRepository userRepository;
 
     @PostConstruct
     public void init() {
         // Définir le chemin relatif au dossier des scripts
-        SCRIPTS_DIR = Path.of("../../../../script");
+        SCRIPTS_DIR = Path.of("backend/src/main/script");
     }
 
     public List<ScriptDTO> getAllScripts() {
@@ -42,16 +46,31 @@ public class ScriptService {
         return scriptRepository.findById(id).map(this::convertToDTO).orElse(null);
     }
 
+    private void makeScriptLocation(Script script){
+        String complement = "";
+        switch (script.getLanguage()){
+            case "Python" :
+                complement = "\\python";
+                break;
+            default:
+                break;
+        }
+        script.setLocation(SCRIPTS_DIR.toString() + complement + "\\" + script.getName() + ".py");
+    }
+
     public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent) throws IOException {
+        //récupération de l'utilisateur
+        User userOwner = userService.findById(scriptDTO.getUserId());
+
         // Convertir le DTO en entité
-        Script script = new Script(scriptDTO);
+        Script script = new Script(scriptDTO, userOwner);
+        makeScriptLocation(script);
 
         // Sauvegarder l'entité
         Script savedScript = scriptRepository.save(script);
 
-        // Définir le chemin de sauvegarde du script
-        String scriptName = scriptDTO.getName();
-        Path scriptPath = SCRIPTS_DIR.resolve("python/" + scriptName + ".py");
+        //sauvegarder le script en local a l'emplacement de script.location
+        storeScriptFile(Paths.get(script.getLocation()), scriptContent);
 
         // Convertir l'entité sauvegardée en DTO
         ScriptDTO savedScriptDTO = new ScriptDTO();
@@ -67,9 +86,11 @@ public class ScriptService {
         return savedScriptDTO;
     }
 
-    //to locally save the script
+
+    // To locally save the script
     private void storeScriptFile(Path scriptPath, String scriptContent) throws IOException {
-        Files.createDirectories(scriptPath.getParent());
+        System.out.println("Storing script at: " + scriptPath.toAbsolutePath());
+        Files.createFile(scriptPath);
         Files.write(scriptPath, scriptContent.getBytes());
     }
 

@@ -1,5 +1,6 @@
 package esgi.codelink.dto.script;
 
+
 public class ScriptDTO {
     private Long id;
     private String name;
@@ -13,6 +14,8 @@ public class ScriptDTO {
 
     // Getters and Setters
 
+    public ScriptDTO() {
+    }
 
     public void setId(Long id) {
         this.id = id;

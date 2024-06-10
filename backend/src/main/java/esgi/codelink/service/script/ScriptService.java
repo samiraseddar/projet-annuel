@@ -16,7 +16,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,14 +39,31 @@ public class ScriptService {
         SCRIPTS_DIR = Path.of("backend/src/main/script");
     }
 
+    /**
+     * Récupère tous les scripts sous forme de liste de ScriptDTO.
+     *
+     * @return une liste de ScriptDTO représentant tous les scripts stockés.
+     */
     public List<ScriptDTO> getAllScripts() {
         return scriptRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
+    /**
+     * Récupère un script par son identifiant.
+     *
+     * @param id l'identifiant du script à récupérer.
+     * @return le ScriptDTO correspondant à l'identifiant fourni, ou null si aucun script n'est trouvé.
+     */
     public ScriptDTO getScriptById(Long id) {
         return scriptRepository.findById(id).map(this::convertToDTO).orElse(null);
     }
 
+
+    /**
+     * Crée et configure l'emplacement de stockage d'un script en fonction de son langage et de l'utilisateur propriétaire.
+     *
+     * @param script l'objet Script pour lequel définir l'emplacement de stockage.
+     */
     private void makeScriptLocation(Script script){
         String complement = "";
         switch (script.getLanguage()){
@@ -70,6 +86,15 @@ public class ScriptService {
         script.setLocation(script.getLocation() + script.getName() + ".py");
     }
 
+
+    /**
+     * Sauvegarde un script en base de données et en local.
+     *
+     * @param scriptDTO     le DTO du script à sauvegarder.
+     * @param scriptContent le contenu du script à sauvegarder.
+     * @return le ScriptDTO du script sauvegardé.
+     * @throws IOException en cas d'erreur lors de la sauvegarde du fichier local.
+     */
     public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent) throws IOException {
         //récupération de l'utilisateur
         User userOwner = userService.findById(scriptDTO.getUserId());
@@ -100,19 +125,28 @@ public class ScriptService {
         return savedScriptDTO;
     }
 
+    /**
+     * Crée le répertoire pour les scripts de l'utilisateur s'il n'existe pas déjà.
+     *
+     * @param script l'objet Script pour lequel créer le répertoire utilisateur.
+     * @throws IOException en cas d'erreur lors de la création du répertoire.
+     */
     private void makeScriptRepoForUserIfNotexist(Script script) throws IOException{
         Path userDir = SCRIPTS_DIR.resolve(script.getLanguage().toLowerCase() + "/" + script.getUser().getUserId());
         System.out.println("creation du repertoire a l'emplacement : " + userDir);
         if (Files.notExists(userDir)) {
             Files.createDirectories(userDir);
-            System.out.println("creation du repertoire");
-        }
-        else{
-
         }
     }
 
 
+    /**
+     * Sauvegarde localement le fichier de script.
+     *
+     * @param scriptPath    le chemin du fichier à sauvegarder.
+     * @param scriptContent le contenu du script à sauvegarder.
+     * @throws IOException en cas d'erreur lors de la sauvegarde du fichier.
+     */
     // To locally save the script file
     private void storeScriptFile(Path scriptPath, String scriptContent) throws IOException {
         System.out.println("Storing script at: " + scriptPath.toAbsolutePath());
@@ -123,12 +157,27 @@ public class ScriptService {
         Files.write(scriptPath, scriptContent.getBytes());
     }
 
-//    private void storeScriptFile(String scriptName, String scriptContent) throws IOException {
-//        Path scriptPath = SCRIPTS_DIR.resolve(scriptName + ".py");
-//        Files.createDirectories(scriptPath.getParent());
-//        Files.write(scriptPath, scriptContent.getBytes());
-//    }
+    /**
+     * Remplace le contenu d'un fichier de script existant.
+     *
+     * @param scriptPath           le chemin du fichier à remplacer.
+     * @param changedScriptContent le nouveau contenu du script.
+     * @throws IOException en cas d'erreur lors du remplacement du fichier.
+     */
+    private void replaceScriptFile(Path scriptPath, String changedScriptContent) throws IOException {
+        System.out.println("Storing script at: " + scriptPath.toAbsolutePath());
+        if(Files.notExists(scriptPath)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "vous devez effectuer une opération de création, le fichier n'existe pas.");
+        }
+        Files.write(scriptPath, changedScriptContent.getBytes());
+    }
 
+    /**
+     * Convertit un objet Script en ScriptDTO.
+     *
+     * @param script l'objet Script à convertir.
+     * @return le ScriptDTO correspondant.
+     */
     private ScriptDTO convertToDTO(Script script) {
         ScriptDTO dto = new ScriptDTO();
         dto.setScriptId(script.getScript_id());
@@ -142,6 +191,12 @@ public class ScriptService {
         return dto;
     }
 
+    /**
+     * Convertit un objet ScriptDTO en entité Script.
+     *
+     * @param scriptDTO le ScriptDTO à convertir.
+     * @return l'entité Script correspondante.
+     */
     private Script convertToEntity(ScriptDTO scriptDTO) {
         Script script = new Script();
         script.setName(scriptDTO.getName());

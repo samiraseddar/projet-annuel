@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_05_2024_10_28_[Changes]/UserService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_05_2024_10_28_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_05_2024_10_28__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/MessageController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/Message.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/repository/MessageRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/MessageService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -172,7 +156,7 @@
       <workItem from="1716912677910" duration="3125000" />
       <workItem from="1716981626165" duration="1506000" />
       <workItem from="1718865756141" duration="2122000" />
-      <workItem from="1718872950507" duration="295000" />
+      <workItem from="1718872950507" duration="626000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />

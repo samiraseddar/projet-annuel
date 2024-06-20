@@ -1,14 +1,23 @@
 package esgi.codelink.dto.script;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 public class ScriptDTO {
+    @Null
     private Long id;
+    @NotBlank
     private String name;
+    @Null
     private String location;
+
     private String protectionLevel;
+    @NotBlank
     private String language;
     private String inputFiles;
     private String outputFiles;
+    @Null
     private Long userId;
 
 

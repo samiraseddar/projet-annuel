@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class ScriptService {
 
-    private Path SCRIPTS_DIR;
+    private static final Path SCRIPTS_DIR = Path.of("../script").normalize();
 
     @Autowired
     private ScriptRepository scriptRepository;
@@ -32,12 +32,6 @@ public class ScriptService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @PostConstruct
-    public void init() {
-        // Définir le chemin relatif au dossier des scripts
-        SCRIPTS_DIR = Path.of("backend/src/main/script");
-    }
 
     /**
      * Récupère tous les scripts sous forme de liste de ScriptDTO.
@@ -58,16 +52,15 @@ public class ScriptService {
         return scriptRepository.findById(id).map(this::convertToDTO).orElse(null);
     }
 
-
     /**
      * Crée et configure l'emplacement de stockage d'un script en fonction de son langage et de l'utilisateur propriétaire.
      *
      * @param script l'objet Script pour lequel définir l'emplacement de stockage.
      */
-    private void makeScriptLocation(Script script){
+    private void makeScriptLocation(Script script) {
         String complement = "";
-        switch (script.getLanguage()){
-            case "Python" :
+        switch (script.getLanguage()) {
+            case "Python":
                 complement = "\\python";
                 break;
             default:
@@ -76,16 +69,14 @@ public class ScriptService {
         complement += "\\" + script.getUser().getUserId() + "\\";
         script.setLocation(SCRIPTS_DIR.toString() + complement);
         System.out.println("location = " + script.getLocation());
-        try{
+        try {
             makeScriptRepoForUserIfNotexist(script);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create user directory for saving his scripts", e);
         }
 
         script.setLocation(script.getLocation() + script.getName() + ".py");
     }
-
 
     /**
      * Sauvegarde un script en base de données et en local.
@@ -102,14 +93,18 @@ public class ScriptService {
         // Convertir le DTO en entité
         Script script = new Script(scriptDTO, userOwner);
         makeScriptLocation(script);
-        storeScriptFile(Path.of(script.getLocation()), scriptContent);
+
+        // Sauvegarder le fichier localement
+        Path scriptPath = Path.of(script.getLocation()).normalize();
+        storeScriptFile(scriptPath, scriptContent);
+
+        // Vérifier si le fichier a été créé
+        if (Files.notExists(scriptPath)) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create the script file at " + scriptPath.toAbsolutePath());
+        }
 
         // Sauvegarder l'entité
         Script savedScript = scriptRepository.save(script);
-
-
-
-
 
         // Convertir l'entité sauvegardée en DTO
         ScriptDTO savedScriptDTO = new ScriptDTO();
@@ -126,19 +121,78 @@ public class ScriptService {
     }
 
     /**
+     * Met à jour un script existant.
+     *
+     * @param id            l'identifiant du script à mettre à jour.
+     * @param scriptDTO     le DTO contenant les nouvelles informations du script.
+     * @param scriptContent le nouveau contenu du script.
+     * @return le ScriptDTO du script mis à jour.
+     * @throws IOException en cas d'erreur lors de la mise à jour du fichier local.
+     */
+    public ScriptDTO updateScript(Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
+        // Vérifier si le script existe
+        Script existingScript = scriptRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script has not been saved in the database"));
+
+        // Récupération de l'utilisateur
+        User userOwner = userService.findById(scriptDTO.getUserId());
+        if (userOwner == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown user trying to modify a script");
+        }
+
+        // Mise à jour des informations du script
+        String oldLocation = existingScript.getLocation();
+        existingScript.setName(scriptDTO.getName());
+        existingScript.setProtectionLevel(ProtectionLevel.valueOf(scriptDTO.getProtectionLevel()));
+        existingScript.setLanguage(scriptDTO.getLanguage());
+        existingScript.setInputFiles(scriptDTO.getInputFiles());
+        existingScript.setOutputFiles(scriptDTO.getOutputFiles());
+        existingScript.setUser(userOwner);
+
+        makeScriptLocation(existingScript);
+        replaceScriptFile(Path.of(oldLocation), Path.of(existingScript.getLocation()), scriptContent);
+
+        // Sauvegarder les modifications en base de données
+        Script updatedScript = scriptRepository.save(existingScript);
+
+        // Convertir l'entité sauvegardée en DTO
+        return convertToDTO(updatedScript);
+    }
+
+    /**
+     * Supprime un script existant.
+     *
+     * @param id l'identifiant du script à supprimer.
+     */
+    public void deleteScript(Long id) {
+        // Vérifier si le script existe
+        Script script = scriptRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
+
+        // Supprimer le fichier local
+        try {
+            Files.deleteIfExists(Path.of(script.getLocation()));
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete script file", e);
+        }
+
+        // Supprimer l'entité en base de données
+        scriptRepository.delete(script);
+    }
+
+    /**
      * Crée le répertoire pour les scripts de l'utilisateur s'il n'existe pas déjà.
      *
      * @param script l'objet Script pour lequel créer le répertoire utilisateur.
      * @throws IOException en cas d'erreur lors de la création du répertoire.
      */
-    private void makeScriptRepoForUserIfNotexist(Script script) throws IOException{
+    private void makeScriptRepoForUserIfNotexist(Script script) throws IOException {
         Path userDir = SCRIPTS_DIR.resolve(script.getLanguage().toLowerCase() + "/" + script.getUser().getUserId());
-        System.out.println("creation du repertoire a l'emplacement : " + userDir);
+        System.out.println("Creating directory at: " + userDir.toAbsolutePath().normalize());
         if (Files.notExists(userDir)) {
             Files.createDirectories(userDir);
         }
     }
-
 
     /**
      * Sauvegarde localement le fichier de script.
@@ -147,29 +201,39 @@ public class ScriptService {
      * @param scriptContent le contenu du script à sauvegarder.
      * @throws IOException en cas d'erreur lors de la sauvegarde du fichier.
      */
-    // To locally save the script file
     private void storeScriptFile(Path scriptPath, String scriptContent) throws IOException {
-        System.out.println("Storing script at: " + scriptPath.toAbsolutePath());
-        if(Files.exists(scriptPath)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "vous devez effectuer une opération de modification, le fichier existe déjà.");
+        System.out.println("Storing script at: " + scriptPath.toAbsolutePath().normalize());
+        if (Files.exists(scriptPath)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to perform a modification operation, the file already exists.");
         }
         Files.createFile(scriptPath);
         Files.write(scriptPath, scriptContent.getBytes());
+
+        // Vérifier si le fichier a été créé
+        if (Files.notExists(scriptPath)) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create the script file at " + scriptPath.toAbsolutePath());
+        }
     }
 
     /**
      * Remplace le contenu d'un fichier de script existant.
      *
+     * @param oldLocation          le chemin de l'ancien fichier.
      * @param scriptPath           le chemin du fichier à remplacer.
      * @param changedScriptContent le nouveau contenu du script.
      * @throws IOException en cas d'erreur lors du remplacement du fichier.
      */
-    private void replaceScriptFile(Path scriptPath, String changedScriptContent) throws IOException {
-        System.out.println("Storing script at: " + scriptPath.toAbsolutePath());
-        if(Files.notExists(scriptPath)){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "vous devez effectuer une opération de création, le fichier n'existe pas.");
+    private void replaceScriptFile(Path oldLocation, Path scriptPath, String changedScriptContent) throws IOException {
+        System.out.println("Replacing script at: " + scriptPath.toAbsolutePath());
+        if (Files.notExists(oldLocation)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to perform a creation operation, the file does not exist.");
         }
-        Files.write(scriptPath, changedScriptContent.getBytes());
+        if (Files.deleteIfExists(oldLocation)) {
+            Files.createFile(scriptPath);
+            Files.write(scriptPath, changedScriptContent.getBytes());
+        } else {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete the script.");
+        }
     }
 
     /**

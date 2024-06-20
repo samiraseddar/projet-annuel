@@ -6,13 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="1af5ed06-754c-4fa9-9ce3-20b4632ad358" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/ProjetApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/controller/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/esgi/codelink/service/script/ScriptService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/controller/ScriptController.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/controller/ScriptController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/script/ScriptDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/dto/script/ScriptDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/JpaUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/JpaUserDetailsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/ScriptService.class" beforeDir="false" afterPath="$PROJECT_DIR$/backend/target/classes/esgi/codelink/service/script/ScriptService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -49,7 +60,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;pythonExec&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/jujutravail/coursESGIpresentiel/2023-2024/semestre2/projetAnnuel/origine/projet-annuel&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/jujutravail/coursESGIpresentiel/2023-2024/semestre2/projetAnnuel/origine/projet-annuel/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
@@ -88,7 +99,9 @@
       <workItem from="1717753090231" duration="6298000" />
       <workItem from="1717837673672" duration="11460000" />
       <workItem from="1717948729783" duration="599000" />
-      <workItem from="1718033546189" duration="705000" />
+      <workItem from="1718033546189" duration="5200000" />
+      <workItem from="1718040977952" duration="12000" />
+      <workItem from="1718623118316" duration="15000" />
     </task>
     <servers />
   </component>

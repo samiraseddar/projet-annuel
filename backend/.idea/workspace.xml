@@ -5,9 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation">
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/ProjetApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/ProjetApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/script/ScriptDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/script/ScriptService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/script/python/1/HelloWorld.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/script/python/script.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/ProjetApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/ProjetApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/ScriptController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/ScriptController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/JpaUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/JpaUserDetailsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/script/ScriptService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/script/ScriptService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +44,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+        <option name="mavenHome" value="Use Maven wrapper" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -58,9 +69,9 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.ProjetApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;pythonExec&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/33763/IdeaProjects/projet-annuel/backend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/jujutravail/coursESGIpresentiel/2023-2024/semestre2/projetAnnuel/origine/projet-annuel/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -74,7 +85,7 @@
       <recent name="C:\jujutravail\coursESGIpresentiel\2023-2024\semestre2\projetAnnuel\origine\projet-annuel" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ProjetApplication (1)">
+  <component name="RunManager" selected="Spring Boot.ProjetApplication">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="projet-annuel" />
       <method v="2">
@@ -106,6 +117,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="21" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="projet" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="esgi.codelink.ProjetApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -145,6 +157,16 @@
       <workItem from="1715978640718" duration="734000" />
       <workItem from="1716114580668" duration="1264000" />
       <workItem from="1716134994210" duration="1302000" />
+      <workItem from="1718040914709" duration="62000" />
+      <workItem from="1718040990771" duration="1532000" />
+      <workItem from="1718294711009" duration="60000" />
+      <workItem from="1718617112089" duration="457000" />
+      <workItem from="1718623134714" duration="849000" />
+      <workItem from="1718703681282" duration="656000" />
+      <workItem from="1718787450637" duration="5317000" />
+      <workItem from="1718799428975" duration="19000" />
+      <workItem from="1718810981992" duration="3489000" />
+      <workItem from="1718865504770" duration="2090000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />

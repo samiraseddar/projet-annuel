@@ -39,6 +39,18 @@ public class ScriptController {
         return ResponseEntity.ok(createdScript);
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScriptDTO> updateScript(@PathVariable Long id, @RequestBody ScriptRequest scriptRequest) throws IOException {
+        ScriptDTO updatedScript = scriptService.updateScript(id, scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
+        return ResponseEntity.ok(updatedScript);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteScript(@PathVariable Long id) {
+        scriptService.deleteScript(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/execute")
     public ResponseEntity<String> getScriptById(@RequestBody ScriptRequest monScriptEnStr) {
         // Supprimer tous les espaces avant les autres caractères

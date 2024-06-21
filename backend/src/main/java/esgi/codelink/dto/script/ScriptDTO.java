@@ -1,22 +1,30 @@
 package esgi.codelink.dto.script;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 public class ScriptDTO {
-    @Null
+    @Null(message = "ID must be null for POST and PUT requests")
     private Long id;
-    @NotBlank
+
+    @NotBlank(message = "Name is required")
     private String name;
-    @Null
+
+    @Null(message = "Location must be null for POST and PUT requests")
     private String location;
 
+    @NotBlank(message = "Protection level is required")
     private String protectionLevel;
-    @NotBlank
+
+    @NotBlank(message = "Language is required")
     private String language;
+
+    @NotBlank(message = "Input files are required")
     private String inputFiles;
+
+    @NotBlank(message = "Output files are required")
     private String outputFiles;
+
     @Null
     private Long userId;
 

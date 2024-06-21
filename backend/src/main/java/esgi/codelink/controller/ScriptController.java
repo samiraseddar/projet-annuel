@@ -2,11 +2,14 @@ package esgi.codelink.controller;
 
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.dto.script.ScriptRequest;
+import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.service.script.ScriptExecutor;
 import esgi.codelink.service.script.ScriptService;
 import esgi.codelink.service.script.differentScriptExecutor.pythonScriptExecutor;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -34,20 +37,20 @@ public class ScriptController {
     }
 
     @PostMapping
-    public ResponseEntity<ScriptDTO> createScript(@RequestBody ScriptRequest scriptRequest) throws IOException {
-        ScriptDTO createdScript = scriptService.saveScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
+    public ResponseEntity<ScriptDTO> createScript(@RequestHeader("Authorization") String authHeader, @Valid @RequestBody ScriptRequest scriptRequest) throws IOException {
+        ScriptDTO createdScript = scriptService.saveScript(authHeader, scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
         return ResponseEntity.ok(createdScript);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ScriptDTO> updateScript(@PathVariable Long id, @RequestBody ScriptRequest scriptRequest) throws IOException {
-        ScriptDTO updatedScript = scriptService.updateScript(id, scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
+    public ResponseEntity<ScriptDTO> updateScript(@RequestHeader("Authorization") String authHeader, @PathVariable Long id, @RequestBody ScriptRequest scriptRequest) throws IOException {
+        ScriptDTO updatedScript = scriptService.updateScript(authHeader, id, scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
         return ResponseEntity.ok(updatedScript);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteScript(@PathVariable Long id) {
-        scriptService.deleteScript(id);
+    public ResponseEntity<Void> deleteScript(@RequestHeader("Authorization") String authHeader, @PathVariable Long id) {
+        scriptService.deleteScript(id, authHeader);
         return ResponseEntity.noContent().build();
     }
 

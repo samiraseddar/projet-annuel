@@ -1,6 +1,7 @@
 package esgi.codelink.service.script;
 
 import esgi.codelink.dto.script.ScriptDTO;
+import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.entity.Script;
 import esgi.codelink.entity.Token;
 import esgi.codelink.entity.User;
@@ -13,6 +14,7 @@ import esgi.codelink.service.TokenService;
 import esgi.codelink.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -92,8 +94,8 @@ public class ScriptService {
      * @return the saved ScriptDTO object.
      * @throws IOException if an error occurs while saving the script file.
      */
-    public ScriptDTO saveScript(String customUserToken, ScriptDTO scriptDTO, String scriptContent) throws IOException {
-        User authenticatedUser = getAuthenticatedUser(customUserToken);
+    public ScriptDTO saveScript(@AuthenticationPrincipal CustomUserDetails userDetails, ScriptDTO scriptDTO, String scriptContent) throws IOException {
+        User authenticatedUser = userDetails.getUser();
         if (!(authenticatedUser.getUserId() == (scriptDTO.getUserId()))) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to modify this script");
         }
@@ -115,8 +117,8 @@ public class ScriptService {
      * @return the updated ScriptDTO object.
      * @throws IOException if an error occurs while updating the script file.
      */
-    public ScriptDTO updateScript(String customUserToken, Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
-        User authenticatedUser = getAuthenticatedUser(customUserToken);
+    public ScriptDTO updateScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
+        User authenticatedUser = userDetails.getUser();
         if (!(authenticatedUser.getUserId() == (scriptDTO.getUserId()))) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to modify this script");
         }
@@ -148,8 +150,8 @@ public class ScriptService {
      *
      * @param id the ID of the script to delete.
      */
-    public void deleteScript(Long id, String customUserToken) {
-        User authenticatedUser = getAuthenticatedUser(customUserToken);
+    public void deleteScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id) {
+        User authenticatedUser = userDetails.getUser();
         Script script = scriptRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
 

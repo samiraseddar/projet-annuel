@@ -146,6 +146,20 @@ public class AuthService {//c'est le service qui gére tt l'eutentification (ttt
 
         return false;
     }
+
+    public User getAuthenticatedUser(String token) {
+        if (token == null || !token.startsWith("Bearer ")) {
+            throw new RuntimeException("Invalid token");
+        }
+
+        var tokenOpt = tokenRepository.findByToken(token);
+        if (tokenOpt.isEmpty() || tokenOpt.get().isExpired() || tokenOpt.get().isRevoked()) {
+            throw new RuntimeException("Token is not valid");
+        }
+
+        return userRepository.findUserByToken(token)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }
 
 

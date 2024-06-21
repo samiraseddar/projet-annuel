@@ -39,7 +39,10 @@ public class SecurityConfig {
                 .userDetailsService(jpaUserDetailsService)
                 .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console())
                         .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/**")))
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/scripts/**").authenticated()
+                        .anyRequest().permitAll())
                 .build();
     }
 

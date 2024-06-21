@@ -14,5 +14,9 @@ public interface TokenRepository extends JpaRepository<Token, Long> { // la c'es
       """)
     List<Token> findAllValidTokenByUser(Long id); // j'ai fait une requette
 
-    Optional<Token> findByToken(String token);
+    @Query( value = """
+    SELECT t FROM Token t\s
+    WHERE t.token = ':monToken' and (t.expired = false or t.revoked = false)\s
+    """)
+    Optional<Token> findByToken(String monToken);
 }

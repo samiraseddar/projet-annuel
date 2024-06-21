@@ -1,15 +1,20 @@
 package esgi.codelink.service.script;
 
 import esgi.codelink.dto.script.ScriptDTO;
+import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.entity.Script;
+import esgi.codelink.entity.Token;
 import esgi.codelink.entity.User;
 import esgi.codelink.enumeration.ProtectionLevel;
 import esgi.codelink.repository.ScriptRepository;
+import esgi.codelink.repository.TokenRepository;
 import esgi.codelink.repository.UserRepository;
+import esgi.codelink.service.AuthService;
+import esgi.codelink.service.TokenService;
 import esgi.codelink.service.UserService;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -33,114 +38,98 @@ public class ScriptService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AuthService authService;
+
     /**
-     * Récupère tous les scripts sous forme de liste de ScriptDTO.
+     * Retrieves all scripts.
      *
-     * @return une liste de ScriptDTO représentant tous les scripts stockés.
+     * @return a list of ScriptDTO objects representing all scripts.
      */
     public List<ScriptDTO> getAllScripts() {
         return scriptRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     /**
-     * Récupère un script par son identifiant.
+     * Retrieves a script by its ID.
      *
-     * @param id l'identifiant du script à récupérer.
-     * @return le ScriptDTO correspondant à l'identifiant fourni, ou null si aucun script n'est trouvé.
+     * @param id the ID of the script to retrieve.
+     * @return the ScriptDTO object corresponding to the specified ID, or null if not found.
      */
     public ScriptDTO getScriptById(Long id) {
         return scriptRepository.findById(id).map(this::convertToDTO).orElse(null);
     }
 
     /**
-     * Crée et configure l'emplacement de stockage d'un script en fonction de son langage et de l'utilisateur propriétaire.
+     * Creates a script location path.
      *
-     * @param script l'objet Script pour lequel définir l'emplacement de stockage.
+     * @param script the Script object to create the location path for.
      */
     private void makeScriptLocation(Script script) {
         String complement = "";
         switch (script.getLanguage()) {
             case "Python":
-                complement = "\\python";
+                complement = "/python";
                 break;
             default:
                 break;
         }
-        complement += "\\" + script.getUser().getUserId() + "\\";
+        complement += "/" + script.getUser().getUserId() + "/";
         script.setLocation(SCRIPTS_DIR.toString() + complement);
         System.out.println("location = " + script.getLocation());
         try {
-            makeScriptRepoForUserIfNotexist(script);
+            makeScriptRepoForUserIfNotExist(script);
         } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create user directory for saving his scripts", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create user directory for saving scripts", e);
         }
-
         script.setLocation(script.getLocation() + script.getName() + ".py");
     }
 
     /**
-     * Sauvegarde un script en base de données et en local.
+     * Saves a script.
      *
-     * @param scriptDTO     le DTO du script à sauvegarder.
-     * @param scriptContent le contenu du script à sauvegarder.
-     * @return le ScriptDTO du script sauvegardé.
-     * @throws IOException en cas d'erreur lors de la sauvegarde du fichier local.
+     * @param customUserToken the token of the authenticated user.
+     * @param scriptDTO       the ScriptDTO object containing script details.
+     * @param scriptContent   the content of the script.
+     * @return the saved ScriptDTO object.
+     * @throws IOException if an error occurs while saving the script file.
      */
-    public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent) throws IOException {
-        //récupération de l'utilisateur
-        User userOwner = userService.findById(scriptDTO.getUserId());
-
-        // Convertir le DTO en entité
-        Script script = new Script(scriptDTO, userOwner);
-        makeScriptLocation(script);
-
-        // Sauvegarder le fichier localement
-        Path scriptPath = Path.of(script.getLocation()).normalize();
-        storeScriptFile(scriptPath, scriptContent);
-
-        // Vérifier si le fichier a été créé
-        if (Files.notExists(scriptPath)) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create the script file at " + scriptPath.toAbsolutePath());
+    public ScriptDTO saveScript(@AuthenticationPrincipal CustomUserDetails userDetails, ScriptDTO scriptDTO, String scriptContent) throws IOException {
+        User authenticatedUser = userDetails.getUser();
+        if (!(authenticatedUser.getUserId() == (scriptDTO.getUserId()))) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to modify this script");
         }
 
-        // Sauvegarder l'entité
+        Script script = new Script(scriptDTO, authenticatedUser);
+        makeScriptLocation(script);
+        storeScriptFile(Path.of(script.getLocation()).normalize(), scriptContent);
+
         Script savedScript = scriptRepository.save(script);
-
-        // Convertir l'entité sauvegardée en DTO
-        ScriptDTO savedScriptDTO = new ScriptDTO();
-        savedScriptDTO.setId(savedScript.getScript_id());
-        savedScriptDTO.setName(savedScript.getName());
-        savedScriptDTO.setLocation(savedScript.getLocation());
-        savedScriptDTO.setProtectionLevel(savedScript.getProtectionLevel().name());
-        savedScriptDTO.setLanguage(savedScript.getLanguage());
-        savedScriptDTO.setInputFiles(savedScript.getInputFiles());
-        savedScriptDTO.setOutputFiles(savedScript.getOutputFiles());
-        savedScriptDTO.setUserId(savedScript.getUser().getUserId());
-
-        return savedScriptDTO;
+        return convertToDTO(savedScript);
     }
 
     /**
-     * Met à jour un script existant.
+     * Updates a script.
      *
-     * @param id            l'identifiant du script à mettre à jour.
-     * @param scriptDTO     le DTO contenant les nouvelles informations du script.
-     * @param scriptContent le nouveau contenu du script.
-     * @return le ScriptDTO du script mis à jour.
-     * @throws IOException en cas d'erreur lors de la mise à jour du fichier local.
+     * @param id            the ID of the script to update.
+     * @param scriptDTO     the ScriptDTO object containing updated script details.
+     * @param scriptContent the updated content of the script.
+     * @return the updated ScriptDTO object.
+     * @throws IOException if an error occurs while updating the script file.
      */
-    public ScriptDTO updateScript(Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
-        // Vérifier si le script existe
+    public ScriptDTO updateScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
+        User authenticatedUser = userDetails.getUser();
+        if (!(authenticatedUser.getUserId() == (scriptDTO.getUserId()))) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to modify this script");
+        }
         Script existingScript = scriptRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script has not been saved in the database"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
 
-        // Récupération de l'utilisateur
         User userOwner = userService.findById(scriptDTO.getUserId());
         if (userOwner == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown user trying to modify a script");
         }
 
-        // Mise à jour des informations du script
         String oldLocation = existingScript.getLocation();
         existingScript.setName(scriptDTO.getName());
         existingScript.setProtectionLevel(ProtectionLevel.valueOf(scriptDTO.getProtectionLevel()));
@@ -152,95 +141,89 @@ public class ScriptService {
         makeScriptLocation(existingScript);
         replaceScriptFile(Path.of(oldLocation), Path.of(existingScript.getLocation()), scriptContent);
 
-        // Sauvegarder les modifications en base de données
         Script updatedScript = scriptRepository.save(existingScript);
-
-        // Convertir l'entité sauvegardée en DTO
         return convertToDTO(updatedScript);
     }
 
     /**
-     * Supprime un script existant.
+     * Deletes a script.
      *
-     * @param id l'identifiant du script à supprimer.
+     * @param id the ID of the script to delete.
      */
-    public void deleteScript(Long id) {
-        // Vérifier si le script existe
+    public void deleteScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id) {
+        User authenticatedUser = userDetails.getUser();
         Script script = scriptRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
 
-        // Supprimer le fichier local
+        if (!(authenticatedUser.getUserId() == (script.getUser().getUserId()))) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to delete this script");
+        }
+
         try {
             Files.deleteIfExists(Path.of(script.getLocation()));
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete script file", e);
         }
 
-        // Supprimer l'entité en base de données
         scriptRepository.delete(script);
     }
 
     /**
-     * Crée le répertoire pour les scripts de l'utilisateur s'il n'existe pas déjà.
+     * Creates the script repository for a user if it does not exist.
      *
-     * @param script l'objet Script pour lequel créer le répertoire utilisateur.
-     * @throws IOException en cas d'erreur lors de la création du répertoire.
+     * @param script the Script object to create the repository for.
+     * @throws IOException if an error occurs while creating the directory.
      */
-    private void makeScriptRepoForUserIfNotexist(Script script) throws IOException {
+    private void makeScriptRepoForUserIfNotExist(Script script) throws IOException {
         Path userDir = SCRIPTS_DIR.resolve(script.getLanguage().toLowerCase() + "/" + script.getUser().getUserId());
-        System.out.println("Creating directory at: " + userDir.toAbsolutePath().normalize());
+        System.out.println("Creating directory at: " + userDir);
         if (Files.notExists(userDir)) {
             Files.createDirectories(userDir);
         }
     }
 
     /**
-     * Sauvegarde localement le fichier de script.
+     * Stores a script file.
      *
-     * @param scriptPath    le chemin du fichier à sauvegarder.
-     * @param scriptContent le contenu du script à sauvegarder.
-     * @throws IOException en cas d'erreur lors de la sauvegarde du fichier.
+     * @param scriptPath    the path to store the script file.
+     * @param scriptContent the content of the script.
+     * @throws IOException if an error occurs while storing the file.
      */
     private void storeScriptFile(Path scriptPath, String scriptContent) throws IOException {
         System.out.println("Storing script at: " + scriptPath.toAbsolutePath().normalize());
         if (Files.exists(scriptPath)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to perform a modification operation, the file already exists.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A file with this name already exists. Please choose a different name.");
         }
         Files.createFile(scriptPath);
         Files.write(scriptPath, scriptContent.getBytes());
-
-        // Vérifier si le fichier a été créé
-        if (Files.notExists(scriptPath)) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create the script file at " + scriptPath.toAbsolutePath());
-        }
     }
 
     /**
-     * Remplace le contenu d'un fichier de script existant.
+     * Replaces a script file.
      *
-     * @param oldLocation          le chemin de l'ancien fichier.
-     * @param scriptPath           le chemin du fichier à remplacer.
-     * @param changedScriptContent le nouveau contenu du script.
-     * @throws IOException en cas d'erreur lors du remplacement du fichier.
+     * @param oldLocation          the old file location.
+     * @param scriptPath           the new file location.
+     * @param changedScriptContent the new content of the script.
+     * @throws IOException if an error occurs while replacing the file.
      */
     private void replaceScriptFile(Path oldLocation, Path scriptPath, String changedScriptContent) throws IOException {
-        System.out.println("Replacing script at: " + scriptPath.toAbsolutePath());
+        System.out.println("Storing script at: " + scriptPath.toAbsolutePath());
         if (Files.notExists(oldLocation)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You need to perform a creation operation, the file does not exist.");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The file you are trying to modify does not exist.");
         }
         if (Files.deleteIfExists(oldLocation)) {
             Files.createFile(scriptPath);
             Files.write(scriptPath, changedScriptContent.getBytes());
         } else {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete the script.");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete the old script file.");
         }
     }
 
     /**
-     * Convertit un objet Script en ScriptDTO.
+     * Converts a Script entity to a ScriptDTO.
      *
-     * @param script l'objet Script à convertir.
-     * @return le ScriptDTO correspondant.
+     * @param script the Script entity to convert.
+     * @return the ScriptDTO object.
      */
     private ScriptDTO convertToDTO(Script script) {
         ScriptDTO dto = new ScriptDTO();
@@ -256,10 +239,10 @@ public class ScriptService {
     }
 
     /**
-     * Convertit un objet ScriptDTO en entité Script.
+     * Converts a ScriptDTO to a Script entity.
      *
-     * @param scriptDTO le ScriptDTO à convertir.
-     * @return l'entité Script correspondante.
+     * @param scriptDTO the ScriptDTO to convert.
+     * @return the Script entity.
      */
     private Script convertToEntity(ScriptDTO scriptDTO) {
         Script script = new Script();
@@ -272,5 +255,16 @@ public class ScriptService {
         User user = userRepository.findById(scriptDTO.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
         script.setUser(user);
         return script;
+    }
+
+    /**
+     * Retrieves the authenticated user from the token.
+     *
+     * @param token the token of the authenticated user.
+     * @return the authenticated User entity.
+     */
+    private User getAuthenticatedUser(String token) {
+        //String tokenWithoutBearer = token.substring(7);
+        return authService.getAuthenticatedUser(token);
     }
 }

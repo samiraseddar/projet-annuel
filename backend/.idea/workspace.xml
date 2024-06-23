@@ -123,6 +123,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Spring Boot.ProjetApplication" />
+      <item itemvalue="Spring Boot.ProjetApplication (1)" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ProjetApplication (1)" />

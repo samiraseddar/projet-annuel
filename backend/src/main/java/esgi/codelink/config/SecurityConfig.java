@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/**")))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/api/scripts/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint))
                 .build();

@@ -150,7 +150,7 @@ public class ScriptService {
         if (userOwner == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown user trying to modify a script");
         }
-        else if(userOwner != existingScript.getUser()){
+        else if(userOwner.getUserId() != existingScript.getUser().getUserId()){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this script, you cannot update it.");
         }
 
@@ -184,7 +184,7 @@ public class ScriptService {
         Script script = scriptRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
 
-        if(script.getUser() != userOwner){
+        if(script.getUser().getUserId() != userOwner.getUserId()){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this script, you cannot delete it.");
         }
 

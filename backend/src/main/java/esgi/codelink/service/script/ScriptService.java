@@ -1,15 +1,20 @@
 package esgi.codelink.service.script;
 
 import esgi.codelink.dto.script.ScriptDTO;
+import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.entity.Script;
 import esgi.codelink.entity.User;
 import esgi.codelink.enumeration.ProtectionLevel;
 import esgi.codelink.repository.ScriptRepository;
 import esgi.codelink.repository.UserRepository;
 import esgi.codelink.service.UserService;
+import esgi.codelink.service.script.differentScriptExecutor.pythonScriptExecutor;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,6 +37,8 @@ public class ScriptService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private final ScriptExecutor scriptExecutor = new pythonScriptExecutor();
 
     /**
      * Récupère tous les scripts sous forme de liste de ScriptDTO.
@@ -86,9 +93,11 @@ public class ScriptService {
      * @return le ScriptDTO du script sauvegardé.
      * @throws IOException en cas d'erreur lors de la sauvegarde du fichier local.
      */
-    public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent) throws IOException {
+    public ScriptDTO saveScript(@AuthenticationPrincipal CustomUserDetails userDetails, @Valid ScriptDTO scriptDTO, String scriptContent) throws IOException, ResponseStatusException {
         //récupération de l'utilisateur
-        User userOwner = userService.findById(scriptDTO.getUserId());
+        User userOwner = userDetails.getUser();
+
+        userRepository.findById(userOwner.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "the user does not exist"));
 
         // Convertir le DTO en entité
         Script script = new Script(scriptDTO, userOwner);
@@ -129,15 +138,20 @@ public class ScriptService {
      * @return le ScriptDTO du script mis à jour.
      * @throws IOException en cas d'erreur lors de la mise à jour du fichier local.
      */
-    public ScriptDTO updateScript(Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
+    public ScriptDTO updateScript(@AuthenticationPrincipal CustomUserDetails userDetails,Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
         // Vérifier si le script existe
         Script existingScript = scriptRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script has not been saved in the database"));
 
+
+        User userOwner = userDetails.getUser();
         // Récupération de l'utilisateur
-        User userOwner = userService.findById(scriptDTO.getUserId());
+        //userOwner = userService.findById(userOwner.getUserId());    //pour vérifier que le user existe bien
         if (userOwner == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unknown user trying to modify a script");
+        }
+        else if(userOwner != existingScript.getUser()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this script, you cannot update it.");
         }
 
         // Mise à jour des informations du script
@@ -164,10 +178,15 @@ public class ScriptService {
      *
      * @param id l'identifiant du script à supprimer.
      */
-    public void deleteScript(Long id) {
+    public void deleteScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id) {
         // Vérifier si le script existe
+        User userOwner = userDetails.getUser();
         Script script = scriptRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
+
+        if(script.getUser() != userOwner){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this script, you cannot delete it.");
+        }
 
         // Supprimer le fichier local
         try {
@@ -273,4 +292,14 @@ public class ScriptService {
         script.setUser(user);
         return script;
     }
+
+    public String executeScript(Long id) {
+
+        Script script = scriptRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no script of this id"));
+
+
+        String scriptPath = SCRIPTS_DIR + script.getLocation(); // Assuming the path is stored in the script entity
+        return scriptExecutor.executeScript(scriptPath);
+    }
+
 }

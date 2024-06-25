@@ -293,13 +293,18 @@ public class ScriptService {
         return script;
     }
 
-    public String executeScript(Long id) {
+    public String executeScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id) {
 
+        User UserExecutor = userDetails.getUser();
         Script script = scriptRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no script of this id"));
 
+        if(script.getProtectionLevel() == ProtectionLevel.PUBLIC || UserExecutor.getUserId() == script.getUser().getUserId() ){
+            return scriptExecutor.executeScript(script.getLocation());
+        }
+        else{
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "you are not the owner of this script, you can't execute it");
+        }
 
-        String scriptPath = SCRIPTS_DIR + script.getLocation(); // Assuming the path is stored in the script entity
-        return scriptExecutor.executeScript(scriptPath);
     }
 
 }

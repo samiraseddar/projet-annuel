@@ -11,6 +11,7 @@ public class pythonScriptExecutor implements ScriptExecutor { //TODO : faire une
     public String executeScript(String scriptPath) {
         try {
             // Créer un ProcessBuilder pour exécuter le script Python
+            System.out.println(scriptPath);
             ProcessBuilder pb = new ProcessBuilder("python", scriptPath);
 
             // Démarrer le processus

@@ -64,7 +64,7 @@ public class ScriptController {
     @GetMapping("/execute/{id}")
     public ResponseEntity<String> executeScript(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) {
         try {
-            String output = scriptService.executeScript(id);
+            String output = scriptService.executeScript(userDetails, id);
             return ResponseEntity.ok(output);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());

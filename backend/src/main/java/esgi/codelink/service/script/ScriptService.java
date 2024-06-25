@@ -8,13 +8,11 @@ import esgi.codelink.enumeration.ProtectionLevel;
 import esgi.codelink.repository.ScriptRepository;
 import esgi.codelink.repository.UserRepository;
 import esgi.codelink.service.UserService;
-import esgi.codelink.service.script.differentScriptExecutor.pythonScriptExecutor;
-import jakarta.annotation.PostConstruct;
+import esgi.codelink.service.script.differentScriptExecutor.PythonScriptExecutor;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -38,7 +36,7 @@ public class ScriptService {
     @Autowired
     private UserRepository userRepository;
 
-    private final ScriptExecutor scriptExecutor = new pythonScriptExecutor();
+    private final ScriptExecutor scriptExecutor = new PythonScriptExecutor();
 
     /**
      * Récupère tous les scripts sous forme de liste de ScriptDTO.

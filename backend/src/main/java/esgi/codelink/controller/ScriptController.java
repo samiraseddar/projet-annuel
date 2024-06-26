@@ -3,9 +3,7 @@ package esgi.codelink.controller;
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.dto.script.ScriptRequest;
 import esgi.codelink.entity.CustomUserDetails;
-import esgi.codelink.service.script.ScriptExecutor;
-import esgi.codelink.service.script.ScriptService;
-import esgi.codelink.service.script.differentScriptExecutor.pythonScriptExecutor;
+import esgi.codelink.service.scriptAndFile.script.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,8 +18,6 @@ public class ScriptController {
 
     @Autowired
     private ScriptService scriptService;
-
-    private final ScriptExecutor scriptExecutor = new pythonScriptExecutor();
 
     @GetMapping
     public ResponseEntity<List<ScriptDTO>> getAllScripts() {
@@ -42,7 +38,7 @@ public class ScriptController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ScriptDTO> updateScript(@AuthenticationPrincipal CustomUserDetails userDetails,@PathVariable Long id, @RequestBody ScriptRequest scriptRequest) throws IOException {
+    public ResponseEntity<ScriptDTO> updateScript(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id, @RequestBody ScriptRequest scriptRequest) throws IOException {
         ScriptDTO updatedScript = scriptService.updateScript(userDetails, id, scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
         return ResponseEntity.ok(updatedScript);
     }
@@ -53,12 +49,14 @@ public class ScriptController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/execute")
-    public ResponseEntity<String> getScriptById(@RequestBody ScriptRequest monScriptEnStr) {
-        // Supprimer tous les espaces avant les autres caractères
-        String scriptSansEspaces = monScriptEnStr.getScriptContent().replaceAll("^\\s+", "");
-        String scriptResult = scriptExecutor.executeRawScript(scriptSansEspaces);
-        return ResponseEntity.ok(scriptResult);
+    @PostMapping("/execute/raw")
+    public ResponseEntity<String> executeRawScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) {
+        try {
+            String output = scriptService.executeRawScript(scriptRequest.getScriptContent());
+            return ResponseEntity.ok(output);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
     }
 
     @GetMapping("/execute/{id}")

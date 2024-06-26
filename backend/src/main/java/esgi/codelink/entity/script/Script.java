@@ -1,6 +1,7 @@
-package esgi.codelink.entity;
+package esgi.codelink.entity.script;
 
 import esgi.codelink.dto.script.ScriptDTO;
+import esgi.codelink.entity.User;
 import esgi.codelink.enumeration.ProtectionLevel;
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
-package esgi.codelink.service.script.differentScriptExecutor;
+package esgi.codelink.service.scriptAndFile.executor.differentScriptExecutor;
 
-import esgi.codelink.service.script.ScriptExecutor;
+import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,15 +15,18 @@ public class PythonScriptExecutor implements ScriptExecutor {
     );
 
     @Override
+    public boolean isScriptSafe(String scriptContent) {
+        return !DANGEROUS_COMMANDS.matcher(scriptContent).find();
+    }
+
+    @Override
     public String executeScript(String scriptPath) throws RuntimeException {
-        // Ajoutez ici une logique pour vérifier le contenu du fichier de script si nécessaire
         return runProcess(new ProcessBuilder("python", scriptPath));
     }
 
     @Override
     public String executeRawScript(String fullScript) {
-        // Vérifiez le contenu du script pour des commandes dangereuses
-        if (DANGEROUS_COMMANDS.matcher(fullScript).find()) {
+        if (!isScriptSafe(fullScript)) {
             throw new RuntimeException("Le script contient des commandes dangereuses et ne peut pas être exécuté.");
         }
 

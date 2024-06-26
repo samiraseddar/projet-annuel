@@ -1,14 +1,15 @@
-package esgi.codelink.service.script;
+package esgi.codelink.service.scriptAndFile.script;
 
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.entity.CustomUserDetails;
-import esgi.codelink.entity.Script;
+import esgi.codelink.entity.script.Script;
 import esgi.codelink.entity.User;
 import esgi.codelink.enumeration.ProtectionLevel;
 import esgi.codelink.repository.ScriptRepository;
 import esgi.codelink.repository.UserRepository;
 import esgi.codelink.service.UserService;
-import esgi.codelink.service.script.differentScriptExecutor.PythonScriptExecutor;
+import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
+import esgi.codelink.service.scriptAndFile.executor.differentScriptExecutor.PythonScriptExecutor;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -92,6 +93,11 @@ public class ScriptService {
      * @throws IOException en cas d'erreur lors de la sauvegarde du fichier local.
      */
     public ScriptDTO saveScript(@AuthenticationPrincipal CustomUserDetails userDetails, @Valid ScriptDTO scriptDTO, String scriptContent) throws IOException, ResponseStatusException {
+        // Vérification de sécurité
+        if (!scriptExecutor.isScriptSafe(scriptContent)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le script contient des commandes dangereuses et ne peut pas être sauvegardé.");
+        }
+
         //récupération de l'utilisateur
         User userOwner = userDetails.getUser();
 
@@ -136,7 +142,7 @@ public class ScriptService {
      * @return le ScriptDTO du script mis à jour.
      * @throws IOException en cas d'erreur lors de la mise à jour du fichier local.
      */
-    public ScriptDTO updateScript(@AuthenticationPrincipal CustomUserDetails userDetails,Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
+    public ScriptDTO updateScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id, ScriptDTO scriptDTO, String scriptContent) throws IOException {
         // Vérifier si le script existe
         Script existingScript = scriptRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script has not been saved in the database"));
@@ -150,6 +156,11 @@ public class ScriptService {
         }
         else if(userOwner.getUserId() != existingScript.getUser().getUserId()){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this script, you cannot update it.");
+        }
+
+        // Vérification de sécurité
+        if (!scriptExecutor.isScriptSafe(scriptContent)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le script contient des commandes dangereuses et ne peut pas être sauvegardé.");
         }
 
         // Mise à jour des informations du script
@@ -254,6 +265,37 @@ public class ScriptService {
     }
 
     /**
+     * Exécute un script à la volée en vérifiant d'abord la sécurité.
+     *
+     * @param scriptContent le contenu du script à exécuter.
+     * @return la sortie de l'exécution du script.
+     */
+    public String executeRawScript(String scriptContent) {
+        if (!scriptExecutor.isScriptSafe(scriptContent)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le script contient des commandes dangereuses et ne peut pas être exécuté.");
+        }
+        return scriptExecutor.executeRawScript(scriptContent);
+    }
+
+    /**
+     * Exécute un script existant.
+     *
+     * @param userDetails les détails de l'utilisateur authentifié.
+     * @param id          l'identifiant du script à exécuter.
+     * @return la sortie de l'exécution du script.
+     */
+    public String executeScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id) {
+        User userExecutor = userDetails.getUser();
+        Script script = scriptRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no script of this id"));
+
+        if (script.getProtectionLevel() == ProtectionLevel.PUBLIC || userExecutor.getUserId() == script.getUser().getUserId()) {
+            return scriptExecutor.executeScript(script.getLocation());
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "you are not the owner of this script, you can't execute it");
+        }
+    }
+
+    /**
      * Convertit un objet Script en ScriptDTO.
      *
      * @param script l'objet Script à convertir.
@@ -291,18 +333,47 @@ public class ScriptService {
         return script;
     }
 
-    public String executeScript(@AuthenticationPrincipal CustomUserDetails userDetails, Long id) {
+    /**
+     * Sauvegarde un fichier d'entrée pour un script.
+     *
+     * @param userDetails les détails de l'utilisateur authentifié.
+     * @param scriptId    l'identifiant du script pour lequel sauvegarder le fichier.
+     * @param fileName    le nom du fichier à sauvegarder.
+     * @param fileContent le contenu du fichier à sauvegarder.
+     * @throws IOException en cas d'erreur lors de la sauvegarde du fichier.
+     */
+    public void saveInputFile(@AuthenticationPrincipal CustomUserDetails userDetails, Long scriptId, String fileName, String fileContent) throws IOException {
+        Script script = scriptRepository.findById(scriptId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
 
-        User UserExecutor = userDetails.getUser();
-        Script script = scriptRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "There is no script of this id"));
-
-        if(script.getProtectionLevel() == ProtectionLevel.PUBLIC || UserExecutor.getUserId() == script.getUser().getUserId() ){
-            return scriptExecutor.executeScript(script.getLocation());
+        User userOwner = userDetails.getUser();
+        if (script.getUser().getUserId() != userOwner.getUserId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this script, you cannot add input files to it.");
         }
-        else{
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "you are not the owner of this script, you can't execute it");
-        }
 
+        Path inputFilePath = Path.of(script.getLocation()).getParent().resolve("input").resolve(fileName).normalize();
+        storeScriptFile(inputFilePath, fileContent);
     }
 
+    /**
+     * Sauvegarde un fichier de sortie généré par un script.
+     *
+     * @param userDetails les détails de l'utilisateur authentifié.
+     * @param scriptId    l'identifiant du script pour lequel sauvegarder le fichier.
+     * @param fileName    le nom du fichier à sauvegarder.
+     * @param fileContent le contenu du fichier à sauvegarder.
+     * @throws IOException en cas d'erreur lors de la sauvegarde du fichier.
+     */
+    public void saveOutputFile(@AuthenticationPrincipal CustomUserDetails userDetails, Long scriptId, String fileName, String fileContent) throws IOException {
+        Script script = scriptRepository.findById(scriptId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
+
+        User userOwner = userDetails.getUser();
+        if (script.getUser().getUserId() != (userOwner.getUserId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this script, you cannot add output files to it.");
+        }
+
+        Path outputFilePath = Path.of(script.getLocation()).getParent().resolve("output").resolve(fileName).normalize();
+        storeScriptFile(outputFilePath, fileContent);
+    }
 }

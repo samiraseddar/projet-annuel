@@ -52,7 +52,7 @@ public class ScriptController {
     @PostMapping("/execute/raw")
     public ResponseEntity<String> executeRawScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) {
         try {
-            String output = scriptService.executeRawScript(scriptRequest.getScriptContent());
+            String output = scriptService.executeRawScript(userDetails,scriptRequest.getScriptContent(), scriptRequest.getScriptDTO().getLanguage());
             return ResponseEntity.ok(output);
         } catch (Exception e) {
             return ResponseEntity.status(400).body(e.getMessage());

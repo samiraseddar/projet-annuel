@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ScriptExecutorFactory {
 
-    public ScriptExecutor getExecutor(String language) {
+    public static ScriptExecutor getExecutor(String language) {
         switch (language.toLowerCase()) {
             case "python":
                 return new PythonScriptExecutor();

@@ -1,5 +1,7 @@
 package esgi.codelink.dto.script;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -10,6 +12,7 @@ public class ScriptDTO {
     @NotBlank
     private String name;
     @Null
+    @JsonIgnore
     private String location;
 
     private String protectionLevel;

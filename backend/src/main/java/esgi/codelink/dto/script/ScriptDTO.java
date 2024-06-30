@@ -3,7 +3,6 @@ package esgi.codelink.dto.script;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 public class ScriptDTO {

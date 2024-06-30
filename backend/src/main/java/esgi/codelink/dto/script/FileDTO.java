@@ -1,30 +1,27 @@
 package esgi.codelink.dto.script;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
-public class ScriptFileDTO {
-
+public class FileDTO {
     @Null
     private Long id;
     @NotBlank
     private String name;
     @Null
-    @JsonIgnore
-    private String path;
-
-    private Boolean isGenerated;
+    private String location;
     @Null
+    private boolean isGenerated;
+    @NotNull
     private Long userId;
-
-    public Long getId() {
-        return id;
-    }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -35,12 +32,20 @@ public class ScriptFileDTO {
         this.name = name;
     }
 
-    public String getPath() {
-        return path;
+    public String getLocation() {
+        return location;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public boolean isGenerated() {
+        return isGenerated;
+    }
+
+    public void setGenerated(boolean generated) {
+        isGenerated = generated;
     }
 
     public Long getUserId() {
@@ -51,11 +56,6 @@ public class ScriptFileDTO {
         this.userId = userId;
     }
 
-    public Boolean getGenerated() {
-        return isGenerated;
-    }
 
-    public void setGenerated(Boolean generated) {
-        isGenerated = generated;
-    }
+    // Getters and Setters
 }

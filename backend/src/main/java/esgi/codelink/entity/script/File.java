@@ -4,25 +4,28 @@ import esgi.codelink.entity.User;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "script_files")
-public class ScriptFile {
+public class File {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private String path;
-    private boolean isGenerated; // true pour output, false pour input
+    private String location;
+    private boolean isGenerated;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // getters et setters
+    public File() {
+        // Constructor par défaut requis par JPA
+    }
 
-
-    public ScriptFile(User user) {
+    public File(String name, String location, boolean isGenerated, User user) {
+        this.name = name;
+        this.location = location;
+        this.isGenerated = isGenerated;
         this.user = user;
     }
 
@@ -38,12 +41,12 @@ public class ScriptFile {
         this.name = name;
     }
 
-    public String getPath() {
-        return path;
+    public String getLocation() {
+        return location;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public boolean isGenerated() {
@@ -57,4 +60,8 @@ public class ScriptFile {
     public User getUser() {
         return user;
     }
+
+    // Pas de setter pour user pour éviter les modifications non désirées
+
+    // Autres getters et setters
 }

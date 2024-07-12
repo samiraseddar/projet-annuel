@@ -1,4 +1,4 @@
-package esgi.codelink.dto.script;
+package esgi.codelink.dto.file;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

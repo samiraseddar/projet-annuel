@@ -1,6 +1,6 @@
 package esgi.codelink.service.scriptAndFile.file;
 
-import esgi.codelink.dto.script.FileDTO;
+import esgi.codelink.dto.file.FileDTO;
 import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.entity.script.File;
 import esgi.codelink.repository.FileRepository;

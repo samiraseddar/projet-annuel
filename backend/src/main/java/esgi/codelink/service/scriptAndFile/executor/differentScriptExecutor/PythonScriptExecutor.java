@@ -33,6 +33,20 @@ public class PythonScriptExecutor implements ScriptExecutor {
         return runProcess(new ProcessBuilder("python").redirectInput(ProcessBuilder.Redirect.PIPE), fullScript);
     }
 
+    public String executeScriptWithFiles(String scriptPath, String inputFiles, String outputFile) throws IOException, InterruptedException {
+        ProcessBuilder pb = new ProcessBuilder("python", scriptPath, inputFiles, outputFile);
+        return runProcess(pb);
+    }
+
+    public String executeRawScriptWithFiles(String fullScript, String inputFiles, String outputFile) throws IOException, InterruptedException {
+        if (!isScriptSafe(fullScript)) {
+            throw new RuntimeException("Le script contient des commandes dangereuses et ne peut pas être exécuté.");
+        }
+
+        ProcessBuilder pb = new ProcessBuilder("python", "-", inputFiles, outputFile).redirectInput(ProcessBuilder.Redirect.PIPE);
+        return runProcess(pb, fullScript);
+    }
+
     private String runProcess(ProcessBuilder pb, String inputScript) {
         try {
             Process process = pb.start();

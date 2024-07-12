@@ -3,13 +3,16 @@ package esgi.codelink.controller;
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.dto.script.ScriptRequest;
 import esgi.codelink.entity.CustomUserDetails;
+import esgi.codelink.entity.script.File;
 import esgi.codelink.service.scriptAndFile.script.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -58,6 +61,20 @@ public class ScriptController {
             return ResponseEntity.status(400).body(e.getMessage());
         }
     }
+
+    @PostMapping("/{id}/execute-with-files")
+    public ResponseEntity<String> executeScriptWithFiles(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long id,
+            @RequestParam(value = "inputFiles", required = false) List<MultipartFile> inputFiles,
+            @RequestParam(value = "fileIds", required = false) List<Long> fileIds,
+            @RequestParam("outputFileName") String outputFileName,
+            @RequestParam(value = "scriptContent", required = false) String scriptContent
+    ) {
+        String result = scriptService.executeScriptWithFiles(userDetails, id, inputFiles, fileIds, outputFileName, scriptContent);
+        return ResponseEntity.ok(result);
+    }
+
 
     @GetMapping("/execute/{id}")
     public ResponseEntity<String> executeScript(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) {

@@ -3,8 +3,10 @@ package esgi.codelink.service.scriptAndFile.script;
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.entity.User;
+import esgi.codelink.entity.script.File;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.enumeration.ProtectionLevel;
+import esgi.codelink.repository.FileRepository;
 import esgi.codelink.repository.ScriptRepository;
 import esgi.codelink.repository.UserRepository;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
@@ -14,11 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +40,9 @@ public class ScriptService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FileRepository fileRepository;
 
     /**
      * Récupère tous les scripts sous forme de liste de ScriptDTO.
@@ -296,5 +304,95 @@ public class ScriptService {
         User UserExecutor = userDetails.getUser();
         ScriptExecutor executor = ScriptExecutorFactory.getExecutor(language);
         return executor.executeRawScript(scriptContent);
+    }
+
+    public String executeScriptWithFiles(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            Long scriptId,
+            List<MultipartFile> inputFiles,
+            List<Long> fileIds,
+            String outputFileName,
+            String scriptContent
+    ) {
+        User userExecutor = userDetails.getUser();
+        Script script = scriptRepository.findById(scriptId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
+
+        if (script.getProtectionLevel() == ProtectionLevel.PUBLIC || userExecutor.getUserId() == (script.getUser().getUserId())) {
+            List<String> inputFilePaths = new ArrayList<>();
+
+            // Stocker les nouveaux fichiers envoyés
+            if (inputFiles != null) {
+                for (MultipartFile multipartFile : inputFiles) {
+                    try {
+                        File file = new File(userExecutor);
+                        file.setName(multipartFile.getOriginalFilename());
+                        file.setLocation(Paths.get(script.getLocation()).getParent().resolve("input").resolve(multipartFile.getOriginalFilename()).toString());
+                        file.setGenerated(false);
+                        storeFile(file, new String(multipartFile.getBytes()));
+                        fileRepository.save(file);
+                        inputFilePaths.add(file.getLocation());
+                    } catch (IOException e) {
+                        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error storing input files", e);
+                    }
+                }
+            }
+
+            // Récupérer les fichiers stockés par leurs IDs
+            if (fileIds != null) {
+                for (Long fileId : fileIds) {
+                    File file = fileRepository.findById(fileId)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
+                    inputFilePaths.add(file.getLocation());
+                }
+            }
+
+            String inputFilePathsStr = String.join(" ", inputFilePaths);
+            Path outputFilePath = Paths.get(script.getLocation()).getParent().resolve("output").resolve(outputFileName);
+
+            // Vérifier si le fichier de sortie existe déjà
+            if (Files.exists(outputFilePath)) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Output file already exists.");
+            }
+
+            try {
+                ScriptExecutor scriptExecutor = ScriptExecutorFactory.getExecutor(script.getLanguage());
+
+                String result;
+                if (scriptContent != null && !scriptContent.isEmpty()) {
+                    result = scriptExecutor.executeRawScriptWithFiles(scriptContent, inputFilePathsStr, outputFilePath.toString());
+                } else {
+                    result = scriptExecutor.executeScriptWithFiles(script.getLocation(), inputFilePathsStr, outputFilePath.toString());
+                }
+
+                // Ajouter le fichier généré à la base de données
+                File outputFile = new File(userExecutor);
+                outputFile.setName(outputFileName);
+                outputFile.setLocation(outputFilePath.toString());
+                outputFile.setGenerated(true);
+                fileRepository.save(outputFile);
+
+                return result;
+            } catch (IOException | InterruptedException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Script execution failed", e);
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not the owner of this script, you can't execute it");
+        }
+    }
+
+    private void storeFile(File file, String fileContent) throws IOException {
+        Path filePath = Path.of(file.getLocation()).normalize();
+        if (Files.exists(filePath)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File already exists.");
+        }
+
+        Files.createDirectories(filePath.getParent());
+        Files.createFile(filePath);
+        Files.write(filePath, fileContent.getBytes());
+
+        if (Files.notExists(filePath)) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create the file at " + filePath.toAbsolutePath());
+        }
     }
 }

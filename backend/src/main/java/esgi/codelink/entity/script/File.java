@@ -9,7 +9,6 @@ public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String location;
     private boolean isGenerated;
@@ -22,6 +21,9 @@ public class File {
         // Constructor par défaut requis par JPA
     }
 
+    public File(User user) {
+        this.user = user;
+    }
     public File(String name, String location, boolean isGenerated, User user) {
         this.name = name;
         this.location = location;

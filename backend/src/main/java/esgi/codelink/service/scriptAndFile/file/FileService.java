@@ -2,6 +2,7 @@ package esgi.codelink.service.scriptAndFile.file;
 
 import esgi.codelink.dto.file.FileDTO;
 import esgi.codelink.entity.CustomUserDetails;
+import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.File;
 import esgi.codelink.repository.FileRepository;
 import esgi.codelink.repository.UserRepository;
@@ -28,6 +29,8 @@ public class FileService {
     @Autowired
     private UserRepository userRepository;
 
+
+
     public List<FileDTO> getAllFiles(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return fileRepository.findByUserUserId(userDetails.getUser().getUserId()).stream()
                 .map(this::convertToDTO)
@@ -41,8 +44,7 @@ public class FileService {
     }
 
     public FileDTO saveFile(@AuthenticationPrincipal CustomUserDetails userDetails, FileDTO fileDTO, String fileContent) throws IOException {
-        esgi.codelink.entity.User user = userRepository.findById(userDetails.getUser().getUserId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User user = userDetails.getUser();
 
         File file = new File(fileDTO.getName(), getFileLocation(userDetails, false, fileDTO.getName()), fileDTO.isGenerated(), user);
         storeFile(file, fileContent);
@@ -55,10 +57,9 @@ public class FileService {
         File existingFile = fileRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
 
-        esgi.codelink.entity.User user = userRepository.findById(userDetails.getUser().getUserId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User user = userDetails.getUser();
 
-        if (existingFile.getUser().getUserId() != user.getUserId()) {
+        if (existingFile.getUser().getUserId() != user.getUserId() ) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this file.");
         }
 

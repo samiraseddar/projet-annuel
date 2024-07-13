@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/api/scripts/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/scripts/execute").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/scripts/execute/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint))

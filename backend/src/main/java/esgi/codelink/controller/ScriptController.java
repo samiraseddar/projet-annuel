@@ -1,9 +1,9 @@
 package esgi.codelink.controller;
 
+import esgi.codelink.dto.script.ExecutionRequest;
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.dto.script.ScriptRequest;
 import esgi.codelink.entity.CustomUserDetails;
-import esgi.codelink.entity.script.File;
 import esgi.codelink.service.scriptAndFile.script.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,8 +22,8 @@ public class ScriptController {
     private ScriptService scriptService;
 
     @GetMapping
-    public ResponseEntity<List<ScriptDTO>> getAllScripts() {
-        List<ScriptDTO> scripts = scriptService.getAllScripts();
+    public ResponseEntity<List<ScriptDTO>> getAllScripts(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<ScriptDTO> scripts = scriptService.getAllScriptsByUser(userDetails.getUser());
         return ResponseEntity.ok(scripts);
     }
 
@@ -36,53 +35,31 @@ public class ScriptController {
 
     @PostMapping
     public ResponseEntity<ScriptDTO> createScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) throws IOException {
-        ScriptDTO createdScript = scriptService.saveScript(userDetails, scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
+        ScriptDTO createdScript = scriptService.saveScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent(), userDetails.getUser());
         return ResponseEntity.ok(createdScript);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<ScriptDTO> updateScript(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id, @RequestBody ScriptRequest scriptRequest) throws IOException {
-        ScriptDTO updatedScript = scriptService.updateScript(userDetails, id, scriptRequest.getScriptDTO(), scriptRequest.getScriptContent());
+        scriptRequest.getScriptDTO().setId(id);
+        ScriptDTO updatedScript = scriptService.updateScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent(), userDetails.getUser());
         return ResponseEntity.ok(updatedScript);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteScript(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) {
-        scriptService.deleteScript(userDetails, id);
+    public ResponseEntity<Void> deleteScript(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) throws IOException {
+        scriptService.deleteScript(id, userDetails.getUser());
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/execute/raw")
-    public ResponseEntity<String> executeRawScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) {
-        try {
-            String output = scriptService.executeRawScript(userDetails,scriptRequest.getScriptContent(), scriptRequest.getScriptDTO().getLanguage());
-            return ResponseEntity.ok(output);
-        } catch (Exception e) {
-            return ResponseEntity.status(400).body(e.getMessage());
-        }
-    }
-
-    @PostMapping("/{id}/execute-with-files")
-    public ResponseEntity<String> executeScriptWithFiles(
+    @PostMapping("/execute/{id}")
+    public ResponseEntity<String> executeScript(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long id,
-            @RequestParam(value = "inputFiles", required = false) List<MultipartFile> inputFiles,
-            @RequestParam(value = "fileIds", required = false) List<Long> fileIds,
-            @RequestParam("outputFileName") String outputFileName,
-            @RequestParam(value = "scriptContent", required = false) String scriptContent
-    ) {
-        String result = scriptService.executeScriptWithFiles(userDetails, id, inputFiles, fileIds, outputFileName, scriptContent);
+            @RequestBody ExecutionRequest executionRequest
+    ) throws IOException {
+        String result = scriptService.executeScript(id, userDetails.getUser(), executionRequest.getFileIds(), executionRequest.getScriptIds());
         return ResponseEntity.ok(result);
     }
 
-
-    @GetMapping("/execute/{id}")
-    public ResponseEntity<String> executeScript(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) {
-        try {
-            String output = scriptService.executeScript(userDetails, id);
-            return ResponseEntity.ok(output);
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
-        }
-    }
 }

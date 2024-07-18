@@ -1,15 +1,13 @@
 package esgi.codelink.service.scriptAndFile.file;
 
-import esgi.codelink.dto.file.FileDTO;
-import esgi.codelink.entity.CustomUserDetails;
+import esgi.codelink.dto.script.FileDTO;
 import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.File;
 import esgi.codelink.repository.FileRepository;
-import esgi.codelink.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
@@ -21,121 +19,90 @@ import java.util.stream.Collectors;
 @Service
 public class FileService {
 
-    private static final Path BASE_DIR = Path.of("../script").normalize();
+    private static final Path FILES_DIR = Path.of("../script").normalize();
 
     @Autowired
     private FileRepository fileRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public List<FileDTO> getFilesByUser(User user) {
+        return fileRepository.findByUserUserId(user.getUserId())
+                .stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
 
+    public List<FileDTO> getGeneratedOrNotFilesByUser(User user, boolean isGenerated) {
+        return fileRepository.findByUserUserIdAndIsGenerated(user.getUserId(), isGenerated)
+                .stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
 
-
-    public List<FileDTO> getAllFiles(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        return fileRepository.findByUserUserId(userDetails.getUser().getUserId()).stream()
-                .map(this::convertToDTO)
+    public List<FileDTO> saveFiles(List<MultipartFile> files, boolean isGenerated, User user) throws IOException {
+        List<File> savedFiles = files.stream()
+                .map(file -> {
+                    try {
+                        return saveFile(file, isGenerated, user);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toList());
+
+        return savedFiles.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
-    public List<FileDTO> getFilesByType(@AuthenticationPrincipal CustomUserDetails userDetails, boolean isGenerated) {
-        return fileRepository.findByUserUserIdAndIsGenerated(userDetails.getUser().getUserId(), isGenerated).stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+
+    public File saveFile(MultipartFile multipartFile, boolean isGenerated, User user) throws IOException {
+        String fileName = multipartFile.getOriginalFilename();
+        Path filePath = FILES_DIR.resolve(user.getUserId() + "/input").resolve(fileName).normalize();
+        System.out.println("loccation file = " + filePath);
+        Files.createDirectories(filePath.getParent());
+        Files.write(filePath, multipartFile.getBytes());
+
+        File file = new File(fileName, filePath.toString(), isGenerated, user);
+        return fileRepository.save(file);
     }
 
-    public FileDTO saveFile(@AuthenticationPrincipal CustomUserDetails userDetails, FileDTO fileDTO, String fileContent) throws IOException {
-        User user = userDetails.getUser();
+    public File saveFile(File file,String content, boolean isGenerated, User user) throws IOException {
+        String outputOrInput;
+        if(isGenerated){
+            outputOrInput = "/output";
+        }
+        else outputOrInput = "/input";
+        Path filePath = FILES_DIR.resolve(user.getUserId() + outputOrInput).resolve(file.getName()).normalize();
+        System.out.println("location file = " + filePath);
+        Files.createDirectories(filePath.getParent());
+        Files.write(filePath, content.getBytes());
 
-        File file = new File(fileDTO.getName(), getFileLocation(userDetails, false, fileDTO.getName()), fileDTO.isGenerated(), user);
-        storeFile(file, fileContent);
-
-        File savedFile = fileRepository.save(file);
-        return convertToDTO(savedFile);
+        File ResultFile = new File(file.getName(), filePath.toString(), isGenerated, user);
+        return fileRepository.save(ResultFile);
     }
 
-    public FileDTO updateFile(@AuthenticationPrincipal CustomUserDetails userDetails, Long id, FileDTO fileDTO, String fileContent) throws IOException {
+    public FileDTO replaceFile(Long id, MultipartFile file, User user) throws IOException {
         File existingFile = fileRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
+        Path filePath = Path.of(existingFile.getLocation()).normalize();
+        Files.write(filePath, file.getBytes());
 
-        User user = userDetails.getUser();
-
-        if (existingFile.getUser().getUserId() != user.getUserId() ) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this file.");
-        }
-
-        String oldLocation = existingFile.getLocation();
-        existingFile.setName(fileDTO.getName());
-        existingFile.setLocation(getFileLocation(userDetails, fileDTO.isGenerated(), fileDTO.getName()));
-        existingFile.setGenerated(false); //uploaded file can not be generated
-        //existingFile.setUser(user);   //not wanted
-
-        replaceFile(Path.of(oldLocation), Path.of(existingFile.getLocation()), fileContent);
-
-        File updatedFile = fileRepository.save(existingFile);
-        return convertToDTO(updatedFile);
+        return convertToDTO(existingFile);
     }
 
-    public void deleteFile(@AuthenticationPrincipal CustomUserDetails userDetails, Long id) {
+    public void deleteFile(Long id, User user) throws IOException {
         File file = fileRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
-
-        if (file.getUser().getUserId() != (userDetails.getUser().getUserId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not the owner of this file.");
-        }
-
-        try {
-            Files.deleteIfExists(Path.of(file.getLocation()));
-        } catch (IOException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete file", e);
-        }
+        Path filePath = Path.of(file.getLocation()).normalize();
+        Files.deleteIfExists(filePath);
 
         fileRepository.delete(file);
     }
 
-    private String getFileLocation(CustomUserDetails userDetails, boolean isGenerated, String fileName) {
-        String folder = isGenerated ? "output" : "input";
-        return BASE_DIR.resolve(String.valueOf(userDetails.getUser().getUserId()))
-                .resolve(folder)
-                .resolve(fileName)
-                .toString();
-    }
-
-    private void storeFile(File file, String fileContent) throws IOException {
-        Path filePath = Path.of(file.getLocation()).normalize();
-        if (Files.exists(filePath)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File already exists.");
-        }
-
-        // Créer les répertoires nécessaires
-        Files.createDirectories(filePath.getParent());
-
-        Files.createFile(filePath);
-        Files.write(filePath, fileContent.getBytes());
-
-        if (Files.notExists(filePath)) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create the file at " + filePath.toAbsolutePath());
-        }
-    }
-
-    private void replaceFile(Path oldLocation, Path newLocation, String fileContent) throws IOException {
-        if (Files.notExists(oldLocation)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File does not exist.");
-        }
-        if (Files.deleteIfExists(oldLocation)) {
-            Files.createFile(newLocation);
-            Files.write(newLocation, fileContent.getBytes());
-        } else {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete the old file.");
-        }
-    }
-
     private FileDTO convertToDTO(File file) {
-        FileDTO dto = new FileDTO();
+        FileDTO dto = new FileDTO(file.getName());
         dto.setId(file.getId());
-        dto.setName(file.getName());
         dto.setLocation(file.getLocation());
         dto.setGenerated(file.isGenerated());
         dto.setUserId(file.getUser().getUserId());
         return dto;
+    }
+
+    public File getFileById(Long id) {
+        return fileRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
     }
 }

@@ -1,18 +1,16 @@
 package esgi.codelink.controller;
 
-import esgi.codelink.dto.file.FileDTO;
-import esgi.codelink.dto.file.FileRequest;
+import esgi.codelink.dto.script.FileDTO;
 import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.service.scriptAndFile.file.FileService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/files")
@@ -21,39 +19,42 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @GetMapping
-    public ResponseEntity<List<FileDTO>> getAllFiles(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<FileDTO> files = fileService.getAllFiles(userDetails);
+    @GetMapping("")
+    public ResponseEntity<List<FileDTO>> getAllFilesByUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<FileDTO> files = fileService.getFilesByUser(userDetails.getUser());
         return ResponseEntity.ok(files);
     }
 
-    @GetMapping("/input")
-    public ResponseEntity<List<FileDTO>> getInputFiles(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<FileDTO> inputFiles = fileService.getFilesByType(userDetails, false);
-        return ResponseEntity.ok(inputFiles);
+    @GetMapping("/generated")
+    public ResponseEntity<List<FileDTO>> getGeneratedFilesByUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<FileDTO> files = fileService.getGeneratedOrNotFilesByUser(userDetails.getUser(), true);
+        return ResponseEntity.ok(files);
     }
 
-    @GetMapping("/output")
-    public ResponseEntity<List<FileDTO>> getOutputFiles(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<FileDTO> outputFiles = fileService.getFilesByType(userDetails, true);
-        return ResponseEntity.ok(outputFiles);
+    @GetMapping("/uploaded")
+    public ResponseEntity<List<FileDTO>> getUploadedFilesByUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<FileDTO> files = fileService.getGeneratedOrNotFilesByUser(userDetails.getUser(), false);
+        return ResponseEntity.ok(files);
     }
 
     @PostMapping
-    public ResponseEntity<FileDTO> createFile(@AuthenticationPrincipal CustomUserDetails userDetails,@Valid @RequestBody FileRequest fileRequest) throws IOException {
-        FileDTO createdFile = fileService.saveFile(userDetails, fileRequest.getFileDTO(), fileRequest.getFileContent());
-        return ResponseEntity.ok(createdFile);
+    public ResponseEntity<List<FileDTO>> uploadFiles(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam("files") List<MultipartFile> files) throws IOException {
+        List<FileDTO> savedFiles = fileService.saveFiles(files, false, userDetails.getUser());
+        return ResponseEntity.ok(savedFiles);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<FileDTO> updateFile(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id,@Valid @RequestBody FileRequest fileRequest) throws IOException {
-        FileDTO updatedFile = fileService.updateFile(userDetails, id, fileRequest.getFileDTO(), fileRequest.getFileContent());
-        return ResponseEntity.ok(updatedFile);
+    @PutMapping("/{id}")
+    public ResponseEntity<FileDTO> replaceFile(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException {
+        FileDTO replacedFile = fileService.replaceFile(id, file, userDetails.getUser());
+        return ResponseEntity.ok(replacedFile);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFile(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) {
-        fileService.deleteFile(userDetails, id);
+    public ResponseEntity<Void> deleteFile(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) throws IOException {
+        fileService.deleteFile(id, userDetails.getUser());
         return ResponseEntity.noContent().build();
     }
+
+
+
 }

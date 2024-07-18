@@ -1,27 +1,25 @@
-package esgi.codelink.dto.file;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
+package esgi.codelink.dto.script;
 
 public class FileDTO {
-    @Null
+
     private Long id;
-    @NotBlank
     private String name;
-    @Null
     private String location;
-    @Null
     private boolean isGenerated;
-    @NotNull
     private Long userId;
 
-    public void setId(Long id) {
-        this.id = id;
+    public FileDTO(String name) {
+        this.name = name;
     }
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,7 +53,4 @@ public class FileDTO {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
-
-
-    // Getters and Setters
 }

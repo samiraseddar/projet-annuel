@@ -14,7 +14,7 @@ public class Script {
     @Column(name = "script_id")
     private Long script_id;
 
-    @Column(nullable = false/*, unique = true*/)    //necessaire sinon les fichiers sont écrasés. Donc pourrait aussi servir d'id
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -28,38 +28,36 @@ public class Script {
     private String language;
 
     @Column
-    private String inputFiles;
+    private String inputFileExtensions;
 
     @Column
-    private String outputFiles;
+    private String outputFileNames;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Script(ScriptDTO scriptToCopie, User user){
-        this.script_id = scriptToCopie.getId();
-        this.inputFiles = scriptToCopie.getInputFiles();
-        this.outputFiles = scriptToCopie.getOutputFiles();
+    public Script(ScriptDTO scriptToCopie, User user) {
+        this.inputFileExtensions = scriptToCopie.getInputFileExtensions();
+        this.outputFileNames = scriptToCopie.getOutputFileNames();
         this.name = scriptToCopie.getName();
         this.user = user;
         this.language = scriptToCopie.getLanguage();
         this.location = scriptToCopie.getLocation();
-        this.protectionLevel = ProtectionLevel.PRIVATE; //TODO
+        this.protectionLevel = ProtectionLevel.valueOf(scriptToCopie.getProtectionLevel());
     }
 
-    public Script(){
-        this.script_id = null;  //to rework
-        this.inputFiles = "";
-        this.outputFiles = "";
+    public Script() {
+        this.inputFileExtensions = "";
+        this.outputFileNames = "";
         this.name = "";
-        this.user = null;
         this.language = "";
         this.location = "";
         this.protectionLevel = ProtectionLevel.PRIVATE;
     }
 
     // Getters and Setters
+
     public Long getScript_id() {
         return script_id;
     }
@@ -96,27 +94,23 @@ public class Script {
         this.language = language;
     }
 
-    public String getInputFiles() {
-        return inputFiles;
+    public String getInputFileExtensions() {
+        return inputFileExtensions;
     }
 
-    public void setInputFiles(String inputFiles) {
-        this.inputFiles = inputFiles;
+    public void setInputFileExtensions(String inputFileExtensions) {
+        this.inputFileExtensions = inputFileExtensions;
     }
 
-    public String getOutputFiles() {
-        return outputFiles;
+    public String getOutputFileNames() {
+        return outputFileNames;
     }
 
-    public void setOutputFiles(String outputFiles) {
-        this.outputFiles = outputFiles;
+    public void setOutputFileNames(String outputFileNames) {
+        this.outputFileNames = outputFileNames;
     }
 
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

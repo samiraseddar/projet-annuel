@@ -1,10 +1,12 @@
 package esgi.codelink.dto.script;
 
 public class ScriptRequest {
+
     private ScriptDTO scriptDTO;
     private String scriptContent;
 
     // Getters and Setters
+
     public ScriptDTO getScriptDTO() {
         return scriptDTO;
     }

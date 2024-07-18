@@ -1,82 +1,83 @@
 package esgi.codelink.service.scriptAndFile.executor.differentScriptExecutor;
 
+import esgi.codelink.entity.User;
+import esgi.codelink.entity.script.File;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
+import esgi.codelink.service.scriptAndFile.file.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class PythonScriptExecutor implements ScriptExecutor {
 
+    @Autowired
+    private FileService fileService;
+
     private static final Pattern DANGEROUS_COMMANDS = Pattern.compile(
-            "\\b(rm -rf /|import os|import subprocess|exec|eval|open\\(|shutil)\\b",
+            "\\b(rm -rf /|import os|import subprocess|exec|eval|shutil|system)\\b",
             Pattern.CASE_INSENSITIVE
     );
 
     @Override
-    public boolean isScriptSafe(String scriptContent) {
-        return !DANGEROUS_COMMANDS.matcher(scriptContent).find();
-    }
-
-    @Override
-    public String executeScript(String scriptPath) throws RuntimeException {
-        return runProcess(new ProcessBuilder("python", scriptPath));
-    }
-
-    @Override
-    public String executeRawScript(String fullScript) {
-        if (!isScriptSafe(fullScript)) {
+    public String executeScript(String scriptPath, List<File> inputFiles, List<String> outputFiles, User user) throws RuntimeException, IOException {
+        String scriptContent = java.nio.file.Files.readString(Path.of(scriptPath));
+        if (DANGEROUS_COMMANDS.matcher(scriptContent).find()) {
             throw new RuntimeException("Le script contient des commandes dangereuses et ne peut pas être exécuté.");
         }
 
-        return runProcess(new ProcessBuilder("python").redirectInput(ProcessBuilder.Redirect.PIPE), fullScript);
-    }
+        List<String> inputFilePaths = inputFiles.stream().map(File::getLocation).collect(Collectors.toList());
+        List<String> command = new ProcessBuilder("python", scriptPath).command();
+        command.addAll(inputFilePaths);
+        command.addAll(outputFiles);
 
-    public String executeScriptWithFiles(String scriptPath, String inputFiles, String outputFile) throws IOException, InterruptedException {
-        ProcessBuilder pb = new ProcessBuilder("python", scriptPath, inputFiles, outputFile);
-        return runProcess(pb);
-    }
+        String processOutput = runProcess(new ProcessBuilder(command));
 
-    public String executeRawScriptWithFiles(String fullScript, String inputFiles, String outputFile) throws IOException, InterruptedException {
-        if (!isScriptSafe(fullScript)) {
-            throw new RuntimeException("Le script contient des commandes dangereuses et ne peut pas être exécuté.");
+        // Move output files to the user's output directory
+        for (String outputFilePath : outputFiles) {
+            Path srcPath = Path.of(outputFilePath).normalize();
+            Path destPath = getOutputPath(user, srcPath.getFileName().toString());
+            Files.move(srcPath, destPath);
         }
 
-        ProcessBuilder pb = new ProcessBuilder("python", "-", inputFiles, outputFile).redirectInput(ProcessBuilder.Redirect.PIPE);
-        return runProcess(pb, fullScript);
+        return processOutput;
     }
 
-    private String runProcess(ProcessBuilder pb, String inputScript) {
+    private String runProcess(ProcessBuilder pb) {
         try {
             Process process = pb.start();
 
-            if (inputScript != null) {
-                process.getOutputStream().write(inputScript.getBytes());
-                process.getOutputStream().flush();
-                process.getOutputStream().close();
-            }
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             StringBuilder output = new StringBuilder();
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = stdInput.readLine()) != null) {
                 output.append(line).append("\n");
+            }
+            while ((line = stdError.readLine()) != null) {
+                output.append("ERROR: ").append(line).append("\n");
             }
 
             int exitCode = process.waitFor();
 
-            if (exitCode == 0) {
-                return output.toString();
-            } else {
-                throw new RuntimeException("Erreur lors de l'exécution du script. Code de sortie : " + exitCode);
+            if (exitCode != 0) {
+                throw new RuntimeException("Erreur lors de l'exécution du script. Code de sortie : " + exitCode + "\n" + output);
             }
+
+            return output.toString();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Erreur lors de l'exécution du script", e);
         }
     }
 
-    private String runProcess(ProcessBuilder pb) {
-        return runProcess(pb, null);
+    private Path getOutputPath(User user, String outputFileName) {
+        // Define the user's output directory here
+        return Path.of("..", "script", String.valueOf(user.getUserId()), "output", outputFileName).normalize();
     }
 }

@@ -9,5 +9,4 @@ import java.util.List;
 public interface FileRepository extends JpaRepository<File, Long> {
     List<File> findByUserUserId(Long userId);
     List<File> findByUserUserIdAndIsGenerated(Long userId, boolean isGenerated);
-    //Optional<File> findByUserUserIdAndId(Long id, Long userId);
 }

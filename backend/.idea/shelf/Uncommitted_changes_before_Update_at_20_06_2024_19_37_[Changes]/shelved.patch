@@ -1,0 +1,114 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"c250be2a-3649-4ba9-89b2-5db67ddab0dd\" name=\"Changes\" comment=\"add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$/..\" value=\"pythonExec\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\r\n  </component>\r\n  <component name=\"JpbToolWindowState\">\r\n    <option name=\"isToolWindowVisible\" value=\"false\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHomeTypeForPersistence\" value=\"WRAPPER\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectCodeStyleSettingsMigration\">\r\n    <option name=\"version\" value=\"2\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2fjI0ZMEdhriyMfNFE0ne7ej3NC\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RequestMappingsPanelOrder0\": \"0\",\r\n    \"RequestMappingsPanelOrder1\": \"1\",\r\n    \"RequestMappingsPanelWidth0\": \"75\",\r\n    \"RequestMappingsPanelWidth1\": \"75\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"Spring Boot.ProjetApplication (1).executor\": \"Run\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/33763/IdeaProjects/projet-annuel/backend\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  },\r\n  \"keyToStringList\": {\r\n    \"DatabaseDriversLRU\": [\r\n      \"mysql\",\r\n      \"h2\"\r\n    ]\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\jujutravail\\coursESGIpresentiel\\2023-2024\\semestre2\\projetAnnuel\\origine\\projet-annuel\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Spring Boot.ProjetApplication (1)\">\r\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\r\n      <module name=\"projet-annuel\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\r\n      <module name=\"projet-annuel\" />\r\n      <option name=\"filePath\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ProjetApplication (1)\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\r\n      <module name=\"projet\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"esgi.codelink.ProjetApplication\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"esgi.codelink.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"ProjetApplication\" type=\"SpringBootApplicationConfigurationType\" factoryName=\"Spring Boot\" nameIsGenerated=\"true\">\r\n      <option name=\"ALTERNATIVE_JRE_PATH\" value=\"21\" />\r\n      <option name=\"ALTERNATIVE_JRE_PATH_ENABLED\" value=\"true\" />\r\n      <option name=\"FRAME_DEACTIVATION_UPDATE_POLICY\" value=\"UpdateClassesAndResources\" />\r\n      <module name=\"projet\" />\r\n      <option name=\"SPRING_BOOT_MAIN_CLASS\" value=\"esgi.codelink.ProjetApplication\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Spring Boot.ProjetApplication (1)\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-19.0.2-corretto-19.0.2-4caba194b151-48ba4555\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"c250be2a-3649-4ba9-89b2-5db67ddab0dd\" name=\"Changes\" comment=\"\" />\r\n      <created>1714307837213</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1714307837213</updated>\r\n      <workItem from=\"1714307838210\" duration=\"3711000\" />\r\n      <workItem from=\"1714319520602\" duration=\"19000\" />\r\n      <workItem from=\"1714319596327\" duration=\"100000\" />\r\n      <workItem from=\"1714747473469\" duration=\"807000\" />\r\n      <workItem from=\"1714921947735\" duration=\"1164000\" />\r\n      <workItem from=\"1714944383794\" duration=\"61000\" />\r\n      <workItem from=\"1715077673466\" duration=\"337000\" />\r\n      <workItem from=\"1715181978592\" duration=\"2107000\" />\r\n      <workItem from=\"1715519037552\" duration=\"971000\" />\r\n      <workItem from=\"1715791887299\" duration=\"6872000\" />\r\n      <workItem from=\"1715978640718\" duration=\"734000\" />\r\n      <workItem from=\"1716114580668\" duration=\"1264000\" />\r\n      <workItem from=\"1716134994210\" duration=\"1302000\" />\r\n      <workItem from=\"1716496724071\" duration=\"11733000\" />\r\n      <workItem from=\"1716912677910\" duration=\"3125000\" />\r\n      <workItem from=\"1716981626165\" duration=\"1506000\" />\r\n      <workItem from=\"1718865756141\" duration=\"2122000\" />\r\n      <workItem from=\"1718872950507\" duration=\"1721000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"add UserContoller after merge\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1714747677037</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1714747677037</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"added firstname and lastname\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715795732845</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715795732845</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"add Message and MsgId\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715796327456</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715796327456</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"add MessageRepository\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715797652939</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715797652939</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"change Message\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715797963107</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715797963107</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"change MessageRepository\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715798014993</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715798014993</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1716135268813</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1716135268813</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1718865905289</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1718865905289</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"9\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"origin/main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"add UserContoller after merge\" />\r\n    <MESSAGE value=\"added firstname and lastname\" />\r\n    <MESSAGE value=\"add Message and MsgId\" />\r\n    <MESSAGE value=\"add MessageRepository\" />\r\n    <MESSAGE value=\"change Message\" />\r\n    <MESSAGE value=\"change MessageRepository\" />\r\n    <MESSAGE value=\"add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 7ec56d28c298c16d587b3efecfdf5ba277b31912)
++++ b/.idea/workspace.xml	(date 1718905052471)
+@@ -4,8 +4,8 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation">
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="change workspace.xml">
++      <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -51,33 +51,33 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RequestMappingsPanelOrder0": "0",
+-    "RequestMappingsPanelOrder1": "1",
+-    "RequestMappingsPanelWidth0": "75",
+-    "RequestMappingsPanelWidth1": "75",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "Spring Boot.ProjetApplication (1).executor": "Run",
+-    "WebServerToolWindowFactoryState": "false",
+-    "git-widget-placeholder": "main",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/33763/IdeaProjects/projet-annuel/backend",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
++    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
++    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
++    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;Spring Boot.ProjetApplication (1).executor&quot;: &quot;Run&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/33763/IdeaProjects/projet-annuel/backend&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   },
+-  "keyToStringList": {
+-    "DatabaseDriversLRU": [
+-      "mysql",
+-      "h2"
++  &quot;keyToStringList&quot;: {
++    &quot;DatabaseDriversLRU&quot;: [
++      &quot;mysql&quot;,
++      &quot;h2&quot;
+     ]
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+       <recent name="C:\jujutravail\coursESGIpresentiel\2023-2024\semestre2\projetAnnuel\origine\projet-annuel" />
+@@ -160,6 +160,7 @@
+       <workItem from="1716981626165" duration="1506000" />
+       <workItem from="1718865756141" duration="2122000" />
+       <workItem from="1718872950507" duration="1721000" />
++      <workItem from="1718904754467" duration="298000" />
+     </task>
+     <task id="LOCAL-00001" summary="add UserContoller after merge">
+       <option name="closed" value="true" />
+@@ -225,7 +226,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1718865905289</updated>
+     </task>
+-    <option name="localTasksCounter" value="9" />
++    <task id="LOCAL-00009" summary="change workspace.xml">
++      <option name="closed" value="true" />
++      <created>1718904823969</created>
++      <option name="number" value="00009" />
++      <option name="presentableId" value="LOCAL-00009" />
++      <option name="project" value="LOCAL" />
++      <updated>1718904823969</updated>
++    </task>
++    <option name="localTasksCounter" value="10" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -262,6 +271,7 @@
+     <MESSAGE value="change Message" />
+     <MESSAGE value="change MessageRepository" />
+     <MESSAGE value="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation" />
+-    <option name="LAST_COMMIT_MESSAGE" value="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation" />
++    <MESSAGE value="change workspace.xml" />
++    <option name="LAST_COMMIT_MESSAGE" value="change workspace.xml" />
+   </component>
+ </project>
+\ No newline at end of file

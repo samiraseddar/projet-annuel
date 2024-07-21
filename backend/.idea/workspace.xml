@@ -4,33 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation">
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-=======
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/script/FileDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/file/FileDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/script/FileRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/file/FileRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/script/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/script/File.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/executor/ScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/executor/ScriptExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/executor/differentScriptExecutor/PythonScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/executor/differentScriptExecutor/PythonScriptExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/file/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/file/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/ProjetApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/ProjetApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/ScriptController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/ScriptController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/Script.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptRequest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/repository/ScriptRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/repository/ScriptRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/script/ScriptExecutor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/script/ScriptService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/script/differentScriptExecutor/pythonScriptExecutor.class" beforeDir="false" />
->>>>>>> 423ed9130793cf5fdf08f0379b6ebfd2836b31eb
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,13 +41,16 @@
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -79,41 +67,23 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.Dockerfile.executor": "Run",
+    "Maven.projet [clean,install].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-<<<<<<< HEAD
     "Spring Boot.ProjetApplication (1).executor": "Run",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "Spring Boot.ProjetApplication.executor": "Run",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/33763/IdeaProjects/projet-annuel/backend",
-=======
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.ProjetApplication (1).executor": "Run",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "pythonExec",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/jujutravail/coursESGIpresentiel/2023-2024/semestre2/projetAnnuel/origine/projet-annuel/backend",
->>>>>>> 423ed9130793cf5fdf08f0379b6ebfd2836b31eb
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
-<<<<<<< HEAD
-  },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql",
-      "h2"
-    ]
-=======
->>>>>>> 423ed9130793cf5fdf08f0379b6ebfd2836b31eb
   }
 }]]></component>
   <component name="RecentsManager">
@@ -125,7 +95,12 @@
       <recent name="esgi.codelink.entity.script" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ProjetApplication (1)">
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn clean install" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Docker.Dockerfile">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="projet-annuel" />
       <method v="2">
@@ -163,12 +138,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Docker.Dockerfile" />
       <item itemvalue="Spring Boot.ProjetApplication" />
       <item itemvalue="Spring Boot.ProjetApplication (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.Dockerfile" />
         <item itemvalue="Spring Boot.ProjetApplication (1)" />
       </list>
     </recent_temporary>
@@ -176,14 +167,14 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-19.0.2-corretto-19.0.2-4caba194b151-48ba4555" />
+        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c250be2a-3649-4ba9-89b2-5db67ddab0dd" name="Changes" comment="" />
+      <changelist id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="" />
       <created>1714307837213</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -201,13 +192,11 @@
       <workItem from="1715978640718" duration="734000" />
       <workItem from="1716114580668" duration="1264000" />
       <workItem from="1716134994210" duration="1302000" />
-<<<<<<< HEAD
       <workItem from="1716496724071" duration="11733000" />
       <workItem from="1716912677910" duration="3125000" />
       <workItem from="1716981626165" duration="1506000" />
       <workItem from="1718865756141" duration="2122000" />
       <workItem from="1718872950507" duration="1721000" />
-=======
       <workItem from="1718040914709" duration="62000" />
       <workItem from="1718040990771" duration="1532000" />
       <workItem from="1718294711009" duration="60000" />
@@ -234,7 +223,9 @@
       <workItem from="1720547751820" duration="358000" />
       <workItem from="1720680117949" duration="42000" />
       <workItem from="1720782192824" duration="7621000" />
->>>>>>> 423ed9130793cf5fdf08f0379b6ebfd2836b31eb
+      <workItem from="1721504201157" duration="1248000" />
+      <workItem from="1721512326527" duration="5154000" />
+      <workItem from="1721543826544" duration="6518000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />

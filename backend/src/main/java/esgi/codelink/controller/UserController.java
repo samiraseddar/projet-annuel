@@ -43,7 +43,7 @@ public class UserController {
 
     @PostMapping("/signUp")
     public ResponseEntity<RegisterResponseDTO> signUp(@RequestBody RegisterDTO registerDTO) throws IOException {
-        System.out.println(registerDTO);
+        System.out.println("reponse " + registerDTO);
         var res = authService.register(registerDTO);
         if(res.getStatus().equals("Success")) {
             return ResponseEntity.ok(res);

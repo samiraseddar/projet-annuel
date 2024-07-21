@@ -1,15 +1,14 @@
-FROM ubuntu:latest AS build
+FROM maven:3.8.4-openjdk-17-slim AS build
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
-COPY . .
 
-RUN ./gradlew bootJar --no-daemon
+# Add the Maven Wrapper and make it executable
+COPY . /build
+WORKDIR /build
 
-FROM openjdk:17-jdk-slim
+
 
 EXPOSE 8080
 
-COPY --from=build /build/libs/projet-1.jar app.jar
+RUN mvn clean package
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "target/projet-1.jar"]

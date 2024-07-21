@@ -55,6 +55,8 @@ public class AuthService {//c'est le service qui gére tt l'eutentification (ttt
         }
 
         var user = new User();
+        user.setFirstName(registerDTO.getFirstName());
+        user.setLastName(registerDTO.getLastName());
         user.setMail(registerDTO.getMail());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));//pour ne pas afficher on utulise un passeword Encoder
         userRepository.save(user);

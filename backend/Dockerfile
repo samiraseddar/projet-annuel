@@ -1,20 +1,31 @@
+# Stage 1: Build the Java application using Maven
 FROM maven:3.8.4-openjdk-17-slim AS build
 
-# Ajout des packages nécessaires pour installer Python
-RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN Python -version
-    
 # Add the Maven Wrapper and make it executable
 COPY . /build
 WORKDIR /build
 
-EXPOSE 8080
-
 RUN mvn clean package
 
-ENTRYPOINT ["java", "-jar", "target/projet-1.jar"]
+# Stage 2: Build the final image including Python dependencies
+FROM python:3.9-slim AS python
+
+# Install Java and other necessary packages
+RUN apt-get update && apt-get install -y \
+    openjdk-17-jre-headless \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the built Java application from the previous stage
+COPY --from=build /build/target/projet-1.jar /app/projet-1.jar
+
+# Install Python dependencies if you have a requirements.txt
+# COPY requirements.txt /app/
+# WORKDIR /app
+# RUN pip install -r requirements.txt
+
+WORKDIR /app
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "projet-1.jar"]

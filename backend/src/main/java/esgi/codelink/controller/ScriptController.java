@@ -28,9 +28,15 @@ public class ScriptController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScriptDTO> getScriptById(@PathVariable Long id) {
+    public ResponseEntity<ScriptDTO> getScriptById(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) {
         ScriptDTO script = scriptService.getScriptById(id);
         return script != null ? ResponseEntity.ok(script) : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/content")
+    public ResponseEntity<String> getScriptContentById(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) throws IOException {
+        String content = scriptService.getScriptContentById(id);
+        return ResponseEntity.ok(content);
     }
 
     @PostMapping

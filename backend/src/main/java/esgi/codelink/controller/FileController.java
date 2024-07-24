@@ -37,6 +37,12 @@ public class FileController {
         return ResponseEntity.ok(files);
     }
 
+    @GetMapping("/{id}/content")
+    public ResponseEntity<String> getFileContentById(@PathVariable Long id) throws IOException {
+        String content = fileService.getFileContentById(id);
+        return ResponseEntity.ok(content);
+    }
+
     @PostMapping
     public ResponseEntity<List<FileDTO>> uploadFiles(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam("files") List<MultipartFile> files) throws IOException {
         List<FileDTO> savedFiles = fileService.saveFiles(files, false, userDetails.getUser());

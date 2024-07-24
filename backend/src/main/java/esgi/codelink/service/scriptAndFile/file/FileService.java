@@ -105,4 +105,11 @@ public class FileService {
     public File getFileById(Long id) {
         return fileRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
     }
+
+    public String getFileContentById(Long id) throws IOException {
+        File file = fileRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
+        Path filePath = Path.of(file.getLocation());
+        return Files.readString(filePath);
+    }
 }

@@ -4,20 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="update docckerfile">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_05_2024_10_28__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_22_05_2024_10_28__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_06_2024_19_37__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_20_06_2024_19_37__Changes_.xml" afterDir="false" />
+    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="update dockerfile">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/ProjetApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/ProjetApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/FileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/executor/differentScriptExecutor/PythonScriptExecutor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/executor/differentScriptExecutor/PythonScriptExecutor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/file/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/file/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/AuthService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +28,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "julienEcole"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/samiraseddar/projet-annuel.git",
+    "accountId": "93a87337-0b8e-4efd-b57b-350efede5090"
+  }
+}]]></component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
@@ -326,7 +326,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721556699225</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="update dockerfile">
+      <option name="closed" value="true" />
+      <created>1721822407281</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1721822407281</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -364,6 +372,8 @@
     <MESSAGE value="change MessageRepository" />
     <MESSAGE value="add MessageController and ajout function findMsgBtwTwoUsers and findMsgInConversation" />
     <MESSAGE value="update docckerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="update docckerfile" />
+    <MESSAGE value="fix : première correction partiel de pipelin&#10;feat : ajout de routes pour récupérer le content d'un file ou d'un script" />
+    <MESSAGE value="update dockerfile" />
+    <option name="LAST_COMMIT_MESSAGE" value="update dockerfile" />
   </component>
 </project>

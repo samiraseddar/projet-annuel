@@ -6,6 +6,9 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# Installe les packages Python nécessaires
+RUN pip3 install --no-cache-dir scikit-learn matplotlib seaborn
     
 # Add the Maven Wrapper and make it executable
 COPY . /build

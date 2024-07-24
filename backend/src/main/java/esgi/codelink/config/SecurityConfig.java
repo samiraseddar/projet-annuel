@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager; 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -53,8 +53,11 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/scripts/execute/**").authenticated()
                 .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                 .anyRequest().authenticated())
-            .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint))
-            .build();
+            .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint));
+        
+        // Retirer cet appel car il est redondant
+        // .build();
+
         return http.build();
     }
 

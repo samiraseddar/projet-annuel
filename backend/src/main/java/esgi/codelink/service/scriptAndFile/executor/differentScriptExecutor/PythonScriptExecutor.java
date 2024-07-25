@@ -2,7 +2,9 @@ package esgi.codelink.service.scriptAndFile.executor.differentScriptExecutor;
 
 import esgi.codelink.entity.script.File;
 import esgi.codelink.entity.User;
+import esgi.codelink.entity.script.Script;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
+import esgi.codelink.service.scriptAndFile.file.FileService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,29 +19,26 @@ import java.util.stream.Collectors;
 public class PythonScriptExecutor implements ScriptExecutor {
 
     private static final Pattern DANGEROUS_COMMANDS = Pattern.compile(
-            "\\b(rm -rf /|import os|import subprocess|exec|eval|open\\(|shutil)\\b",
+            "\\b(rm -rf /|import os|import subprocess|exec|eval|shutil)\\b",
             Pattern.CASE_INSENSITIVE
     );
 
     @Override
-    public String executeScript(String scriptPath, List<File> inputFiles, List<String> outputFiles, User user) throws RuntimeException, IOException {
+    public String executeScript(String scriptPath, List<File> inputFiles, List<File> outputFiles) throws RuntimeException {
         if (DANGEROUS_COMMANDS.matcher(scriptPath).find()) {
             throw new RuntimeException("Le script contient des commandes dangereuses et ne peut pas être exécuté.");
         }
 
         List<String> inputFilePaths = inputFiles.stream().map(File::getLocation).collect(Collectors.toList());
-        List<String> args = new ArrayList<>(inputFilePaths);
-        args.addAll(outputFiles);
+        List<String> outputFilePaths = outputFiles.stream().map(File::getLocation).collect(Collectors.toList());
 
-        // Ensure output directories exist
-        for (String outputFile : outputFiles) {
-            Path outputPath = Path.of(outputFile).normalize();
-            Files.createDirectories(outputPath.getParent());
-        }
+        List<String> command = new ArrayList<>();
+        command.add("python");
+        command.add(scriptPath);
+        command.addAll(inputFilePaths);
+        command.addAll(outputFilePaths);
 
-        ProcessBuilder pb = new ProcessBuilder("python", scriptPath);
-        pb.command().addAll(args);
-        return runProcess(pb);
+        return runProcess(new ProcessBuilder(command));
     }
 
     private String runProcess(ProcessBuilder pb) {
@@ -47,10 +46,15 @@ public class PythonScriptExecutor implements ScriptExecutor {
             Process process = pb.start();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             StringBuilder output = new StringBuilder();
             String line;
+
             while ((line = reader.readLine()) != null) {
                 output.append(line).append("\n");
+            }
+            while ((line = errorReader.readLine()) != null) {
+                output.append("ERROR: ").append(line).append("\n");
             }
 
             int exitCode = process.waitFor();
@@ -58,7 +62,7 @@ public class PythonScriptExecutor implements ScriptExecutor {
             if (exitCode == 0) {
                 return output.toString();
             } else {
-                throw new RuntimeException("Erreur lors de l'exécution du script. Code de sortie : " + exitCode);
+                throw new RuntimeException("Erreur lors de l'exécution du script. Code de sortie : " + exitCode + "\n" + output);
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Erreur lors de l'exécution du script", e);

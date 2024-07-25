@@ -1,4 +1,4 @@
-package esgi.codelink.dto.script;
+package esgi.codelink.dto.file;
 
 public class FileDTO {
 

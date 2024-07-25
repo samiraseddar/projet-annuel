@@ -64,4 +64,12 @@ public class File {
     public User getUser() {
         return user;
     }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

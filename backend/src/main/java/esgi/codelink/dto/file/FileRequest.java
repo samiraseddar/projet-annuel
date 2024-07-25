@@ -1,6 +1,5 @@
 package esgi.codelink.dto.file;
 
-import esgi.codelink.dto.script.FileDTO;
 
 public class FileRequest {
 

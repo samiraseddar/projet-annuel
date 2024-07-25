@@ -1,8 +1,8 @@
 package esgi.codelink.controller;
 
-import esgi.codelink.dto.script.ExecutionRequest;
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.dto.script.ScriptRequest;
+import esgi.codelink.dto.script.PipelineRequest;
 import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.service.scriptAndFile.script.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/scripts")
@@ -28,15 +29,9 @@ public class ScriptController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScriptDTO> getScriptById(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) {
+    public ResponseEntity<ScriptDTO> getScriptById(@PathVariable Long id) {
         ScriptDTO script = scriptService.getScriptById(id);
         return script != null ? ResponseEntity.ok(script) : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/{id}/content")
-    public ResponseEntity<String> getScriptContentById(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long id) throws IOException {
-        String content = scriptService.getScriptContentById(id);
-        return ResponseEntity.ok(content);
     }
 
     @PostMapping
@@ -58,14 +53,16 @@ public class ScriptController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/execute/{id}")
-    public ResponseEntity<String> executeScript(
+    @PostMapping("/execute-pipeline")
+    public ResponseEntity<String> executePipeline(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long id,
-            @RequestBody ExecutionRequest executionRequest
-    ) throws IOException {
-        String result = scriptService.executeScript(id, userDetails.getUser(), executionRequest.getFileIds(), executionRequest.getScriptIds());
+            @RequestBody PipelineRequest pipelineRequest
+    ) throws IOException, InterruptedException {
+        String result = scriptService.executePipeline(
+                pipelineRequest.getInitialScriptId(),
+                userDetails.getUser(),
+                pipelineRequest.getScriptToFileMap()
+        );
         return ResponseEntity.ok(result);
     }
-
 }

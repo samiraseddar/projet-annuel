@@ -1,5 +1,7 @@
 package esgi.codelink.service.scriptAndFile.script;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.File;
 import esgi.codelink.entity.script.Script;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class ScriptService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ScriptService.class);
 
     @Autowired
     private ScriptRepository scriptRepository;
@@ -126,19 +130,33 @@ public class ScriptService {
             Script script = scriptRepository.findById(scriptId)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
 
+            logger.info("Executing script: {} with ID: {}", script.getName(), scriptId);
+
             List<File> inputFiles = new ArrayList<>();
             if (inputFileIds != null) {
                 inputFiles.addAll(inputFileIds.stream().map(fileService::findById).collect(Collectors.toList()));
             }
             inputFiles.addAll(previousOutputFiles);
 
+            for (File file : inputFiles) {
+                logger.info("Input file: {} at location {}", file.getName(), file.getLocation());
+            }
+
             List<File> outputFiles = prepareOutputFiles(script, user);
 
             ScriptExecutor executor = scriptExecutorFactory.getExecutor(script.getLanguage());
             String result = executor.executeScript(script.getLocation(), inputFiles, outputFiles);
+            logger.info("Script execution result: {}", result);
 
             for (File outputFile : outputFiles) {
-                fileService.saveFile(outputFile, fileService.readContent(outputFile), true, user);
+                java.io.File file = new java.io.File(outputFile.getLocation());
+                if (file.exists()) {
+                    String content = new String(Files.readAllBytes(file.toPath()));
+                    fileService.saveFile(outputFile, content, true, user);
+                    logger.info("Saved output file: {} with content: {}", outputFile.getName(), content);
+                } else {
+                    throw new RuntimeException("File operation error: " + outputFile.getLocation());
+                }
             }
 
             previousOutputFiles.clear();
@@ -153,13 +171,17 @@ public class ScriptService {
     }
 
     private List<File> prepareOutputFiles(Script script, User user) {
-        return Arrays.stream(script.getOutputFileNames().split(","))
-                .map(outputFileName -> new File(outputFileName, "", true, user))
+        List<String> outputFileNames = Arrays.asList(script.getOutputFileNames().split(","));
+        return outputFileNames.stream()
+                .map(name -> {
+                    Path outputPath = fileService.getFilesDir().resolve(user.getUserId() + "/output").resolve(name).normalize();
+                    try {
+                        Files.createDirectories(outputPath.getParent());
+                    } catch (IOException e) {
+                        throw new RuntimeException("Failed to create directories for output file: " + outputPath, e);
+                    }
+                    return new File(name, outputPath.toString(), true, user);
+                })
                 .collect(Collectors.toList());
-    }
-
-
-    private String generateOutputFilePath(User user, String fileName) {
-        return "../files/" + user.getUserId() + "/output/" + fileName;
     }
 }

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class PythonScriptExecutor implements ScriptExecutor {
 
     private static final Pattern DANGEROUS_COMMANDS = Pattern.compile(
-            "\\b(rm -rf /|import os|import subprocess|exec|eval|open\\(|shutil)\\b",
+            "\\b(rm -rf /|import os|import subprocess|exec|eval|shutil)\\b",
             Pattern.CASE_INSENSITIVE
     );
 
@@ -46,16 +46,15 @@ public class PythonScriptExecutor implements ScriptExecutor {
             Process process = pb.start();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             StringBuilder output = new StringBuilder();
             String line;
+
             while ((line = reader.readLine()) != null) {
                 output.append(line).append("\n");
             }
-
-            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            StringBuilder errorOutput = new StringBuilder();
             while ((line = errorReader.readLine()) != null) {
-                errorOutput.append("ERROR: ").append(line).append("\n");
+                output.append("ERROR: ").append(line).append("\n");
             }
 
             int exitCode = process.waitFor();
@@ -63,7 +62,7 @@ public class PythonScriptExecutor implements ScriptExecutor {
             if (exitCode == 0) {
                 return output.toString();
             } else {
-                return "Erreur lors de l'exécution du script. Code de sortie : " + exitCode + "\n" + errorOutput;
+                throw new RuntimeException("Erreur lors de l'exécution du script. Code de sortie : " + exitCode + "\n" + output);
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Erreur lors de l'exécution du script", e);

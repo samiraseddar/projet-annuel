@@ -58,11 +58,7 @@ public class ScriptController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody PipelineRequest pipelineRequest
     ) throws IOException, InterruptedException {
-        String result = scriptService.executePipeline(
-                pipelineRequest.getInitialScriptId(),
-                userDetails.getUser(),
-                pipelineRequest.getScriptToFileMap()
-        );
+        String result = scriptService.executePipeline(pipelineRequest.getInitialScriptId(), userDetails.getUser(), pipelineRequest.getScriptToFileMap());
         return ResponseEntity.ok(result);
     }
 }

@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FileService {
@@ -25,25 +26,54 @@ public class FileService {
     @Autowired
     private FileRepository fileRepository;
 
-    public File saveFile(File file, String content, boolean isGenerated, User user) throws IOException {
-        String outputOrInput = isGenerated ? "/output" : "/input";
-        Path filePath = FILES_DIR.resolve(user.getUserId() + outputOrInput).resolve(file.getName()).normalize();
-        Files.createDirectories(filePath.getParent());
-        Files.write(filePath, content.getBytes());
-
-        File resultFile = new File(file.getName(), filePath.toString(), isGenerated, user);
-        return fileRepository.save(resultFile);
-    }
-
     public File saveFile(MultipartFile multipartFile, boolean isGenerated, User user) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
         Path filePath = FILES_DIR.resolve(user.getUserId() + "/input").resolve(fileName).normalize();
         Files.createDirectories(filePath.getParent());
         Files.write(filePath, multipartFile.getBytes());
 
-        File file = new File(fileName, filePath.toString(), isGenerated, user);
+        File file = fileRepository.findByLocation(filePath.toString()).orElse(null);
+        if (file != null) {
+            file.setLocation(filePath.toString());
+        } else {
+            file = new File(fileName, filePath.toString(), isGenerated, user);
+        }
         return fileRepository.save(file);
     }
+
+    public File saveFile(File file, String content, boolean isGenerated, User user) throws IOException {
+        String outputOrInput = isGenerated ? "/output" : "/input";
+        Path filePath = FILES_DIR.resolve(user.getUserId() + outputOrInput).resolve(file.getName()).normalize();
+        Files.createDirectories(filePath.getParent());
+        Files.write(filePath, content.getBytes());
+
+        Optional<File> existingFileOptional = fileRepository.findByLocation(filePath.toString());
+        if (existingFileOptional.isPresent()) {
+            File existingFile = existingFileOptional.get();
+            existingFile.setLocation(filePath.toString());
+            return fileRepository.save(existingFile);
+        } else {
+            File resultFile = new File(file.getName(), filePath.toString(), isGenerated, user);
+            return fileRepository.save(resultFile);
+        }
+    }
+
+    public File findById(Long id) {
+        return fileRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
+    }
+
+    public void prepareFile(File file) throws IOException {
+        Path filePath = getFilePath(file, file.getUser(), true);
+        Files.createDirectories(filePath.getParent());
+        Files.createFile(filePath);
+        file.setLocation(filePath.toString());
+    }
+
+    private Path getFilePath(File file, User user, boolean isGenerated) {
+        String outputOrInput = isGenerated ? "output" : "input";
+        return FILES_DIR.resolve(user.getUserId() + "/" + outputOrInput).resolve(file.getName()).normalize();
+    }
+
 
     public File updateFile(Long id, MultipartFile multipartFile, User user) throws IOException {
         File existingFile = findById(id);
@@ -57,11 +87,6 @@ public class FileService {
         existingFile.setName(fileName);
         existingFile.setLocation(filePath.toString());
         return fileRepository.save(existingFile);
-    }
-
-    public File findById(Long id) {
-        return fileRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("File not found"));
     }
 
     public Resource getFileContent(Long id) throws IOException {

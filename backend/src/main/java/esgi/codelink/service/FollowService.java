@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FollowService {
-
     private final FollowRepository followRepository;
     private final UserRepository userRepository;
 

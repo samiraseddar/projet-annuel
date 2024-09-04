@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="Added the entity that represent the dislikes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/DislikeRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/FollowRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/LikeRepository.java" afterDir="false" />
+    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="Added repositories for like, dislike and follow">
       <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/DislikeService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/FollowService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/LikeService.java" afterDir="false" />
@@ -273,7 +270,7 @@
       <workItem from="1723024289202" duration="599000" />
       <workItem from="1725180922798" duration="935000" />
       <workItem from="1725453089490" duration="3557000" />
-      <workItem from="1725464216106" duration="4948000" />
+      <workItem from="1725464216106" duration="6850000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />
@@ -379,7 +376,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725468392405</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Added repositories for like, dislike and follow">
+      <option name="closed" value="true" />
+      <created>1725469256422</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1725469256422</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,6 +427,7 @@
     <MESSAGE value="Added the entity that represent the follows" />
     <MESSAGE value="Added the entity that represent the likes" />
     <MESSAGE value="Added the entity that represent the dislikes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the entity that represent the dislikes" />
+    <MESSAGE value="Added repositories for like, dislike and follow" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added repositories for like, dislike and follow" />
   </component>
 </project>

@@ -4,25 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/Dislike.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/DislikeId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/Follow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/FollowId.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/Like.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/LikeId.java" afterDir="false" />
+    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="Added the entity that represent the dislikes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/DislikeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/FollowRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/LikeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/DislikeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/FollowService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/LikeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/ScriptController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/ScriptController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/AuthService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/JpaUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/JpaUserDetailsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/TokenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/TokenService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -284,7 +273,7 @@
       <workItem from="1723024289202" duration="599000" />
       <workItem from="1725180922798" duration="935000" />
       <workItem from="1725453089490" duration="3557000" />
-      <workItem from="1725464216106" duration="4042000" />
+      <workItem from="1725464216106" duration="4948000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />
@@ -366,7 +355,31 @@
       <option name="project" value="LOCAL" />
       <updated>1721822407281</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added the entity that represent the follows">
+      <option name="closed" value="true" />
+      <created>1725468352322</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1725468352322</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added the entity that represent the likes">
+      <option name="closed" value="true" />
+      <created>1725468377630</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1725468377630</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added the entity that represent the dislikes">
+      <option name="closed" value="true" />
+      <created>1725468392405</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1725468392405</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,6 +419,9 @@
     <MESSAGE value="update docckerfile" />
     <MESSAGE value="fix : première correction partiel de pipelin&#10;feat : ajout de routes pour récupérer le content d'un file ou d'un script" />
     <MESSAGE value="update dockerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="update dockerfile" />
+    <MESSAGE value="Added the entity that represent the follows" />
+    <MESSAGE value="Added the entity that represent the likes" />
+    <MESSAGE value="Added the entity that represent the dislikes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the entity that represent the dislikes" />
   </component>
 </project>

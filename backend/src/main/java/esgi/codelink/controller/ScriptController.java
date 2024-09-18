@@ -1,30 +1,41 @@
 package esgi.codelink.controller;
 
+import esgi.codelink.dto.CommentDTO;
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.dto.script.ScriptRequest;
 import esgi.codelink.dto.script.PipelineRequest;
+import esgi.codelink.entity.Comment;
 import esgi.codelink.entity.CustomUserDetails;
+import esgi.codelink.entity.script.Script;
+import esgi.codelink.service.CommentService;
 import esgi.codelink.service.scriptAndFile.script.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/scripts")
 public class ScriptController {
 
+    private final ScriptService scriptService;
+
+    private final CommentService commentService;
+
     @Autowired
-    private ScriptService scriptService;
+    public ScriptController(ScriptService scriptService, CommentService commentService) {
+        this.scriptService = scriptService;
+        this.commentService = commentService;
+    }
 
     @GetMapping
-    public ResponseEntity<List<ScriptDTO>> getAllScripts(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<ScriptDTO> scripts = scriptService.getAllScriptsByUser(userDetails.getUser());
+    public ResponseEntity<List<ScriptRequest>> getAllScripts(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<ScriptRequest> scripts = scriptService.getAllScriptsByUser(userDetails.getUser());
         return ResponseEntity.ok(scripts);
     }
 
@@ -60,5 +71,33 @@ public class ScriptController {
     ) throws IOException, InterruptedException {
         String result = scriptService.executePipeline(pipelineRequest.getInitialScriptId(), userDetails.getUser(), pipelineRequest.getScriptToFileMap());
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/{scriptId}/comments/")
+    public ResponseEntity<Comment> addComment(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CommentDTO commentDTO, @PathVariable Long scriptId) {
+        var script = scriptService.getScriptEntityById(scriptId);
+        if(script.isPresent()) {
+            Comment savedComment = commentService.addComment(commentDTO, script.get(), userDetails.getUser());
+            return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long commentId) {
+
+        commentService.deleteComment(commentId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{scriptId}/comments/")
+    public ResponseEntity<List<Comment>> getCommentsByScript(@PathVariable Long scriptId) {
+        Optional<Script> script = scriptService.getScriptEntityById(scriptId);
+        if (script.isPresent()) {
+            List<Comment> comments = commentService.getCommentsByScript(script.get());
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

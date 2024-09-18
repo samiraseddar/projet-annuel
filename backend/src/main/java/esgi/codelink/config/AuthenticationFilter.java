@@ -16,6 +16,8 @@ import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
+import java.util.Locale;
+
 import esgi.codelink.repository.*;
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter { // pour appler la requette
@@ -35,13 +37,14 @@ public class AuthenticationFilter extends OncePerRequestFilter { // pour appler 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         if (request.getServletPath().contains("/api/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         var authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("BEARER ")) {
+        if (authHeader == null || !authHeader.toUpperCase(Locale.ROOT).startsWith("BEARER ")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -57,16 +60,14 @@ public class AuthenticationFilter extends OncePerRequestFilter { // pour appler 
                     filterChain.doFilter(request, response);
                     return;
                 }
+
                 var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                var context = SecurityContextHolder.createEmptyContext();
-                context.setAuthentication(authToken);
-                securityContextRepository.saveContext(context, request, response);
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
         filterChain.doFilter(request, response);
     }
-
     @Bean
     public SecurityContextRepository securityContextRepository() {
         return new HttpSessionSecurityContextRepository();

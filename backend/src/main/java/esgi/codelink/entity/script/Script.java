@@ -29,7 +29,8 @@ public class Script {
 
     @Column
     private String inputFileExtensions;
-
+    private int nbLikes;
+    private int nbDislikes;
     @Column
     private String outputFileNames;
 
@@ -112,5 +113,28 @@ public class Script {
 
     public User getUser() {
         return user;
+    }
+    public void incrementLikes() {
+        nbLikes = nbLikes + 1;
+    }
+
+    public void decrementLikes() {
+        nbLikes = nbLikes - 1;
+    }
+
+    public void incrementDislikes() {
+        nbDislikes = nbDislikes + 1;
+    }
+
+    public void decrementDislikes() {
+        nbDislikes = nbDislikes - 1;
+    }
+
+    public int getNbLikes() {
+        return nbLikes;
+    }
+
+    public int getNbDislikes() {
+        return nbDislikes;
     }
 }

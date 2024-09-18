@@ -2,6 +2,7 @@ package esgi.codelink.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -15,12 +16,10 @@ public class CustomUserDetails implements UserDetails {// c'est pour repr√©sent√
         this.user = user;
     }
 
-   @Override
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("USER"));
     }
-//le role on return une liste vide .
-
 
     public User getUser() {
         return user;

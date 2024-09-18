@@ -4,7 +4,10 @@ public class ScriptRequest {
 
     private ScriptDTO scriptDTO;
     private String scriptContent;
-
+    public ScriptRequest(ScriptDTO scriptDTO, String scriptContent) {
+        this.scriptDTO = scriptDTO;
+        this.scriptContent = scriptContent;
+    }
     // Getters and Setters
 
     public ScriptDTO getScriptDTO() {

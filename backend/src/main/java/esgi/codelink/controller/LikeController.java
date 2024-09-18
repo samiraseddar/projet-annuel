@@ -28,7 +28,14 @@ public class LikeController {
         var like = service.insert(userDetails.getUserId(), scriptId);
         return like == null ? ResponseEntity.ok(false) : ResponseEntity.ok(true);
     }
-
+    @GetMapping("/api/likes/{scriptId}")
+    public ResponseEntity<Boolean> isExistingLike(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable long scriptId) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        var like = service.findById(userDetails.getUserId(), scriptId);
+        return like == null ? ResponseEntity.ok(false) : ResponseEntity.ok(true);
+    }
 
     @DeleteMapping("/api/likes/{scriptId}")
     public ResponseEntity<Void> deleteLike(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable long scriptId) {

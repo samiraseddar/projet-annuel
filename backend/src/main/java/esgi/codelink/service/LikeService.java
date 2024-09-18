@@ -37,16 +37,16 @@ public class LikeService {
     @Transactional
     public Like insert(long userId, long scriptId) {
         var user = userRepository.findById(userId);
-        var post = em.find(Script.class, scriptId, LockModeType.PESSIMISTIC_WRITE);
+        var script = em.find(Script.class, scriptId, LockModeType.PESSIMISTIC_WRITE);
 
-        if(user.isEmpty() || post == null) return null;
+        if(user.isEmpty() || script == null) return null;
 
-        var like = likeRepository.findById(new LikeId(post, user.get()));
+        var like = likeRepository.findById(new LikeId(script, user.get()));
         if(like.isPresent()) return like.get();
 
-        var newLike = new Like(post, user.get());
-        //script.addLike(newLike);
-        scriptRepository.save(post);
+        var newLike = new Like(script, user.get());
+        script.incrementLikes();
+        scriptRepository.save(script);
         return likeRepository.save(newLike);
     }
 
@@ -61,11 +61,23 @@ public class LikeService {
         var like = likeRepository.findById(id);
         if(like.isPresent()) {
             var script = post.get();
-            //script.deleteLike(like.get());
+            script.decrementLikes();
             scriptRepository.save(script);
             likeRepository.delete(like.get());
             return true;
         }
         return false;
+    }
+
+
+    @Transactional
+    public Like findById(long userId, long scriptId) {
+        var script = scriptRepository.findById(scriptId);
+        var user = userRepository.findById(userId);
+
+        if (script.isEmpty() || user.isEmpty()) return null;
+
+        var id = new LikeId(script.get(), user.get());
+        return likeRepository.findById(id).orElse(null);
     }
 }

@@ -2,6 +2,8 @@ package esgi.codelink.service;
 
 import esgi.codelink.entity.Dislike;
 import esgi.codelink.entity.DislikeId;
+import esgi.codelink.entity.Like;
+import esgi.codelink.entity.LikeId;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.repository.DislikeRepository;
 import esgi.codelink.repository.ScriptRepository;
@@ -26,7 +28,7 @@ public class DislikeService {
 
     @Autowired
     public DislikeService(DislikeRepository dislikeRepository, ScriptRepository scriptRepository,
-                       UserRepository userRepository, EntityManager em) {
+                          UserRepository userRepository, EntityManager em) {
         this.dislikeRepository = dislikeRepository;
         this.scriptRepository = scriptRepository;
         this.userRepository = userRepository;
@@ -37,16 +39,16 @@ public class DislikeService {
     @Transactional
     public Dislike insert(long userId, long scriptId) {
         var user = userRepository.findById(userId);
-        var post = em.find(Script.class, scriptId, LockModeType.PESSIMISTIC_WRITE);
+        var script = em.find(Script.class, scriptId, LockModeType.PESSIMISTIC_WRITE);
 
-        if(user.isEmpty() || post == null) return null;
+        if(user.isEmpty() || script == null) return null;
 
-        var dislike = dislikeRepository.findById(new DislikeId(post, user.get()));
+        var dislike = dislikeRepository.findById(new DislikeId(script, user.get()));
         if(dislike.isPresent()) return dislike.get();
 
-        var newDislike = new Dislike(post, user.get());
-        //script.addLike(newLike);
-        scriptRepository.save(post);
+        var newDislike = new Dislike(script, user.get());
+        script.incrementDislikes();
+        scriptRepository.save(script);
         return dislikeRepository.save(newDislike);
     }
 
@@ -61,11 +63,23 @@ public class DislikeService {
         var dislike = dislikeRepository.findById(id);
         if(dislike.isPresent()) {
             var script = post.get();
-            //script.deleteLike(like.get());
+            script.decrementDislikes();
             scriptRepository.save(script);
             dislikeRepository.delete(dislike.get());
             return true;
         }
         return false;
+    }
+
+
+    @Transactional
+    public Dislike findById(long userId, long scriptId) {
+        var script = scriptRepository.findById(scriptId);
+        var user = userRepository.findById(userId);
+
+        if (script.isEmpty() || user.isEmpty()) return null;
+
+        var id = new DislikeId(script.get(), user.get());
+        return dislikeRepository.findById(id).orElse(null);
     }
 }

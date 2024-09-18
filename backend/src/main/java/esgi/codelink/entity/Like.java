@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name="likes")
+@Table(name = "likes")
 @IdClass(LikeId.class)
 public class Like {
 
@@ -20,7 +20,8 @@ public class Like {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Like(){}
+    public Like() {
+    }
 
     public Like(Script script, User user) {
         this.script = Objects.requireNonNull(script);

@@ -29,9 +29,16 @@ public class DislikeController {
         var dislike = service.insert(userDetails.getUserId(), scriptId);
         return dislike == null ? ResponseEntity.ok(false) : ResponseEntity.ok(true);
     }
+    @GetMapping("/api/dislikes/{scriptId}")
+    public ResponseEntity<Boolean> isExistingDislike(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable long scriptId) {
+        if (userDetails == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        var like = service.findById(userDetails.getUserId(), scriptId);
+        return like == null ? ResponseEntity.ok(false) : ResponseEntity.ok(true);
+    }
 
-
-    @DeleteMapping("/api/likes/{scriptId}")
+    @DeleteMapping("/api/dislikes/{scriptId}")
     public ResponseEntity<Void> deleteDislike(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable long scriptId) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

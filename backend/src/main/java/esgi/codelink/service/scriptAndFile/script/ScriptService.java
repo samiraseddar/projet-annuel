@@ -84,7 +84,7 @@ public class ScriptService {
     }
 
     private ScriptDTO convertToDTO(Script script) {
-        ScriptDTO scriptDTO = new ScriptDTO();
+        ScriptDTO scriptDTO = new ScriptDTO(script.getUser().getUserId());
         scriptDTO.setId(script.getScript_id());
         scriptDTO.setName(script.getName());
         scriptDTO.setLocation(script.getLocation());

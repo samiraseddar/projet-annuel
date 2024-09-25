@@ -113,4 +113,21 @@ public class Script {
     public User getUser() {
         return user;
     }
+
+    public ScriptDTO toDTO() {
+        ScriptDTO dto = new ScriptDTO(this.getUser().getUserId());
+        dto.setId(this.getScript_id());
+        dto.setName(this.getName());
+        dto.setLocation(this.getLocation());
+        dto.setProtectionLevel(this.getProtectionLevel().name());
+        dto.setLanguage(this.getLanguage());
+        dto.setInputFileExtensions(this.getInputFileExtensions());
+        dto.setOutputFileNames(this.getOutputFileNames());
+
+        return dto;
+    }
+
+    public Long getScriptId() {
+        return this.script_id;
+    }
 }

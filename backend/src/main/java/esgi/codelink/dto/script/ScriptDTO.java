@@ -13,6 +13,12 @@ public class ScriptDTO {
 
     // Getters
 
+    public ScriptDTO(){}
+
+    public ScriptDTO(long userId){
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -73,5 +79,9 @@ public class ScriptDTO {
 
     public void setOutputFileNames(String outputFileNames) {
         this.outputFileNames = outputFileNames;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

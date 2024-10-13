@@ -13,6 +13,7 @@ import esgi.codelink.service.scriptAndFile.file.FileService;
 import esgi.codelink.dto.script.ScriptDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,6 +28,9 @@ import java.util.stream.Collectors;
 public class ScriptService {
 
     private static final Logger logger = LoggerFactory.getLogger(ScriptService.class);
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     private ScriptRepository scriptRepository;
@@ -123,6 +127,9 @@ public class ScriptService {
         Map<Long, String> executionResults = new LinkedHashMap<>();
         List<File> previousOutputFiles = new ArrayList<>();
 
+        // Notifier le début du pipeline
+        messagingTemplate.convertAndSend("/topic/progress", "Pipeline started for user: " + user.getFirstName());
+
         for (Map.Entry<Long, List<Long>> entry : scriptToFileMap.entrySet()) {
             Long scriptId = entry.getKey();
             List<Long> inputFileIds = entry.getValue();
@@ -132,6 +139,10 @@ public class ScriptService {
 
             logger.info("Executing script: {} with ID: {}", script.getName(), scriptId);
 
+            // Notifier l'utilisateur que le script commence à s'exécuter
+            messagingTemplate.convertAndSend("/topic/progress", "Executing script: " + script.getName() + " (ID: " + scriptId + ")");
+
+            // Récupération des fichiers d'entrée
             List<File> inputFiles = new ArrayList<>();
             if (inputFileIds != null) {
                 inputFiles.addAll(inputFileIds.stream().map(fileService::findById).collect(Collectors.toList()));
@@ -140,31 +151,50 @@ public class ScriptService {
 
             for (File file : inputFiles) {
                 logger.info("Input file: {} at location {}", file.getName(), file.getLocation());
+                // Notifier l'utilisateur des fichiers d'entrée utilisés
+                messagingTemplate.convertAndSend("/topic/progress", "Processing input file: " + file.getName() + " located at: " + file.getLocation());
             }
 
+            // Préparer les fichiers de sortie
             List<File> outputFiles = prepareOutputFiles(script, user);
 
+            // Exécuter le script
             ScriptExecutor executor = scriptExecutorFactory.getExecutor(script.getLanguage());
             String result = executor.executeScript(script.getLocation(), inputFiles, outputFiles);
-            logger.info("Script execution result: {}", result);
+            logger.info("Script " + script.getName() + " execution result: {}", result);
 
+            // Notifier l'utilisateur du résultat de l'exécution
+            messagingTemplate.convertAndSend("/topic/progress", "Execution result for script: " + script.getName() + " => " + result);
+
+            // Gérer les fichiers de sortie
             for (File outputFile : outputFiles) {
                 java.io.File file = new java.io.File(outputFile.getLocation());
                 if (file.exists()) {
                     String content = new String(Files.readAllBytes(file.toPath()));
                     fileService.saveFile(outputFile, content, true, user);
                     logger.info("Saved output file: {} with content: {}", outputFile.getName(), content);
+
+                    // Notifier l'utilisateur du fichier de sortie sauvegardé
+                    messagingTemplate.convertAndSend("/topic/progress", "Output file saved: " + outputFile.getName());
                 } else {
-                    throw new RuntimeException("File operation error: " + outputFile.getLocation());
+                    // Notifier l'utilisateur si une erreur de fichier se produit
+                    String errorMessage = "File operation error: " + outputFile.getLocation();
+                    messagingTemplate.convertAndSend("/topic/progress", errorMessage);
+                    throw new RuntimeException(errorMessage);
                 }
             }
 
             previousOutputFiles.clear();
             previousOutputFiles.addAll(outputFiles);
 
+            // Ajouter le résultat de l'exécution du script dans le résultat final
             executionResults.put(scriptId, result);
         }
 
+        // Notifier la fin du pipeline
+        messagingTemplate.convertAndSend("/topic/progress", "Pipeline finished for user: " + user.getFirstName());
+
+        // Retourner les résultats des exécutions
         return executionResults.entrySet().stream()
                 .map(entry -> "Script ID: " + entry.getKey() + "\nResult:\n" + entry.getValue())
                 .collect(Collectors.joining("\n\n"));

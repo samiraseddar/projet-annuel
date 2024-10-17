@@ -82,7 +82,7 @@ public class ScriptService {
     }
 
     public List<ScriptDTO> getAllScriptsByUser(User user) {
-        return scriptRepository.findByUser(user).stream()
+        return scriptRepository.findByUserOrProtectionLevel(user, ProtectionLevel.PUBLIC).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

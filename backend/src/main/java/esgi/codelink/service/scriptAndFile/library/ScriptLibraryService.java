@@ -34,11 +34,16 @@ public class ScriptLibraryService {
         return new LibraryDTO(scriptLibraryRepository.save(library));
     }
 
-    public List<LibraryDTO> getLibrariesByUser(User owner) {
-        List<ScriptLibrary> libraries = scriptLibraryRepository.findAllByOwner(owner);
+    public List<LibraryDTO> getAllLibrariesByUser(User owner) {
+        List<ScriptLibrary> libraries = scriptLibraryRepository.findAllByOwnerOrProtectionLevel(owner, ProtectionLevel.PUBLIC);
         return libraries.stream().map(this::convertToLibraryDTO).collect(Collectors.toList());
     }
 
+
+    public List<LibraryDTO> getExclusiveLibrariesFromUser(User owner) {
+        List<ScriptLibrary> libraries = scriptLibraryRepository.findAllByOwner(owner);
+        return libraries.stream().map(this::convertToLibraryDTO).collect(Collectors.toList());
+    }
     public LibraryDTO addScriptToLibrary(Long libraryId, Long[] scriptIds, User owner) {
         // Récupération de la bibliothèque
         ScriptLibrary library = scriptLibraryRepository.findById(libraryId)

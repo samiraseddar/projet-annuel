@@ -38,9 +38,15 @@ public class ScriptLibraryController {
         return ResponseEntity.ok(library);
     }
 
-    @GetMapping
+    @GetMapping("/user")
     public ResponseEntity<List<LibraryDTO>> getLibrariesByUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<LibraryDTO> libraries = scriptLibraryService.getLibrariesByUser(userDetails.getUser());
+        List<LibraryDTO> libraries = scriptLibraryService.getExclusiveLibrariesFromUser(userDetails.getUser());
+        return ResponseEntity.ok(libraries);
+    }
+
+    @GetMapping("/free")
+    public ResponseEntity<List<LibraryDTO>> getAllFreeLibrairies(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<LibraryDTO> libraries = scriptLibraryService.getAllLibrariesByUser(userDetails.getUser());
         return ResponseEntity.ok(libraries);
     }
 

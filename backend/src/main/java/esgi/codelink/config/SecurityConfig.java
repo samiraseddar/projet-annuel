@@ -23,13 +23,14 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     private final AuthenticationFilter authFilter;
+
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Autowired
@@ -43,7 +44,8 @@ public class SecurityConfig {
         http
             .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
             .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-            .cors().and()
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
             .userDetailsService(jpaUserDetailsService)
             .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console())
                 .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/**")))

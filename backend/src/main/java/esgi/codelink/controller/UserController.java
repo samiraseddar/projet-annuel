@@ -1,19 +1,21 @@
 package esgi.codelink.controller;
-import esgi.codelink.dto.LoginDTO;
-import esgi.codelink.dto.LoginResponseDTO;
-import esgi.codelink.dto.RegisterDTO;
-import esgi.codelink.dto.RegisterResponseDTO;
+import esgi.codelink.dto.*;
+import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.service.AuthService;
+import esgi.codelink.service.FollowService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import esgi.codelink.entity.User;
 import esgi.codelink.service.UserService;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -43,7 +45,6 @@ public class UserController {
 
     @PostMapping("/signUp")
     public ResponseEntity<RegisterResponseDTO> signUp(@RequestBody RegisterDTO registerDTO) throws IOException {
-        System.out.println("reponse " + registerDTO);
         var res = authService.register(registerDTO);
         if(res.getStatus().equals("Success")) {
             return ResponseEntity.ok(res);
@@ -62,10 +63,34 @@ public class UserController {
         }
         else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
-
         }
 
     }
+
+
+    @PostMapping("/{followeeId}/follows")
+    public ResponseEntity<Void> follow(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable long followeeId) {
+        System.out.println("CONTROLLER FOLLOW ");
+        boolean success = userService.followUser(userDetails.getUserId(), followeeId);
+        if (success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{followeeId}/follows")
+    public ResponseEntity<Void> unfollow(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable long followeeId) {
+        System.out.println("CONTROLLER UNFOLLOW");
+        boolean success = userService.unfollowUser(userDetails.getUserId(), followeeId);
+        if (success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @PostMapping("/{followerId}/follow/{followeeId}")
     public ResponseEntity<Void> followUser(@PathVariable long followerId, @PathVariable long followeeId) {
         boolean success = userService.followUser(followerId, followeeId);
@@ -86,8 +111,28 @@ public class UserController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<User>> searchUsers(@RequestParam String query) {
+        List<User> users = userService.searchUsers(query);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
 
+    @GetMapping("/{userId}/followers")
+    public ResponseEntity<List<User>> getFollowers(@PathVariable Long userId) {
+        List<User> followers = userService.getFollowers(userId);
+        return ResponseEntity.ok(followers);
+    }
 
+    @GetMapping("/{userId}/following")
+    public ResponseEntity<List<User>> getFollowing(@PathVariable Long userId) {
+        List<User> following = userService.getFollowing(userId);
+        return ResponseEntity.ok(following);
+    }
 
+    @GetMapping("/isFollowing/{userId}")
+    public ResponseEntity<Boolean> isFollowing(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long userId) {
+        User currentUser = userDetails.getUser();
+        return ResponseEntity.ok(userService.isFollowing(currentUser, userId));
+    }
 }

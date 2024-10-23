@@ -1,5 +1,6 @@
 package esgi.codelink.service.scriptAndFile.script;
 
+import esgi.codelink.dto.script.ScriptRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import esgi.codelink.entity.User;
@@ -41,7 +42,8 @@ public class ScriptService {
     @Autowired
     private ScriptExecutorFactory scriptExecutorFactory;
 
-    private static final Path SCRIPTS_DIR = Paths.get("../scripts");
+    //private static final Path SCRIPTS_DIR = Paths.get("../scripts");
+    Path SCRIPTS_DIR = Paths.get(System.getProperty("user.dir")).getParent().resolve("script");
 
     public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent, User user) throws IOException {
         Script script = new Script(scriptDTO, user);
@@ -84,7 +86,20 @@ public class ScriptService {
     public List<ScriptDTO> getAllScriptsByUser(User user) {
         return scriptRepository.findByUserOrProtectionLevel(user, ProtectionLevel.PUBLIC).stream()
                 .map(this::convertToDTO)
+                .map(scriptDTO -> { //rajout
+                    String scriptContent = null;
+                    try {
+                        Path scriptPath = Paths.get("../script/" + scriptDTO.getLocation());
+                        scriptContent = Files.readString(scriptPath);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return new ScriptRequest(scriptDTO, scriptContent);
+                })
                 .collect(Collectors.toList());
+    }
+    public Optional<Script> getScriptEntityById(Long id) {
+        return scriptRepository.findById(id);
     }
 
     private ScriptDTO convertToDTO(Script script) {
@@ -96,24 +111,39 @@ public class ScriptService {
         scriptDTO.setLanguage(script.getLanguage());
         scriptDTO.setInputFileExtensions(script.getInputFileExtensions());
         scriptDTO.setOutputFileNames(script.getOutputFileNames());
+
+        scriptDTO.setNbLikes(script.getNbLikes());
+        scriptDTO.setNbDislikes(script.getNbDislikes());
         return scriptDTO;
     }
 
     private void makeScriptLocation(Script script) {
-        String complement = "/" + script.getUser().getUserId() + "/";
+        String complement = script.getUser().getUserId() + "/";
         switch (script.getLanguage().toLowerCase()) {
             case "python":
-                complement = "/python" + complement;
+                complement = "python/" + complement;
                 break;
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported script language");
         }
-        Path scriptDir = SCRIPTS_DIR.resolve(complement).normalize();
-        script.setLocation(scriptDir.resolve(script.getName() + ".py").toString());
+        Path scriptDir = SCRIPTS_DIR.resolve(complement);
+        System.out.println(scriptDir);
+        try { //TEST
+            if (!Files.exists(scriptDir)) {
+                Files.createDirectories(scriptDir);
+                System.out.println("Répertoire créé : " + scriptDir);
+            }
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du répertoire des scripts", e);
+        }
+        System.out.println("location : " + Paths.get(complement).resolve(script.getName() + ".py"));
+        script.setLocation(Paths.get(complement).resolve(script.getName() + ".py").toString());
     }
 
+
     private void storeScriptFile(Script script, String scriptContent) throws IOException {
-        Path scriptPath = Paths.get(script.getLocation()).normalize();
+        //Path scriptPath = Paths.get(script.getLocation()).normalize();
+        Path scriptPath = SCRIPTS_DIR.resolve(script.getLocation()).normalize();
         Files.createDirectories(scriptPath.getParent());
         Files.write(scriptPath, scriptContent.getBytes());
     }

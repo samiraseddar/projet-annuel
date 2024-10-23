@@ -31,6 +31,11 @@ public class User {
     @OneToMany(mappedBy = "user")// un user c'est une clé etrangére pour un token
     private Set<Token> tokens;
 
+    //@OneToMany(mappedBy = "follower")
+    //private Set<Follow> followings = new HashSet<>();
+
+   // @OneToMany(mappedBy = "following")
+    //private Set<Follow> followers = new HashSet<>();
     public User() { }
 
     public User(String mail, String password,String lastName,String firstName) {
@@ -102,6 +107,7 @@ public class User {
     }
 
     public void incrementFollowing() {
+
         this.nbFollowing++;
     }
 

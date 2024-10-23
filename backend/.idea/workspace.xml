@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="update dockerfile">
+    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="corrige les erreurs du back">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,23 +24,23 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="pythonExec" />
+        <entry key="$PROJECT_DIR$/.." value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "julienEcole"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;julienEcole&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/samiraseddar/projet-annuel.git",
-    "accountId": "93a87337-0b8e-4efd-b57b-350efede5090"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/samiraseddar/projet-annuel.git&quot;,
+    &quot;accountId&quot;: &quot;93a87337-0b8e-4efd-b57b-350efede5090&quot;
   }
-}]]></component>
+}</component>
   <component name="JpbToolWindowState">
     <option name="isToolWindowVisible" value="false" />
   </component>
@@ -63,6 +64,9 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2fjI0ZMEdhriyMfNFE0ne7ej3NC" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -107,13 +111,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Maven.projet [clean,install,compile...]">
-    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile">
-        <settings />
-      </deployment>
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Spring Boot.ProjetApplication">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="projet-annuel" />
       <method v="2">
@@ -192,9 +190,25 @@
       </deployment>
       <method v="2" />
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
+      <item itemvalue="Docker.Dockerfile" />
       <item itemvalue="Maven.projet [clean,install,compile...]" />
+      <item itemvalue="Spring Boot.ProjetApplication" />
+      <item itemvalue="Spring Boot.ProjetApplication (1)" />
     </list>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -253,6 +267,25 @@
       <workItem from="1721543826544" duration="8148000" />
       <workItem from="1721567328631" duration="1395000" />
       <workItem from="1721577541594" duration="266000" />
+      <workItem from="1721934932031" duration="1779000" />
+      <workItem from="1723024289202" duration="599000" />
+      <workItem from="1725180922798" duration="935000" />
+      <workItem from="1725453089490" duration="3557000" />
+      <workItem from="1725464216106" duration="10446000" />
+      <workItem from="1725912062241" duration="603000" />
+      <workItem from="1726137504032" duration="664000" />
+      <workItem from="1726485047897" duration="10544000" />
+      <workItem from="1726657312700" duration="1209000" />
+      <workItem from="1726771254859" duration="1171000" />
+      <workItem from="1726831820028" duration="1286000" />
+      <workItem from="1727864841761" duration="1507000" />
+      <workItem from="1727867964825" duration="788000" />
+      <workItem from="1727868782411" duration="186000" />
+      <workItem from="1727869165412" duration="1031000" />
+      <workItem from="1728682470862" duration="2235000" />
+      <workItem from="1728762669495" duration="10000" />
+      <workItem from="1729199367809" duration="2662000" />
+      <workItem from="1729455469336" duration="1121000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />
@@ -334,7 +367,103 @@
       <option name="project" value="LOCAL" />
       <updated>1721822407281</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added the entity that represent the follows">
+      <option name="closed" value="true" />
+      <created>1725468352322</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1725468352322</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added the entity that represent the likes">
+      <option name="closed" value="true" />
+      <created>1725468377630</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1725468377630</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added the entity that represent the dislikes">
+      <option name="closed" value="true" />
+      <created>1725468392405</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1725468392405</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added repositories for like, dislike and follow">
+      <option name="closed" value="true" />
+      <created>1725469256422</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1725469256422</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Added services for like, dislike and follow">
+      <option name="closed" value="true" />
+      <created>1725471212101</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1725471212101</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added controllers for like, dislike and follow">
+      <option name="closed" value="true" />
+      <created>1725473465923</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1725473465923</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add comment">
+      <option name="closed" value="true" />
+      <created>1726657378536</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1726657378536</updated>
+    </task>
+    <task id="LOCAL-00018" summary="add like dislike">
+      <option name="closed" value="true" />
+      <created>1726657719081</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1726657719082</updated>
+    </task>
+    <task id="LOCAL-00019" summary="update token repository">
+      <option name="closed" value="true" />
+      <created>1726657812301</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1726657812301</updated>
+    </task>
+    <task id="LOCAL-00020" summary="add partie reseau social">
+      <option name="closed" value="true" />
+      <created>1726657850191</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1726657850191</updated>
+    </task>
+    <task id="LOCAL-00021" summary="update some files">
+      <option name="closed" value="true" />
+      <created>1726657892662</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1726657892662</updated>
+    </task>
+    <task id="LOCAL-00022" summary="corrige les erreurs du back">
+      <option name="closed" value="true" />
+      <created>1726657926574</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1726657926574</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -374,6 +503,18 @@
     <MESSAGE value="update docckerfile" />
     <MESSAGE value="fix : première correction partiel de pipelin&#10;feat : ajout de routes pour récupérer le content d'un file ou d'un script" />
     <MESSAGE value="update dockerfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="update dockerfile" />
+    <MESSAGE value="Added the entity that represent the follows" />
+    <MESSAGE value="Added the entity that represent the likes" />
+    <MESSAGE value="Added the entity that represent the dislikes" />
+    <MESSAGE value="Added repositories for like, dislike and follow" />
+    <MESSAGE value="Added services for like, dislike and follow" />
+    <MESSAGE value="Added controllers for like, dislike and follow" />
+    <MESSAGE value="add comment" />
+    <MESSAGE value="add like dislike" />
+    <MESSAGE value="update token repository" />
+    <MESSAGE value="add partie reseau social" />
+    <MESSAGE value="update some files" />
+    <MESSAGE value="corrige les erreurs du back" />
+    <option name="LAST_COMMIT_MESSAGE" value="corrige les erreurs du back" />
   </component>
 </project>

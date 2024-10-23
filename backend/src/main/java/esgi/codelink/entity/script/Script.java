@@ -114,12 +114,14 @@ public class Script {
     public User getUser() {
         return user;
     }
+  
     public void incrementLikes() {
         nbLikes = nbLikes + 1;
     }
 
     public void decrementLikes() {
         nbLikes = nbLikes - 1;
+        if(nbLikes < 0) nbLikes = 0;
     }
 
     public void incrementDislikes() {
@@ -128,6 +130,7 @@ public class Script {
 
     public void decrementDislikes() {
         nbDislikes = nbDislikes - 1;
+        if(nbDislikes < 0) nbDislikes = 0;
     }
 
     public int getNbLikes() {
@@ -136,5 +139,23 @@ public class Script {
 
     public int getNbDislikes() {
         return nbDislikes;
+
+    public ScriptDTO toDTO() {
+        ScriptDTO dto = new ScriptDTO(this.getUser().getUserId());
+        dto.setId(this.getScript_id());
+        dto.setName(this.getName());
+        dto.setLocation(this.getLocation());
+        dto.setProtectionLevel(this.getProtectionLevel().name());
+        dto.setLanguage(this.getLanguage());
+        dto.setInputFileExtensions(this.getInputFileExtensions());
+        dto.setOutputFileNames(this.getOutputFileNames());
+        dto.setNbLikes(this.getNbLikes());
+        dto.setNbDislikes(this.getNbDislikes());
+
+        return dto;
+    }
+
+    public Long getScriptId() {
+        return this.script_id;
     }
 }

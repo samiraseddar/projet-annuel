@@ -30,7 +30,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final AuthenticationFilter authFilter;
-
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Autowired
@@ -42,23 +41,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JpaUserDetailsService jpaUserDetailsService) throws Exception {
         http
-            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-            .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(withDefaults())
-            .userDetailsService(jpaUserDetailsService)
-            .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console())
-                .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/**")))
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(HttpMethod.GET, "/api/scripts/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/scripts/execute").authenticated()
-                .requestMatchers(HttpMethod.GET, "/api/scripts/execute/**").authenticated()
-                .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-                .anyRequest().authenticated())
-            .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint));
-        
-        // Retirer cet appel car il est redondant
-        // .build();
+                .userDetailsService(jpaUserDetailsService)
+                .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console())
+                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/**")))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.POST, "/api/users/signIn").permitAll() // Permettre l'accès à la route de connexion
+                        .requestMatchers(HttpMethod.POST, "/api/users/signUp").permitAll() // Permettre l'accès à la route de connexion
+                        .requestMatchers(HttpMethod.GET, "/api/scripts/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/scripts/execute").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/scripts/execute/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint));
 
         return http.build();
     }

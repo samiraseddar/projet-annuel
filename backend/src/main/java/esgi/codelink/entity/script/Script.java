@@ -57,6 +57,19 @@ public class Script {
         this.protectionLevel = ProtectionLevel.PRIVATE;
     }
 
+    public Script(User user,ScriptDTO scriptDTO) {
+        this.inputFileExtensions = scriptDTO.getInputFileExtensions();
+        this.outputFileNames = scriptDTO.getOutputFileNames();
+        this.name = scriptDTO.getName();
+        this.user = user;
+        this.language = scriptDTO.getLanguage();
+        this.location = scriptDTO.getLocation();
+        this.protectionLevel = ProtectionLevel.valueOf(scriptDTO.getProtectionLevel());
+        this.nbLikes = scriptDTO.getNbLikes();
+        this.nbDislikes = scriptDTO.getNbDislikes();
+    }
+
+
     // Getters and Setters
 
     public Long getScript_id() {

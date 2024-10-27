@@ -1,4 +1,6 @@
 package esgi.codelink.service;
+import esgi.codelink.service.JpaUserDetailsService;
+import esgi.codelink.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;

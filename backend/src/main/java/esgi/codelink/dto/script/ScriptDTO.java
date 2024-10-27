@@ -1,10 +1,16 @@
 package esgi.codelink.dto.script;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class ScriptDTO {
 
     private Long id;
     private String name;
+
+    @JsonIgnore
     private String location;
+
     private String protectionLevel;
     private String language;
     private String inputFileExtensions;
@@ -101,8 +107,29 @@ public class ScriptDTO {
     public void setNbDislikes(int nbDislikes) {
         this.nbDislikes = nbDislikes;
     }
-  
+
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    // Méthodes pour gérer likes et dislikes
+    public void incrementLikes() {
+        this.nbLikes += 1;
+    }
+
+    public void decrementLikes() {
+        if (this.nbLikes > 0) {
+            this.nbLikes -= 1;
+        }
+    }
+
+    public void incrementDislikes() {
+        this.nbDislikes += 1;
+    }
+
+    public void decrementDislikes() {
+        if (this.nbDislikes > 0) {
+            this.nbDislikes -= 1;
+        }
     }
 }

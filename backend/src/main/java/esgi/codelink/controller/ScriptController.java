@@ -6,6 +6,7 @@ import esgi.codelink.dto.script.ScriptRequest;
 import esgi.codelink.dto.script.PipelineRequest;
 import esgi.codelink.entity.Comment;
 import esgi.codelink.entity.CustomUserDetails;
+import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.service.CommentService;
 import esgi.codelink.service.scriptAndFile.script.ScriptService;
@@ -75,8 +76,15 @@ public class ScriptController {
 
     @PostMapping("/{scriptId}/comments/")
     public ResponseEntity<Comment> addComment(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CommentDTO commentDTO, @PathVariable Long scriptId) {
-        var script = scriptService.getScriptById(scriptId);
-        Comment savedComment = commentService.addComment(commentDTO, script.get(), userDetails.getUser());
+        ScriptDTO scriptDTO = scriptService.getScriptById(scriptId);
+
+        // Créer l'utilisateur à partir de `userDetails` pour initialiser le `Script`
+        User user = userDetails.getUser();
+
+        // Convertir le ScriptDTO en Script
+        Script script = new Script(user, scriptDTO);
+
+        Comment savedComment = commentService.addComment(commentDTO, script, user);
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }
 

@@ -24,7 +24,7 @@ public class CommentService {
 
     @Transactional
     public Comment addComment(CommentDTO commentDTO, Script script, User user) {
-        var comment = commentDTO.convertToComment();
+        Comment comment = commentDTO.convertToComment();
         comment.setScript(script);
         comment.setUser(user);
         System.out.println("comment to add : " + comment);
@@ -36,8 +36,8 @@ public class CommentService {
         commentRepository.deleteById(commentId);
     }
 
-    public List<Comment> getCommentsByScript(Script script) {
-        return commentRepository.findByScript(script);
+    public List<Comment> getCommentsByScript(Long scriptId) {
+        return commentRepository.findByScriptId(scriptId);
     }
 
     public Optional<Comment> getCommentById(Long commentId) {

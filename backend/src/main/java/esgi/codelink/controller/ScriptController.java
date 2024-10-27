@@ -34,8 +34,8 @@ public class ScriptController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ScriptRequest>> getAllScripts(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<ScriptRequest> scripts = scriptService.getAllScriptsByUser(userDetails.getUser());
+    public ResponseEntity<List<ScriptDTO>> getAllScripts(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<ScriptDTO> scripts = scriptService.getAllScriptsByUser(userDetails.getUser());
         return ResponseEntity.ok(scripts);
     }
 
@@ -75,12 +75,9 @@ public class ScriptController {
 
     @PostMapping("/{scriptId}/comments/")
     public ResponseEntity<Comment> addComment(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CommentDTO commentDTO, @PathVariable Long scriptId) {
-        var script = scriptService.getScriptEntityById(scriptId);
-        if(script.isPresent()) {
-            Comment savedComment = commentService.addComment(commentDTO, script.get(), userDetails.getUser());
-            return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        var script = scriptService.getScriptById(scriptId);
+        Comment savedComment = commentService.addComment(commentDTO, script.get(), userDetails.getUser());
+        return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }
 
 
@@ -93,11 +90,9 @@ public class ScriptController {
 
     @GetMapping("/{scriptId}/comments/")
     public ResponseEntity<List<Comment>> getCommentsByScript(@PathVariable Long scriptId) {
-        Optional<Script> script = scriptService.getScriptEntityById(scriptId);
-        if (script.isPresent()) {
-            List<Comment> comments = commentService.getCommentsByScript(script.get());
-            return new ResponseEntity<>(comments, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        ScriptDTO script = scriptService.getScriptById(scriptId);
+
+        List<Comment> comments = commentService.getCommentsByScript(script.getId());
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 }

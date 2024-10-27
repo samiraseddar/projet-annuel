@@ -139,6 +139,7 @@ public class Script {
 
     public int getNbDislikes() {
         return nbDislikes;
+    }
 
     public ScriptDTO toDTO() {
         ScriptDTO dto = new ScriptDTO(this.getUser().getUserId());

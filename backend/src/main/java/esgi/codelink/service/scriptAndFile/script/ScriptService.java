@@ -1,5 +1,6 @@
 package esgi.codelink.service.scriptAndFile.script;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import esgi.codelink.entity.User;
@@ -24,6 +25,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ScriptService {
 
@@ -41,7 +43,9 @@ public class ScriptService {
     @Autowired
     private ScriptExecutorFactory scriptExecutorFactory;
 
-    private static final Path SCRIPTS_DIR = Paths.get("../scripts");
+    //private static final Path SCRIPTS_DIR = Paths.get("../scripts");
+
+    Path SCRIPTS_DIR = Paths.get(System.getProperty("user.dir")).getParent().resolve("scripts");
 
     public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent, User user) throws IOException {
         Script script = new Script(scriptDTO, user);
@@ -99,21 +103,32 @@ public class ScriptService {
         return scriptDTO;
     }
 
+
     private void makeScriptLocation(Script script) {
-        String complement = "/" + script.getUser().getUserId() + "/";
+        String complement = script.getUser().getUserId() + "/";
         switch (script.getLanguage().toLowerCase()) {
             case "python":
-                complement = "/python" + complement;
+                complement = "python/" + complement;
                 break;
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported script language");
         }
-        Path scriptDir = SCRIPTS_DIR.resolve(complement).normalize();
-        script.setLocation(scriptDir.resolve(script.getName() + ".py").toString());
+        Path scriptDir = SCRIPTS_DIR.resolve(complement);
+        System.out.println(scriptDir);
+        try { //TEST
+            if (!Files.exists(scriptDir)) {
+                Files.createDirectories(scriptDir);
+                System.out.println("Répertoire créé : " + scriptDir);
+            }
+        } catch (IOException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erreur lors de la création du répertoire des scripts", e);
+        }
+        System.out.println("location : " + Paths.get(complement).resolve(script.getName() + ".py"));
+        script.setLocation(Paths.get(complement).resolve(script.getName() + ".py").toString());
     }
 
     private void storeScriptFile(Script script, String scriptContent) throws IOException {
-        Path scriptPath = Paths.get(script.getLocation()).normalize();
+        Path scriptPath = SCRIPTS_DIR.resolve(script.getLocation()).normalize();
         Files.createDirectories(scriptPath.getParent());
         Files.write(scriptPath, scriptContent.getBytes());
     }
@@ -131,6 +146,7 @@ public class ScriptService {
         messagingTemplate.convertAndSend("/topic/progress", "Pipeline started for user: " + user.getFirstName());
 
         for (Map.Entry<Long, List<Long>> entry : scriptToFileMap.entrySet()) {
+            log.info("[SCRIPT SERVICE] - Entry = ", entry);
             Long scriptId = entry.getKey();
             List<Long> inputFileIds = entry.getValue();
 

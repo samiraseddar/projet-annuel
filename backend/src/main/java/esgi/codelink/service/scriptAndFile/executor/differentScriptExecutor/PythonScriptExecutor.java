@@ -5,6 +5,7 @@ import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
 import esgi.codelink.service.scriptAndFile.file.FileService;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,9 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.nio.file.Paths;
 
+@Slf4j
 public class PythonScriptExecutor implements ScriptExecutor {
 
+    Path SCRIPTS_DIR = Paths.get(System.getProperty("user.dir")).getParent().resolve("scripts");
     private static final Pattern DANGEROUS_COMMANDS = Pattern.compile(
             "\\b(rm -rf /|import os|import subprocess|exec|eval|shutil)\\b",
             Pattern.CASE_INSENSITIVE
@@ -34,7 +38,7 @@ public class PythonScriptExecutor implements ScriptExecutor {
 
         List<String> command = new ArrayList<>();
         command.add("python");
-        command.add(scriptPath);
+        command.add(Paths.get(SCRIPTS_DIR.toString(), scriptPath.toString()).normalize().toString());
         command.addAll(inputFilePaths);
         command.addAll(outputFilePaths);
 

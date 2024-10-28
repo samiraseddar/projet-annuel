@@ -10,6 +10,7 @@ import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.service.CommentService;
 import esgi.codelink.service.scriptAndFile.script.ScriptService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/scripts")
 public class ScriptController {
@@ -47,9 +49,17 @@ public class ScriptController {
     }
 
     @PostMapping
-    public ResponseEntity<ScriptDTO> createScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) throws IOException {
-        ScriptDTO createdScript = scriptService.saveScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent(), userDetails.getUser());
-        return ResponseEntity.ok(createdScript);
+    public ResponseEntity<ScriptDTO> createScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) throws IOException{
+        try {
+            ScriptDTO createdScript = scriptService.saveScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent(), userDetails.getUser());
+            return ResponseEntity.ok(createdScript);
+        } catch (IOException e) {
+            log.error("[ERROR] An IOException occurred while creating the script: {}", e.getMessage(), e); // Log with exception details
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
+            log.error("[ERROR] An unexpected error occurred: {}", e.getMessage(), e); // Log with exception details
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PatchMapping("/{id}")

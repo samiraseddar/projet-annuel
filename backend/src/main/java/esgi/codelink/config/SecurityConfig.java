@@ -23,6 +23,8 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -67,7 +69,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");
+        config.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "https://front-pa.vercel.app"
+        ));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/api/**", config);

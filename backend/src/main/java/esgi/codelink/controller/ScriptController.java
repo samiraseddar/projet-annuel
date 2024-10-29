@@ -80,8 +80,22 @@ public class ScriptController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody PipelineRequest pipelineRequest
     ) throws IOException, InterruptedException {
-        String result = scriptService.executePipeline(pipelineRequest.getInitialScriptId(), userDetails.getUser(), pipelineRequest.getScriptToFileMap());
-        return ResponseEntity.ok(result);
+        log.info("Received request to execute pipeline with initial script ID: {} by user: {}", pipelineRequest.getInitialScriptId(), userDetails.getUsername());
+
+        try {
+            String result = scriptService.executePipeline(
+                    pipelineRequest.getInitialScriptId(),
+                    userDetails.getUser(),
+                    pipelineRequest.getScriptToFileMap()
+            );
+
+            log.info("Pipeline executed successfully for script ID: {}. Result: {}", pipelineRequest.getInitialScriptId(), result);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            log.error("Error executing pipeline for script ID: {}", pipelineRequest.getInitialScriptId(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error executing pipeline: " + e.getMessage());
+        }
     }
 
     @PostMapping("/{scriptId}/comments/")

@@ -31,7 +31,7 @@ public class DislikeController {
     }
 
 
-    @DeleteMapping("/api/likes/{scriptId}")
+    @DeleteMapping("/api/dislikes/{scriptId}")
     public ResponseEntity<Void> deleteDislike(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable long scriptId) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

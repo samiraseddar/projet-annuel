@@ -4,12 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="Added services for like, dislike and follow">
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/DislikeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/FollowController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/LikeController.java" afterDir="false" />
+    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="Added se">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/FollowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/FollowService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/DislikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/DislikeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/Message.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/repository/ScriptRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/repository/ScriptRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/AuthService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/JpaUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/JpaUserDetailsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/TokenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/TokenService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="pythonExec" />
+        <entry key="$PROJECT_DIR$/.." value="update-code" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -67,6 +74,9 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="2fjI0ZMEdhriyMfNFE0ne7ej3NC" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -202,6 +212,12 @@
       <item itemvalue="Spring Boot.ProjetApplication" />
       <item itemvalue="Spring Boot.ProjetApplication (1)" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ProjetApplication (1)" />
+        <item itemvalue="Docker.Dockerfile" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -272,6 +288,9 @@
       <workItem from="1725180922798" duration="935000" />
       <workItem from="1725453089490" duration="3557000" />
       <workItem from="1725464216106" duration="8972000" />
+      <workItem from="1730310991372" duration="571000" />
+      <workItem from="1730313346781" duration="1036000" />
+      <workItem from="1730314639410" duration="1931000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />

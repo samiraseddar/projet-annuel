@@ -34,7 +34,7 @@ public class User {
     @OneToMany(mappedBy = "follower")
     private Set<Follow> followings = new HashSet<>();
 
-    @OneToMany(mappedBy = "following")
+    @OneToMany(mappedBy = "followed")
     private Set<Follow> followers = new HashSet<>();
     public User() { }
 

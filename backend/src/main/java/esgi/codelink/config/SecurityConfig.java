@@ -49,6 +49,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // Autorise les requêtes OPTIONS
                         .requestMatchers(HttpMethod.POST, "/api/users/signIn").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/signUp").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/scripts").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/scripts/execute").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/scripts/execute/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()

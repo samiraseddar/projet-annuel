@@ -16,6 +16,8 @@ import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
+import java.util.Locale;
+
 import esgi.codelink.repository.*;
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter { // pour appler la requette
@@ -35,17 +37,46 @@ public class AuthenticationFilter extends OncePerRequestFilter { // pour appler 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
         if (request.getServletPath().contains("/api/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         var authHeader = request.getHeader("Authorization");
-        if (authHeader == null || !authHeader.startsWith("BEARER ")) {
+        if (authHeader == null || !authHeader.toUpperCase(Locale.ROOT).startsWith("BEARER ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
+
+        String s = """
+                var jwt = authHeader.substring(7);
+                var mail = tokenService.extractMail(jwt);
+                System.out.println("mail : " + mail);
+                if (mail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    var user = userDetailsService.loadUserByUsername(mail);
+                    System.out.println("user : " + user);
+                    var token = tokenRepository.findByToken(jwt);
+                    System.out.println("token : "+ token);
+                    if (tokenService.isTokenValid(jwt, user) && token.isPresent() && !token.get().isRevoked()) {
+                        System.out.println("c'est valide !");
+                        if (token.get().isExpired()) {
+                            System.out.println("erreur 401");
+                            response.setStatus(401);
+                            filterChain.doFilter(request, response);
+                            return;
+                        }
+                        var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        System.out.println(authToken);
+                        var context = SecurityContextHolder.createEmptyContext();
+                        context.setAuthentication(authToken);
+                        securityContextRepository.saveContext(context, request, response);
+                    }
+                }
+                filterChain.doFilter(request, response);
+                """;
         var jwt = authHeader.substring(7);
         var mail = tokenService.extractMail(jwt);
         if (mail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -57,11 +88,10 @@ public class AuthenticationFilter extends OncePerRequestFilter { // pour appler 
                     filterChain.doFilter(request, response);
                     return;
                 }
+
                 var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                var context = SecurityContextHolder.createEmptyContext();
-                context.setAuthentication(authToken);
-                securityContextRepository.saveContext(context, request, response);
+                SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
         filterChain.doFilter(request, response);

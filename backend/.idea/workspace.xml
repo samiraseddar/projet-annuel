@@ -4,19 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="Added se">
+    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="reglage des erreures">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/DislikeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/DislikeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/dto/script/ScriptDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/Message.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/Message.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/repository/ScriptRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/repository/ScriptRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/AuthService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/AuthService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/JpaUserDetailsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/JpaUserDetailsService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/service/TokenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/service/TokenService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/esgi/codelink/entity/User.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -290,7 +286,7 @@
       <workItem from="1725464216106" duration="8972000" />
       <workItem from="1730310991372" duration="571000" />
       <workItem from="1730313346781" duration="1036000" />
-      <workItem from="1730314639410" duration="1931000" />
+      <workItem from="1730314639410" duration="4384000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />
@@ -412,7 +408,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725471212101</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="reglage des erreures">
+      <option name="closed" value="true" />
+      <created>1730316799287</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1730316799288</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -457,6 +461,7 @@
     <MESSAGE value="Added the entity that represent the dislikes" />
     <MESSAGE value="Added repositories for like, dislike and follow" />
     <MESSAGE value="Added services for like, dislike and follow" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added services for like, dislike and follow" />
+    <MESSAGE value="reglage des erreures" />
+    <option name="LAST_COMMIT_MESSAGE" value="reglage des erreures" />
   </component>
 </project>

@@ -43,20 +43,24 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JpaUserDetailsService jpaUserDetailsService) throws Exception {
         http
-                .cors(withDefaults())
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
+                .userDetailsService(jpaUserDetailsService)
+                .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console())
+                        .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/**")))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // Autorise les requêtes OPTIONS
-                        .requestMatchers(HttpMethod.POST, "/api/users/signIn").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/signUp").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/scripts").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/signIn").permitAll() // Permettre l'accès à la route de connexion
+                        .requestMatchers(HttpMethod.POST, "/api/users/signUp").permitAll() // Permettre l'accès à la route de connexion
+                        .requestMatchers(HttpMethod.GET, "/api/scripts/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/scripts/execute").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/scripts/execute/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint))
-                .userDetailsService(jpaUserDetailsService);
+                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint));
 
         return http.build();
     }
@@ -66,10 +70,15 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://front-pa.vercel.app"));
+        config.setAllowedOrigins(Arrays.asList(
+                "http://localhost:3000",
+                "https://front-pa.vercel.app"
+        ));
         config.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));
         config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
-        source.registerCorsConfiguration("/**", config);
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/api/**", config);
         return new CorsFilter(source);
     }
 

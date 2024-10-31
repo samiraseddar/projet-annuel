@@ -1,6 +1,7 @@
 package esgi.codelink.service.scriptAndFile.script;
 
 import esgi.codelink.dto.script.ScriptRequest;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

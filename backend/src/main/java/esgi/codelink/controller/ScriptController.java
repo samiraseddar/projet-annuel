@@ -10,6 +10,7 @@ import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.service.CommentService;
 import esgi.codelink.service.scriptAndFile.script.ScriptService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

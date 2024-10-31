@@ -130,6 +130,7 @@ public class ScriptController {
 
     @GetMapping("/{scriptId}/comments/")
     public ResponseEntity<List<Comment>> getCommentsByScript(@PathVariable Long scriptId) {
+        System.out.println("récupérer commentaires controller : " + scriptId);
         ScriptDTO script = scriptService.getScriptById(scriptId);
 
         List<Comment> comments = commentService.getCommentsByScript(script.getId());

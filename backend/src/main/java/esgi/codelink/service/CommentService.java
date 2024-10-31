@@ -27,8 +27,10 @@ public class CommentService {
         Comment comment = commentDTO.convertToComment();
         comment.setScript(script);
         comment.setUser(user);
+
+        var newComment = commentRepository.save(comment);
         System.out.println("comment to add : " + comment);
-        return commentRepository.save(comment);
+        return newComment;
     }
 
     @Transactional

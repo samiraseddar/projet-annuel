@@ -107,9 +107,12 @@ public class ScriptController {
 
     @PostMapping("/{scriptId}/comments/")
     public ResponseEntity<Comment> addComment(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CommentDTO commentDTO, @PathVariable Long scriptId) {
+        System.out.println("add comment controller : " + commentDTO);
         ScriptDTO scriptDTO = scriptService.getScriptById(scriptId);
+        System.out.println(scriptDTO);
 
         User user = userDetails.getUser();
+        System.out.println("user : " + user);
 
         Script script = new Script(user, scriptDTO);
 

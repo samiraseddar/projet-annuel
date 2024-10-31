@@ -1,6 +1,4 @@
 package esgi.codelink.service;
-import esgi.codelink.service.JpaUserDetailsService;
-import esgi.codelink.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
@@ -84,6 +82,7 @@ public class AuthService {//c'est le service qui gére tt l'eutentification (ttt
         var userDetails = (CustomUserDetails) authentication.getPrincipal();
         //spring securitée travail avec des userdetails
         var jwt = tokenService.generateToken(userDetails);
+        System.out.println("auth service connection  token : " + jwt);
         revokeAllTokens(userDetails);
         saveUserToken(userDetails.getUser(), jwt);
         return new LoginResponseDTO(
@@ -113,6 +112,7 @@ public class AuthService {//c'est le service qui gére tt l'eutentification (ttt
     }
 
     private void saveUserToken(User user, String jwt) {
+        System.out.println("saveUserToken : " + user + " " + jwt);
         tokenRepository.save(new Token(jwt, user));
     }
 

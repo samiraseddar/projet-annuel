@@ -48,6 +48,13 @@ public class ScriptController {
         return script != null ? ResponseEntity.ok(script) : ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/{id}/content")
+    public ResponseEntity<String> getScriptContent(@PathVariable Long id) {
+        var script = scriptService.getScriptContent(id);
+        System.out.println("script content : " + script);
+        return ResponseEntity.ok(script);
+    }
+
     @PostMapping
     public ResponseEntity<ScriptDTO> createScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) throws IOException{
         try {
@@ -102,10 +109,8 @@ public class ScriptController {
     public ResponseEntity<Comment> addComment(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CommentDTO commentDTO, @PathVariable Long scriptId) {
         ScriptDTO scriptDTO = scriptService.getScriptById(scriptId);
 
-        // Créer l'utilisateur à partir de `userDetails` pour initialiser le `Script`
         User user = userDetails.getUser();
 
-        // Convertir le ScriptDTO en Script
         Script script = new Script(user, scriptDTO);
 
         Comment savedComment = commentService.addComment(commentDTO, script, user);

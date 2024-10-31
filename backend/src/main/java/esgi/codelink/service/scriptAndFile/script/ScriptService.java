@@ -1,5 +1,6 @@
 package esgi.codelink.service.scriptAndFile.script;
 
+import esgi.codelink.dto.script.ScriptRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,6 +90,21 @@ public class ScriptService {
         return scriptRepository.findByUserOrProtectionLevel(user, ProtectionLevel.PUBLIC).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public String getScriptContent(long id) {
+        var optional = scriptRepository.findById(id);
+        if(optional.isEmpty()) return null;
+        var script = optional.get();
+        String scriptContent = null;
+        log.info(script.getLocation());
+        try {
+            Path scriptPath = Paths.get(SCRIPTS_DIR.toString(), script.getLocation()).normalize();
+            scriptContent = Files.readString(scriptPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return scriptContent;
     }
 
     private ScriptDTO convertToDTO(Script script) {

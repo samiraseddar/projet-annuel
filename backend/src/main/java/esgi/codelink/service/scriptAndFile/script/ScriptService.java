@@ -53,6 +53,7 @@ public class ScriptService {
         makeScriptLocation(script);
         storeScriptFile(script, scriptContent);
         scriptRepository.save(script);
+        user.incrementNbPosts();
         return convertToDTO(script);
     }
 

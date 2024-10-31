@@ -111,6 +111,10 @@ public class User {
         this.nbFollowing++;
     }
 
+    public void incrementNbPosts() {
+        this.nbPosts++;
+    }
+
     public void decrementFollowers() {
         this.nbFollowers--;
     }

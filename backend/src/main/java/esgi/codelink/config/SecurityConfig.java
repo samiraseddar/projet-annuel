@@ -42,10 +42,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JpaUserDetailsService jpaUserDetailsService) throws Exception {
         http
+                .cors(withDefaults())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(withDefaults())
                 .userDetailsService(jpaUserDetailsService)
                 .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console())
                         .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/**")))

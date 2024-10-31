@@ -21,7 +21,8 @@ import java.util.Optional;
 @Service
 public class FileService {
 
-    private static final Path FILES_DIR = Paths.get("../files");
+    //private static final Path FILES_DIR = Paths.get("../files");
+    private static final Path FILES_DIR = Paths.get(System.getProperty("user.dir")).getParent().resolve("files");
 
     @Autowired
     private FileRepository fileRepository;

@@ -39,9 +39,7 @@ public class AuthenticationFilter extends OncePerRequestFilter { // pour appler 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        if (request.getServletPath().contains("/api/auth")
-                || request.getServletPath().contains("/api/users/signIn")
-                || request.getServletPath().contains("/api/users/signUp")) {
+        if (request.getServletPath().contains("/api/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -52,6 +50,34 @@ public class AuthenticationFilter extends OncePerRequestFilter { // pour appler 
             return;
         }
 
+
+        String s = """
+                var jwt = authHeader.substring(7);
+                var mail = tokenService.extractMail(jwt);
+                System.out.println("mail : " + mail);
+                if (mail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    var user = userDetailsService.loadUserByUsername(mail);
+                    System.out.println("user : " + user);
+                    var token = tokenRepository.findByToken(jwt);
+                    System.out.println("token : "+ token);
+                    if (tokenService.isTokenValid(jwt, user) && token.isPresent() && !token.get().isRevoked()) {
+                        System.out.println("c'est valide !");
+                        if (token.get().isExpired()) {
+                            System.out.println("erreur 401");
+                            response.setStatus(401);
+                            filterChain.doFilter(request, response);
+                            return;
+                        }
+                        var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        System.out.println(authToken);
+                        var context = SecurityContextHolder.createEmptyContext();
+                        context.setAuthentication(authToken);
+                        securityContextRepository.saveContext(context, request, response);
+                    }
+                }
+                filterChain.doFilter(request, response);
+                """;
         var jwt = authHeader.substring(7);
         var mail = tokenService.extractMail(jwt);
         if (mail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -71,6 +97,7 @@ public class AuthenticationFilter extends OncePerRequestFilter { // pour appler 
         }
         filterChain.doFilter(request, response);
     }
+
     @Bean
     public SecurityContextRepository securityContextRepository() {
         return new HttpSessionSecurityContextRepository();

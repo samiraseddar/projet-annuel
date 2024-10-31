@@ -174,6 +174,8 @@ public class ScriptService {
             // Préparer les fichiers de sortie
             List<File> outputFiles = prepareOutputFiles(script, user);
 
+            log.info(" outputFiles content :" + outputFiles);
+
             // Exécuter le script
             ScriptExecutor executor = scriptExecutorFactory.getExecutor(script.getLanguage());
             String result = executor.executeScript(script.getLocation(), inputFiles, outputFiles);
@@ -182,26 +184,30 @@ public class ScriptService {
             // Notifier l'utilisateur du résultat de l'exécution
             messagingTemplate.convertAndSend("/topic/progress", "Execution result for script: " + script.getName() + " => " + result);
 
-            // Gérer les fichiers de sortie
-            for (File outputFile : outputFiles) {
-                java.io.File file = new java.io.File(outputFile.getLocation());
-                if (file.exists()) {
-                    String content = new String(Files.readAllBytes(file.toPath()));
-                    fileService.saveFile(outputFile, content, true, user);
-                    logger.info("Saved output file: {} with content: {}", outputFile.getName(), content);
 
-                    // Notifier l'utilisateur du fichier de sortie sauvegardé
-                    messagingTemplate.convertAndSend("/topic/progress", "Output file saved: " + outputFile.getName());
-                } else {
-                    // Notifier l'utilisateur si une erreur de fichier se produit
-                    String errorMessage = "File operation error: " + outputFile.getLocation();
-                    messagingTemplate.convertAndSend("/topic/progress", errorMessage);
-                    throw new RuntimeException(errorMessage);
+                // Gérer les fichiers de sortie
+                for (File outputFile : outputFiles) {
+                    java.io.File file = new java.io.File(outputFile.getLocation());
+
+                    if (file.exists()) {
+                        String content = new String(Files.readAllBytes(file.toPath()));
+                        fileService.saveFile(outputFile, content, true, user);
+                        logger.info("Saved output file: {} with content: {}", outputFile.getName(), content);
+
+                        // Notifier l'utilisateur du fichier de sortie sauvegardé
+                        messagingTemplate.convertAndSend("/topic/progress", "Output file saved: " + outputFile.getName());
+                    } else {
+                        // Notifier l'utilisateur si une erreur de fichier se produit
+                        String errorMessage = "File operation error: " + outputFile.getLocation();
+                        messagingTemplate.convertAndSend("/topic/progress", errorMessage);
+                        throw new RuntimeException(errorMessage);
+                    }
                 }
-            }
 
-            previousOutputFiles.clear();
-            previousOutputFiles.addAll(outputFiles);
+                previousOutputFiles.clear();
+                previousOutputFiles.addAll(outputFiles);
+
+
 
             // Ajouter le résultat de l'exécution du script dans le résultat final
             executionResults.put(scriptId, result);
@@ -217,6 +223,11 @@ public class ScriptService {
     }
 
     private List<File> prepareOutputFiles(Script script, User user) {
+        // Vérifiez d'abord si le script a des noms de fichiers de sortie définis
+        if (script.getOutputFileNames() == null || script.getOutputFileNames().trim().isEmpty()) {
+            return Collections.emptyList(); // Retourner une liste vide si aucun nom n'est défini
+        }
+
         List<String> outputFileNames = Arrays.asList(script.getOutputFileNames().split(","));
         return outputFileNames.stream()
                 .map(name -> {

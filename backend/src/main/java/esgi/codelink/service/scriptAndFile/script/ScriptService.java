@@ -1,10 +1,6 @@
 package esgi.codelink.service.scriptAndFile.script;
 
-import esgi.codelink.dto.script.ScriptRequest;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.File;
 import esgi.codelink.entity.script.Script;
@@ -13,7 +9,9 @@ import esgi.codelink.repository.ScriptRepository;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutorFactory;
 import esgi.codelink.service.scriptAndFile.file.FileService;
-import esgi.codelink.dto.script.ScriptDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -65,8 +63,6 @@ public class ScriptService {
         existingScript.setName(scriptDTO.getName());
         existingScript.setProtectionLevel(ProtectionLevel.valueOf(scriptDTO.getProtectionLevel()));
         existingScript.setLanguage(scriptDTO.getLanguage());
-        existingScript.setInputFileExtensions(scriptDTO.getInputFileExtensions());
-        existingScript.setOutputFileNames(scriptDTO.getOutputFileNames());
 
         makeScriptLocation(existingScript);
         storeScriptFile(existingScript, scriptContent);
@@ -116,8 +112,6 @@ public class ScriptService {
         scriptDTO.setLocation(script.getLocation());
         scriptDTO.setProtectionLevel(script.getProtectionLevel().toString());
         scriptDTO.setLanguage(script.getLanguage());
-        scriptDTO.setInputFileExtensions(script.getInputFileExtensions());
-        scriptDTO.setOutputFileNames(script.getOutputFileNames());
         return scriptDTO;
     }
 
@@ -241,22 +235,6 @@ public class ScriptService {
     }
 
     private List<File> prepareOutputFiles(Script script, User user) {
-        // Vérifiez d'abord si le script a des noms de fichiers de sortie définis
-        if (script.getOutputFileNames() == null || script.getOutputFileNames().trim().isEmpty()) {
-            return Collections.emptyList(); // Retourner une liste vide si aucun nom n'est défini
-        }
-
-        List<String> outputFileNames = Arrays.asList(script.getOutputFileNames().split(","));
-        return outputFileNames.stream()
-                .map(name -> {
-                    Path outputPath = fileService.getFilesDir().resolve(user.getUserId() + "/output").resolve(name).normalize();
-                    try {
-                        Files.createDirectories(outputPath.getParent());
-                    } catch (IOException e) {
-                        throw new RuntimeException("Failed to create directories for output file: " + outputPath, e);
-                    }
-                    return new File(name, outputPath.toString(), true, user);
-                })
-                .collect(Collectors.toList());
+        return Collections.emptyList();
     }
 }

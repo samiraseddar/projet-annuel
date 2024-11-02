@@ -27,20 +27,14 @@ public class Script {
     @Column(nullable = false)
     private String language;
 
-    @Column
-    private String inputFileExtensions;
     private int nbLikes;
     private int nbDislikes;
-    @Column
-    private String outputFileNames;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public Script(ScriptDTO scriptToCopie, User user) {
-        this.inputFileExtensions = scriptToCopie.getInputFileExtensions();
-        this.outputFileNames = scriptToCopie.getOutputFileNames();
         this.name = scriptToCopie.getName();
         this.user = user;
         this.language = scriptToCopie.getLanguage();
@@ -49,8 +43,6 @@ public class Script {
     }
 
     public Script() {
-        this.inputFileExtensions = "";
-        this.outputFileNames = "";
         this.name = "";
         this.language = "";
         this.location = "";
@@ -58,8 +50,6 @@ public class Script {
     }
 
     public Script(User user,ScriptDTO scriptDTO) {
-        this.inputFileExtensions = scriptDTO.getInputFileExtensions();
-        this.outputFileNames = scriptDTO.getOutputFileNames();
         this.name = scriptDTO.getName();
         this.user = user;
         this.language = scriptDTO.getLanguage();
@@ -108,21 +98,6 @@ public class Script {
         this.language = language;
     }
 
-    public String getInputFileExtensions() {
-        return inputFileExtensions;
-    }
-
-    public void setInputFileExtensions(String inputFileExtensions) {
-        this.inputFileExtensions = inputFileExtensions;
-    }
-
-    public String getOutputFileNames() {
-        return outputFileNames;
-    }
-
-    public void setOutputFileNames(String outputFileNames) {
-        this.outputFileNames = outputFileNames;
-    }
 
     public User getUser() {
         return user;
@@ -161,8 +136,6 @@ public class Script {
         dto.setLocation(this.getLocation());
         dto.setProtectionLevel(this.getProtectionLevel().name());
         dto.setLanguage(this.getLanguage());
-        dto.setInputFileExtensions(this.getInputFileExtensions());
-        dto.setOutputFileNames(this.getOutputFileNames());
         dto.setNbLikes(this.getNbLikes());
         dto.setNbDislikes(this.getNbDislikes());
 

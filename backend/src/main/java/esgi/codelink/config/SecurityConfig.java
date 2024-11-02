@@ -23,6 +23,9 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -42,10 +45,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JpaUserDetailsService jpaUserDetailsService) throws Exception {
         http
-                .cors(withDefaults())
+
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(withDefaults())
                 .userDetailsService(jpaUserDetailsService)
                 .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console())
                         .ignoringRequestMatchers(AntPathRequestMatcher.antMatcher("/api/**")))
@@ -68,8 +72,11 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("https://front-pa.vercel.app");
-        config.addAllowedOrigin("http://localhost:3000");
+        //config.addAllowedOrigin("https://front-pa.vercel.app");
+        //config.addAllowedOrigin("http://localhost:3000");
+        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/api/**", config);

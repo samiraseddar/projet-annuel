@@ -25,4 +25,11 @@ public class ScriptRequest {
     public void setScriptContent(String scriptContent) {
         this.scriptContent = scriptContent;
     }
+
+    @Override
+    public String toString() {
+        return "ScriptRequest{" +
+                "scriptDTO=" + scriptDTO +
+                '}';
+    }
 }

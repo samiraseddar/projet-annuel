@@ -110,8 +110,6 @@ public class ScriptLibraryService {
         result.setLocation(script.getLocation());
         result.setProtectionLevel(script.getProtectionLevel().name());
         result.setLanguage(script.getLanguage());
-        result.setInputFileExtensions(script.getInputFileExtensions());
-        result.setOutputFileNames(script.getOutputFileNames());
 
         return result;
     }

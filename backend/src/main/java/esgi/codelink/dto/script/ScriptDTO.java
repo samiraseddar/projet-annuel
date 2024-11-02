@@ -13,8 +13,6 @@ public class ScriptDTO {
 
     private String protectionLevel;
     private String language;
-    private String inputFileExtensions;
-    private String outputFileNames;
     private Long userId;
 
     private int nbLikes;
@@ -50,13 +48,6 @@ public class ScriptDTO {
         return language;
     }
 
-    public String getInputFileExtensions() {
-        return inputFileExtensions;
-    }
-
-    public String getOutputFileNames() {
-        return outputFileNames;
-    }
 
     public Long getUserId() {
         return userId;
@@ -84,13 +75,6 @@ public class ScriptDTO {
         this.language = language;
     }
 
-    public void setInputFileExtensions(String inputFileExtensions) {
-        this.inputFileExtensions = inputFileExtensions;
-    }
-
-    public void setOutputFileNames(String outputFileNames) {
-        this.outputFileNames = outputFileNames;
-    }
 
     public int getNbLikes() {
         return nbLikes;
@@ -131,5 +115,16 @@ public class ScriptDTO {
         if (this.nbDislikes > 0) {
             this.nbDislikes -= 1;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ScriptDTO{" +
+                "name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", protectionLevel='" + protectionLevel + '\'' +
+                ", language='" + language + '\'' +
+                ", userId=" + userId +
+                '}';
     }
 }

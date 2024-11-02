@@ -57,7 +57,9 @@ public class ScriptController {
     }
 
     @PostMapping
-    public ResponseEntity<ScriptDTO> createScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) throws IOException{
+    public ResponseEntity<ScriptDTO> createScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) {
+        System.out.println("CONTROLLER SAVE SCRIPT : " + scriptRequest);
+
         try {
             ScriptDTO createdScript = scriptService.saveScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent(), userDetails.getUser());
             return ResponseEntity.ok(createdScript);

@@ -22,13 +22,13 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    @Transactional
+    //@Transactional
     public Comment addComment(CommentDTO commentDTO, Script script, User user) {
         Comment comment = commentDTO.convertToComment();
         comment.setScript(script);
         comment.setUser(user);
 
-        var newComment = commentRepository.save(comment);
+        Comment newComment = commentRepository.save(comment);
         System.out.println("comment to add : " + comment);
         return newComment;
     }
@@ -39,7 +39,7 @@ public class CommentService {
     }
 
     public List<Comment> getCommentsByScript(Long scriptId) {
-        return commentRepository.findByScriptId(scriptId);
+        return commentRepository.findByScriptId(scriptId)   ;
     }
 
     public Optional<Comment> getCommentById(Long commentId) {

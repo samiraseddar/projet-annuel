@@ -109,7 +109,7 @@ public class ScriptLibraryService {
         result.setName(script.getName());
         result.setLocation(script.getLocation());
         result.setProtectionLevel(script.getProtectionLevel().name());
-        result.setLanguage(script.getLanguage());
+        result.setLanguage(script.getLanguage().name());
 
         return result;
     }

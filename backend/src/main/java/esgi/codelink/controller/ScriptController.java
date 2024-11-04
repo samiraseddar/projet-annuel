@@ -58,16 +58,14 @@ public class ScriptController {
 
     @PostMapping
     public ResponseEntity<ScriptDTO> createScript(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ScriptRequest scriptRequest) {
-        System.out.println("CONTROLLER SAVE SCRIPT : " + scriptRequest);
-
         try {
             ScriptDTO createdScript = scriptService.saveScript(scriptRequest.getScriptDTO(), scriptRequest.getScriptContent(), userDetails.getUser());
             return ResponseEntity.ok(createdScript);
         } catch (IOException e) {
-            log.error("[ERROR] An IOException occurred while creating the script: {}", e.getMessage(), e); // Log with exception details
+            log.error("[ERROR] An IOException occurred while creating the script: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } catch (Exception e) {
-            log.error("[ERROR] An unexpected error occurred: {}", e.getMessage(), e); // Log with exception details
+            log.error("[ERROR] An unexpected error occurred: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
@@ -117,7 +115,7 @@ public class ScriptController {
         User user = userDetails.getUser();
         System.out.println("user : " + user);
 
-        Script script = new Script(user, scriptDTO);
+        Script script = new Script(scriptDTO, user);
 
         Comment savedComment = commentService.addComment(commentDTO, script, user);
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);

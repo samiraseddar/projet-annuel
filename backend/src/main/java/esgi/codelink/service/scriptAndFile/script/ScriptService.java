@@ -6,6 +6,7 @@ import esgi.codelink.entity.script.File;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.enumeration.ProtectionLevel;
 import esgi.codelink.repository.ScriptRepository;
+import esgi.codelink.service.pipeline.ScriptLanguage;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutorFactory;
 import esgi.codelink.service.scriptAndFile.file.FileService;
@@ -62,9 +63,11 @@ public class ScriptService {
 
         existingScript.setName(scriptDTO.getName());
         existingScript.setProtectionLevel(ProtectionLevel.valueOf(scriptDTO.getProtectionLevel()));
-        existingScript.setLanguage(scriptDTO.getLanguage());
 
         makeScriptLocation(existingScript);
+
+        existingScript.setLanguage(ScriptLanguage.fromLocation(existingScript.getLocation()));
+
         storeScriptFile(existingScript, scriptContent);
         scriptRepository.save(existingScript);
         return convertToDTO(existingScript);
@@ -111,14 +114,15 @@ public class ScriptService {
         scriptDTO.setName(script.getName());
         scriptDTO.setLocation(script.getLocation());
         scriptDTO.setProtectionLevel(script.getProtectionLevel().toString());
-        scriptDTO.setLanguage(script.getLanguage());
+        scriptDTO.setLanguage(script.getLanguage().name());
         return scriptDTO;
     }
 
 
     private void makeScriptLocation(Script script) {
         String complement = script.getUser().getUserId() + "/";
-        switch (script.getLanguage().toLowerCase()) {
+        System.out.println(script.getLanguage().name().toLowerCase());
+        switch (script.getLanguage().name().toLowerCase()) {
             case "python":
                 complement = "python/" + complement;
                 break;
@@ -189,7 +193,7 @@ public class ScriptService {
             log.info(" outputFiles content :" + outputFiles);
 
             // Exécuter le script
-            ScriptExecutor executor = scriptExecutorFactory.getExecutor(script.getLanguage());
+            ScriptExecutor executor = scriptExecutorFactory.getExecutor(script.getLanguage().name());
             String result = executor.executeScript(script.getLocation(), inputFiles, outputFiles);
             logger.info("Script " + script.getName() + " execution result: {}", result);
 

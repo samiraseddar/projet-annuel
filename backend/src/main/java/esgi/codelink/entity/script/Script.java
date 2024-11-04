@@ -3,6 +3,7 @@ package esgi.codelink.entity.script;
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.entity.User;
 import esgi.codelink.enumeration.ProtectionLevel;
+import esgi.codelink.service.pipeline.ScriptLanguage;
 import jakarta.persistence.*;
 
 @Entity
@@ -24,8 +25,8 @@ public class Script {
     @Column(nullable = false)
     private ProtectionLevel protectionLevel;
 
-    @Column(nullable = false)
-    private String language;
+    @Enumerated(EnumType.STRING)
+    private ScriptLanguage language;
 
     private int nbLikes;
     private int nbDislikes;
@@ -34,33 +35,22 @@ public class Script {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Script(ScriptDTO scriptToCopie, User user) {
-        this.name = scriptToCopie.getName();
-        this.user = user;
-        this.language = scriptToCopie.getLanguage();
-        this.location = scriptToCopie.getLocation();
-        this.protectionLevel = ProtectionLevel.valueOf(scriptToCopie.getProtectionLevel());
-    }
-
-    public Script() {
-        this.name = "";
-        this.language = "";
-        this.location = "";
-        this.protectionLevel = ProtectionLevel.PRIVATE;
-    }
-
-    public Script(User user,ScriptDTO scriptDTO) {
+    public Script(ScriptDTO scriptDTO, User user) {
         this.name = scriptDTO.getName();
-        this.user = user;
-        this.language = scriptDTO.getLanguage();
         this.location = scriptDTO.getLocation();
+        this.user = user;
+        this.language = ScriptLanguage.fromLocation(scriptDTO.getLanguage());
         this.protectionLevel = ProtectionLevel.valueOf(scriptDTO.getProtectionLevel());
         this.nbLikes = scriptDTO.getNbLikes();
         this.nbDislikes = scriptDTO.getNbDislikes();
     }
 
-
-    // Getters and Setters
+    public Script() {
+        this.name = "";
+        this.language = ScriptLanguage.UNKNOWN;
+        this.location = "";
+        this.protectionLevel = ProtectionLevel.PRIVATE;
+    }
 
     public Long getScript_id() {
         return script_id;
@@ -90,11 +80,11 @@ public class Script {
         this.protectionLevel = protectionLevel;
     }
 
-    public String getLanguage() {
+    public ScriptLanguage getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(ScriptLanguage language) {
         this.language = language;
     }
 
@@ -135,7 +125,7 @@ public class Script {
         dto.setName(this.getName());
         dto.setLocation(this.getLocation());
         dto.setProtectionLevel(this.getProtectionLevel().name());
-        dto.setLanguage(this.getLanguage());
+        dto.setLanguage(this.getLanguage().name());
         dto.setNbLikes(this.getNbLikes());
         dto.setNbDislikes(this.getNbDislikes());
 
@@ -144,5 +134,16 @@ public class Script {
 
     public Long getScriptId() {
         return this.script_id;
+    }
+
+    @Override
+    public String toString() {
+        return "Script{" +
+                "script_id=" + script_id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", protectionLevel=" + protectionLevel +
+                ", language=" + language +
+                '}';
     }
 }

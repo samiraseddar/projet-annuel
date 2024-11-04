@@ -4,9 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="corrige les erreurs du back">
+    <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="ajustements des métadonnées des scripts">
+      <change afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/AsyncConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/PipelineController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/pipeline/PipelineJobResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/pipeline/PipelineResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/pipeline/StartPipelineRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/pipeline/StartPipelineResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/pipeline/Pipeline.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/pipeline/PipelineJob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/PipelineJobRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/PipelineRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/WebSocketService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/Executor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/JavascriptExecutor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/PipelineService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/PythonExecutor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/ScriptLanguage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/script/PipelineRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/script/PipelineRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/script/Script.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/script/Script.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/library/ScriptLibraryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/library/ScriptLibraryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +42,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -50,13 +77,6 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -85,9 +105,9 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.ProjetApplication (1).executor&quot;: &quot;Run&quot;,
     &quot;Spring Boot.ProjetApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev-samira&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/jujutravail/2023-2024/projetAnnuel/projet-annuel/backend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/soumi/IdeaProjects/01-11-2024/projet-annuel/backend&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -206,7 +226,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-corretto-21.0.2-4caba194b151-51586f01" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
       </set>
     </attachedChunks>
   </component>
@@ -286,6 +306,13 @@
       <workItem from="1728762669495" duration="10000" />
       <workItem from="1729199367809" duration="2662000" />
       <workItem from="1729455469336" duration="1121000" />
+      <workItem from="1730490617909" duration="2067000" />
+      <workItem from="1730546320788" duration="4413000" />
+      <workItem from="1730561408117" duration="154000" />
+      <workItem from="1730577697076" duration="6784000" />
+      <workItem from="1730626854484" duration="29248000" />
+      <workItem from="1730664176009" duration="5669000" />
+      <workItem from="1730715018861" duration="902000" />
     </task>
     <task id="LOCAL-00001" summary="add UserContoller after merge">
       <option name="closed" value="true" />
@@ -463,7 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726657926574</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="ajustements des métadonnées des scripts">
+      <option name="closed" value="true" />
+      <created>1730561526648</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1730561526648</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -515,6 +550,7 @@
     <MESSAGE value="add partie reseau social" />
     <MESSAGE value="update some files" />
     <MESSAGE value="corrige les erreurs du back" />
-    <option name="LAST_COMMIT_MESSAGE" value="corrige les erreurs du back" />
+    <MESSAGE value="ajustements des métadonnées des scripts" />
+    <option name="LAST_COMMIT_MESSAGE" value="ajustements des métadonnées des scripts" />
   </component>
 </project>

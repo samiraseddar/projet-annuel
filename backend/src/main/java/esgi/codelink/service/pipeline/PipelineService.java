@@ -20,6 +20,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -50,7 +51,12 @@ public class PipelineService {
         var pipeline = pipelineRepository.save(newPipeline);
 
         List<Long> scriptIds = pipelineRequest.getScriptIds();
-        List<Script> scripts = scriptRepository.findAllById(scriptIds);
+        List<Script> scripts = scriptIds.stream()
+                .map(scriptRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .toList();
+        //List<Script> scripts = scriptRepository.findAllById(scriptIds);
 
         var scripts_names = scripts.stream().map(Script::getName).toList();
         var pipelineResponse = new StartPipelineResponse(scripts_names, pipeline.getId());

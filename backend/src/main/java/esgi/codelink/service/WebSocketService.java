@@ -15,8 +15,9 @@ public class WebSocketService {
     }
 
     public void sendJobStatusUpdate(Long pipelineId, Long jobId, Long script_id, String scriptName, PipelineJob.JobStatus status) {
+        System.out.println("send job status message | Pipeline id : " + pipelineId + " | job id : " + jobId);
         JobStatusMessage message = new JobStatusMessage(pipelineId, jobId, scriptName, status.name(), script_id);
-        messagingTemplate.convertAndSend("/topic/pipelineStatus/" + pipelineId, message);
+        messagingTemplate.convertAndSend("/topic/jobStatus/" + pipelineId, message);
     }
 
     public void sendPipelineStatusUpdate(Long pipelineId, Pipeline.PipelineStatus status) {

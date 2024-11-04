@@ -82,6 +82,7 @@ public class PipelineService {
             for (var job : pipeline.getJobs()) {
                 job.setInputFile(currentInputFile);
                 job.setStatus(PipelineJob.JobStatus.RUNNING);
+                pipelineJobRepository.save(job);
                 webSocketService.sendJobStatusUpdate(pipeline.getId(), job.getId(), job.getScript().getScript_id(), job.getScript().getName(), job.getStatus());
 
                 var script = job.getScript();
@@ -95,6 +96,7 @@ public class PipelineService {
                     File outputFile = outputFiles[0];
                     job.setStatus(PipelineJob.JobStatus.COMPLETED);
                     job.setOutputFile(outputFile.getAbsolutePath());
+                    pipelineJobRepository.save(job);
                     currentInputFile = outputFile.getAbsolutePath();
                 } else {
                     job.setStatus(PipelineJob.JobStatus.FAILED);

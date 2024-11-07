@@ -5,33 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b1bc39db-058f-45b2-b34d-1139d022cfbe" name="Changes" comment="ajustements des métadonnées des scripts">
-      <change afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/AsyncConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/PipelineController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/pipeline/PipelineJobResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/pipeline/PipelineResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/pipeline/StartPipelineRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/pipeline/StartPipelineResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/pipeline/Pipeline.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/pipeline/PipelineJob.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/PipelineJobRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/repository/PipelineRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/WebSocketService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/Executor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/JavascriptExecutor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/PipelineService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/PythonExecutor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/pipeline/ScriptLanguage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/database.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/resources/database.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/config/WebSocketConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/controller/ScriptController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/script/PipelineRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/dto/script/PipelineRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/script/Script.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/entity/script/Script.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/library/ScriptLibraryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/library/ScriptLibraryService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/esgi/codelink/service/scriptAndFile/script/ScriptService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="main" />
+        <entry key="$PROJECT_DIR$/.." value="mergingInstable" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />

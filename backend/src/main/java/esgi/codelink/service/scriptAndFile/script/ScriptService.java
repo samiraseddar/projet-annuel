@@ -237,6 +237,11 @@ public class ScriptService {
                 .map(entry -> "Script ID: " + entry.getKey() + "\nResult:\n" + entry.getValue())
                 .collect(Collectors.joining("\n\n"));
     }
+    public List<ScriptDTO> getAllScripts() {
+        return scriptRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
 
     private List<File> prepareOutputFiles(Script script, User user) {
         return Collections.emptyList();

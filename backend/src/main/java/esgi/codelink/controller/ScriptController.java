@@ -39,6 +39,11 @@ public class ScriptController {
 
     @GetMapping
     public ResponseEntity<List<ScriptDTO>> getAllScripts(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        List<ScriptDTO> scripts = scriptService.getAllScripts();
+        return ResponseEntity.ok(scripts);
+    }
+    @GetMapping("/private")
+    public ResponseEntity<List<ScriptDTO>> getAllScriptsByUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
         List<ScriptDTO> scripts = scriptService.getAllScriptsByUser(userDetails.getUser());
         return ResponseEntity.ok(scripts);
     }

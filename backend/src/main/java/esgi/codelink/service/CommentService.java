@@ -5,6 +5,7 @@ import esgi.codelink.entity.Comment;
 import esgi.codelink.entity.User;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.repository.CommentRepository;
+import esgi.codelink.repository.ScriptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,21 +17,25 @@ import java.util.Optional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final ScriptRepository scriptRepository;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, ScriptRepository scriptRepository) {
         this.commentRepository = commentRepository;
+        this.scriptRepository = scriptRepository;
     }
 
     @Transactional
-    public Comment addComment(CommentDTO commentDTO, Script script, User user) {
+    public Comment addComment(CommentDTO commentDTO, long scriptId, User user) {
+        var optionalScript = scriptRepository.findById(scriptId);
+        if(optionalScript.isEmpty()) return null;
+        var script = optionalScript.get();
+
         Comment comment = commentDTO.convertToComment();
         comment.setScript(script);
         comment.setUser(user);
 
-        var newComment = commentRepository.save(comment);
-        System.out.println("comment to add : " + comment);
-        return newComment;
+        return commentRepository.save(comment);
     }
 
     @Transactional

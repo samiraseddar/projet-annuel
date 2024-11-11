@@ -131,5 +131,20 @@ public class User {
     public void setNbPosts(int nbReviews) {
         this.nbPosts = nbReviews;
     }
-            }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", mail='" + mail + '\'' +
+                ", nbFollowers=" + nbFollowers +
+                ", nbFollowing=" + nbFollowing +
+                ", nbPosts=" + nbPosts +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                '}';
+    }
+}
+
+
 

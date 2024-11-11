@@ -115,6 +115,8 @@ public class ScriptService {
         scriptDTO.setLocation(script.getLocation());
         scriptDTO.setProtectionLevel(script.getProtectionLevel().toString());
         scriptDTO.setLanguage(script.getLanguage().name());
+        scriptDTO.setNbLikes(script.getNbLikes());
+        scriptDTO.setNbDislikes(script.getNbDislikes());
         return scriptDTO;
     }
 

@@ -141,6 +141,9 @@ public class ScriptService {
             case "python":
                 complement = "python/" + complement;
                 break;
+            case "javascript":
+                complement = "javascript/" + complement;
+                break;
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported script language");
         }

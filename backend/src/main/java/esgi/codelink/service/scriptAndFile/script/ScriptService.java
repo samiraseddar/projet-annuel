@@ -6,10 +6,12 @@ import esgi.codelink.entity.script.File;
 import esgi.codelink.entity.script.Script;
 import esgi.codelink.enumeration.ProtectionLevel;
 import esgi.codelink.repository.ScriptRepository;
+import esgi.codelink.repository.UserRepository;
 import esgi.codelink.service.pipeline.ScriptLanguage;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutor;
 import esgi.codelink.service.scriptAndFile.executor.ScriptExecutorFactory;
 import esgi.codelink.service.scriptAndFile.file.FileService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,31 +34,41 @@ public class ScriptService {
 
     private static final Logger logger = LoggerFactory.getLogger(ScriptService.class);
 
-    @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    @Autowired
     private ScriptRepository scriptRepository;
 
-    @Autowired
     private FileService fileService;
 
-    @Autowired
     private ScriptExecutorFactory scriptExecutorFactory;
+
+    private final UserRepository userRepository;
+
+    @Autowired
+    public ScriptService(SimpMessagingTemplate messagingTemplate, ScriptRepository scriptRepository, FileService fileService, ScriptExecutorFactory scriptExecutorFactory, UserRepository userRepository) {
+        this.messagingTemplate = messagingTemplate;
+        this.scriptRepository = scriptRepository;
+        this.fileService = fileService;
+        this.scriptExecutorFactory = scriptExecutorFactory;
+        this.userRepository = userRepository;
+    }
 
     //private static final Path SCRIPTS_DIR = Paths.get("../scripts");
 
     Path SCRIPTS_DIR = Paths.get(System.getProperty("user.dir")).getParent().resolve("scripts");
 
+    @Transactional
     public ScriptDTO saveScript(ScriptDTO scriptDTO, String scriptContent, User user) throws IOException {
         Script script = new Script(scriptDTO, user);
         makeScriptLocation(script);
         storeScriptFile(script, scriptContent);
         scriptRepository.save(script);
         user.incrementNbPosts();
+        userRepository.save(user);
         return convertToDTO(script);
     }
 
+    @Transactional
     public ScriptDTO updateScript(ScriptDTO scriptDTO, String scriptContent, User user) throws IOException {
         Script existingScript = scriptRepository.findById(scriptDTO.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
@@ -73,6 +85,7 @@ public class ScriptService {
         return convertToDTO(existingScript);
     }
 
+    @Transactional
     public void deleteScript(Long id, User user) throws IOException {
         Script script = scriptRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Script not found"));
@@ -115,6 +128,8 @@ public class ScriptService {
         scriptDTO.setLocation(script.getLocation());
         scriptDTO.setProtectionLevel(script.getProtectionLevel().toString());
         scriptDTO.setLanguage(script.getLanguage().name());
+        scriptDTO.setNbLikes(script.getNbLikes());
+        scriptDTO.setNbDislikes(script.getNbDislikes());
         return scriptDTO;
     }
 
@@ -125,6 +140,9 @@ public class ScriptService {
         switch (script.getLanguage().name().toLowerCase()) {
             case "python":
                 complement = "python/" + complement;
+                break;
+            case "javascript":
+                complement = "javascript/" + complement;
                 break;
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported script language");

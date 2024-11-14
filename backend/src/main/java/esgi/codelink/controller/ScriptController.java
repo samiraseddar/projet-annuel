@@ -1,16 +1,14 @@
 package esgi.codelink.controller;
 
 import esgi.codelink.dto.CommentDTO;
+import esgi.codelink.dto.script.PipelineRequest;
 import esgi.codelink.dto.script.ScriptDTO;
 import esgi.codelink.dto.script.ScriptRequest;
-import esgi.codelink.dto.script.PipelineRequest;
 import esgi.codelink.entity.Comment;
 import esgi.codelink.entity.CustomUserDetails;
 import esgi.codelink.entity.User;
-import esgi.codelink.entity.script.Script;
 import esgi.codelink.service.CommentService;
 import esgi.codelink.service.scriptAndFile.script.ScriptService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -113,16 +110,8 @@ public class ScriptController {
 
     @PostMapping("/{scriptId}/comments/")
     public ResponseEntity<Comment> addComment(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CommentDTO commentDTO, @PathVariable Long scriptId) {
-        System.out.println("add comment controller : " + commentDTO);
-        ScriptDTO scriptDTO = scriptService.getScriptById(scriptId);
-        System.out.println(scriptDTO);
-
         User user = userDetails.getUser();
-        System.out.println("user : " + user);
-
-        Script script = new Script(scriptDTO, user);
-
-        Comment savedComment = commentService.addComment(commentDTO, script, user);
+        Comment savedComment = commentService.addComment(commentDTO, scriptId, user);
         return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
     }
 

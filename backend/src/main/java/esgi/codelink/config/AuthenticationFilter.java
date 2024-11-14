@@ -37,8 +37,10 @@ public class AuthenticationFilter extends OncePerRequestFilter { // pour appler 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-        if (request.getServletPath().contains("/api/auth")) {
+            ///api/users
+        if (request.getServletPath().contains("/api/auth")
+            || request.getServletPath().contains("/api/users/signUp")
+            || request.getServletPath().contains("/api/users/signIn")){
             filterChain.doFilter(request, response);
             return;
         }

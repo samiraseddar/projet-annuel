@@ -10,23 +10,27 @@ RUN mvn clean package
 # Stage 2: Build the final image including Python dependencies
 FROM python:3.9-slim AS python
 
-# Install Java and other necessary packages
+# Install dependencies required for adding Node.js repository
 RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    lsb-release \
+    ca-certificates \
     openjdk-17-jre-headless \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y nodejs npm
+# Add NodeSource repository for Node.js installation
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs npm \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN pip install Pillow
 
 # Copy the built Java application from the previous stage
 COPY --from=build /build/target/projet-1.jar /app/projet-1.jar
-
-# Install Python dependencies if you have a requirements.txt
-# COPY requirements.txt /app/
-# WORKDIR /app
-# RUN pip install -r requirements.txt
 
 WORKDIR /app
 

@@ -17,26 +17,23 @@ public class PythonExecutor implements Executor {
             jobOutputDir.mkdirs();
         }
 
-        String command = String.format("python \"%s\" \"%s\" \"%s\"",
+        String[] command = {
+                "python",
                 scriptPath.toAbsolutePath().toString(),
                 inputFile.getAbsolutePath(),
-                jobOutputDir.getAbsolutePath());
+                jobOutputDir.getAbsolutePath()
+        };
 
         try {
-            Process process = Runtime.getRuntime().exec(command);
+            Process process = new ProcessBuilder(command)
+                    .redirectErrorStream(true)
+                    .start();
 
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-
-            String s;
-            System.out.println("Standard Output:");
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
-
-            System.out.println("Standard Error:");
-            while ((s = stdError.readLine()) != null) {
-                System.err.println(s);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            System.out.println("Execution Output:");
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
             }
 
             int exitCode = process.waitFor();
@@ -50,4 +47,5 @@ public class PythonExecutor implements Executor {
 
         return jobOutputDir;
     }
+
 }

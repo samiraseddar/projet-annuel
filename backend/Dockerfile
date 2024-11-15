@@ -10,7 +10,7 @@ RUN mvn clean package
 # Stage 2: Build the final image including Python dependencies
 FROM python:3.9-slim AS python
 
-# Install dependencies required for adding Node.js repository
+# Install dependencies for Node.js and Java
 RUN apt-get update && apt-get install -y \
     curl \
     gnupg2 \
@@ -20,13 +20,10 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Add NodeSource repository for Node.js installation
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get update \
-    && apt-get install -y nodejs npm \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Install Node.js using the official Node.js package from Debian repositories
+RUN apt-get update && apt-get install -y nodejs npm
 
+# Install Python dependencies
 RUN pip install Pillow
 
 # Copy the built Java application from the previous stage

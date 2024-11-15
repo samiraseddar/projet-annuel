@@ -14,7 +14,11 @@ FROM python:3.9-slim AS python
 RUN apt-get update && apt-get install -y \
     openjdk-17-jre-headless \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+
+RUN apt-get update && apt-get install -y nodejs npm
+
+RUN pip install Pillow
 
 # Copy the built Java application from the previous stage
 COPY --from=build /build/target/projet-1.jar /app/projet-1.jar

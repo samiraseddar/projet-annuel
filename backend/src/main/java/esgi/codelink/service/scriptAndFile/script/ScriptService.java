@@ -102,15 +102,21 @@ public class ScriptService {
 
     private void makeScriptLocation(Script script) {
         String complement = "/" + script.getUser().getUserId() + "/";
+        Path scriptDir;
         switch (script.getLanguage().toLowerCase()) {
             case "python":
                 complement = "/python" + complement;
+                scriptDir = SCRIPTS_DIR.resolve(complement).normalize();
+                script.setLocation(scriptDir.resolve(script.getName() + ".py").toString());
+                break;
+            case "javascript":
+                complement = "/javascript" + complement;
+                scriptDir = SCRIPTS_DIR.resolve(complement).normalize();
+                script.setLocation(scriptDir.resolve(script.getName() + ".js").toString());
                 break;
             default:
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported script language");
         }
-        Path scriptDir = SCRIPTS_DIR.resolve(complement).normalize();
-        script.setLocation(scriptDir.resolve(script.getName() + ".py").toString());
     }
 
     private void storeScriptFile(Script script, String scriptContent) throws IOException {

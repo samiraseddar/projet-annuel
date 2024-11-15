@@ -2,40 +2,37 @@ package esgi.codelink.service.pipeline;
 
 import esgi.codelink.entity.script.Script;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 
 public class JavascriptExecutor implements Executor {
 
     @Override
     public File execute(Path scriptsDir, File inputFile, Script script, File jobOutputDir) {
-        if (!jobOutputDir.exists()) {
-            jobOutputDir.mkdirs();
+        if (!jobOutputDir.exists() && !jobOutputDir.mkdirs()) {
+            throw new RuntimeException("Failed to create job output directory: " + jobOutputDir.getAbsolutePath());
         }
 
         Path scriptPath = scriptsDir.resolve(script.getLocation()).normalize();
 
-        String command = String.format("node \"%s\" \"%s\" \"%s\"",
+        String[] command = {
+                "node",
                 scriptPath.toAbsolutePath().toString(),
                 inputFile.getAbsolutePath(),
-                jobOutputDir.getAbsolutePath());
+                jobOutputDir.getAbsolutePath()
+        };
 
         try {
-            Process process = Runtime.getRuntime().exec(command);
+            System.out.println("Executing JavaScript command: " + String.join(" ", command));
 
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            processBuilder.redirectErrorStream(true); // Combine stdout and stderr
+            Process process = processBuilder.start();
 
-            String s;
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
-
-            while ((s = stdError.readLine()) != null) {
-                System.err.println(s);
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String output = reader.lines().collect(Collectors.joining("\n"));
+                System.out.println("Script output: \n" + output);
             }
 
             int exitCode = process.waitFor();
